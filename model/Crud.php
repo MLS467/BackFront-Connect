@@ -18,11 +18,11 @@ abstract class Crud extends Db
         return $res;
     }
 
-    public function selecionarUmRegistro($id)
+    public function selecionarUmRegistro($cpf)
     {
-        $sql = "SELECT * FROM $this->nomeTabela WHERE id = ?";
+        $sql = "SELECT * FROM $this->nomeTabela WHERE cpf = ?";
         $query = self::preparar($sql);
-        $query->execute(array($id));
+        $query->execute(array($cpf));
         $res = $query->fetch(PDO::FETCH_ASSOC);
         return $res;
     }

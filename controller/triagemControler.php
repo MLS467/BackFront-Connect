@@ -1,6 +1,7 @@
 <?php
 // Incluir a definição da classe Triagem, se não estiver carregada automaticamente
 require_once '../autoload.php';
+require_once '../config/config.php';
 
 // Dados recebidos via $_POST (ou outro array associativo)
 $dadosFormulario = [
@@ -27,11 +28,15 @@ $dadosFormulario = [
     'intensidade_dor' => isset($_POST['intensidade_dor']) ? (int)$_POST['intensidade_dor'] : null,
     'natureza_dor' => $_POST['natureza_dor'] ?? null,
     'observacoes' => $_POST['observacoes'] ?? null,
+    'cpf' => $_POST['cpf'] ?? null
 ];
 
 
 $triagem = new Triagem($dadosFormulario);
-// echo "<pre>";
-// print_r($triagem);
-// echo "</pre>";
-$triagem->inserirDados();
+
+if ($triagem->inserirDados()) {
+    $_SESSION['cpf'] = $dadosFormulario['cpf'];
+    header("location:../view/html/cadastrarPacienteView.html");
+} else {
+    echo "Houve um problema para inserir os dados!";
+}

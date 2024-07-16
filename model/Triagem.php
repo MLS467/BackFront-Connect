@@ -6,6 +6,7 @@ class Triagem extends Crud
 {
     // informações básicas
     private ?string $nome = null;
+    private ?string $cpf = null;
     private ?int $idade = null;
     private ?string $sexo = null;
     private ?string $contatoEmergencia = null;
@@ -40,11 +41,12 @@ class Triagem extends Crud
     private ?string $obsAdicionais = null;
 
 
-    public function __construct(array $dados)
+    public function __construct(?array $dados)
     {
         $this->nomeTabela = 'triagem';
         // Informações Básicas
         $this->nome = $dados['nome'] ?? null;
+        $this->cpf = $dados['cpf'] ?? null;
         $this->idade = isset($dados['idade']) ? (int)$dados['idade'] : null;
         $this->sexo = $dados['sexo'] ?? null;
         $this->contatoEmergencia = $dados['contato_emergencia'] ?? null;
@@ -82,13 +84,17 @@ class Triagem extends Crud
 
     public function inserirDados()
     {
-        $sql = "INSERT INTO $this->nomeTabela VALUES
-            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO $this->nomeTabela 
+                (nome, cpf, idade, sexo, contato_emergencia, condicoes_medicas, alergias, medicamentos_em_uso, historico_de_cirurgia, 
+                data_hora_chegada, motivo_visita, sintomas_atuais, gravidade_sintomas, tempo_sintomas, localizacao_dor, sintomas_associados, 
+                pressao_arterial, frequencia_cardiaca, temperatura_corporal, saturacao_oxigenio, frequencia_respiratoria, intensidade_dor, 
+                natureza_dor, obs_adicionais)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         $query = Db::preparar($sql);
         $query->execute(array(
-            null,
             $this->getNome(),
+            $this->getCpf(),
             $this->getIdade(),
             $this->getSexo(),
             $this->getContatoEmergencia(),
@@ -112,6 +118,10 @@ class Triagem extends Crud
             $this->getNaturezaDor(),
             $this->getObsAdicionais()
         ));
+
+        if (!$query)
+            return false;
+        return true;
     }
 
 
@@ -125,6 +135,11 @@ class Triagem extends Crud
     public function getNome(): ?string
     {
         return $this->nome;
+    }
+
+    public function getCpf(): ?string
+    {
+        return $this->cpf;
     }
 
     public function getIdade(): ?int
@@ -241,6 +256,11 @@ class Triagem extends Crud
     public function setNome(?string $nome): void
     {
         $this->nome = $nome;
+    }
+
+    public function setCpf(?string $cpf)
+    {
+        $this->cpf = $cpf;
     }
 
     public function setIdade(?int $idade): void
