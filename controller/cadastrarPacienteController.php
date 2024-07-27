@@ -1,9 +1,8 @@
 <?php
-require_once('../config/config.php');
-require_once('../autoload.php');
+require_once('../vendor/autoload.php');
 
 $cpf = $_SESSION['cpf'];
-$triagem = new Triagem(null);
+$triagem = new sistema\Triagem(null);
 $dadosTriagem = $triagem->selecionarUmRegistro($cpf);
 
 $dados = [
@@ -16,10 +15,12 @@ $dados = [
 ];
 
 
-$paciente = new Paciente($dadosTriagem, $dados);
+$paciente = new sistema\Paciente($dadosTriagem, $dados);
 
 if ($paciente->inserirDados()) {
-    echo "Dados inseridos";
+    echo "<pre>";
+    print_r($paciente);
+    echo "</pre>";
 } else {
     echo "Deu ruim";
 }

@@ -1,13 +1,10 @@
 <?php
 // Incluir a definição da classe Triagem, se não estiver carregada automaticamente
-require_once '../autoload.php';
-require_once '../config/config.php';
+require_once('../vendor/autoload.php');
 
 // Dados recebidos via $_POST (ou outro array associativo)
 $dadosFormulario = [
-    'nome' => $_POST['nome'] ?? null,
     'idade' => isset($_POST['idade']) ? (int)$_POST['idade'] : null,
-    'sexo' => $_POST['sexo'] ?? null,
     'contato_emergencia' => $_POST['contato_emergencia'] ?? null,
     'condicoes_medicas' => $_POST['condicoes_medicas'] ?? null,
     'alergias' => $_POST['alergias'] ?? null,
@@ -32,7 +29,7 @@ $dadosFormulario = [
 ];
 
 
-$triagem = new Triagem($dadosFormulario);
+$triagem = new sistema\Triagem($dadosFormulario);
 
 if ($triagem->inserirDados()) {
     $_SESSION['cpf'] = $dadosFormulario['cpf'];

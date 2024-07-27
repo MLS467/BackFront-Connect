@@ -1,0 +1,26 @@
+{
+    "name": "proj/integ",
+    "description": "projeto de front-end e back-end",
+    "autoload": {
+        "psr-4": {
+            "sistema\\": "model/",
+            "sistema\\controlador\\": "model/",
+            "sistema\\rotas\\": "model/",
+            "sistema\\suporte\\": "suporte/"
+        },
+        "files": [
+            "config/config.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Maisson Leal da Silva",
+            "email": "maisson.ifsul@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "pecee/simple-router": "dev-master",
+        "twig/twig": "^3.0"
+    }
+}

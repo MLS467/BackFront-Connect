@@ -1,5 +1,10 @@
 <?php
+
+namespace sistema;
+
 require_once('Db.php');
+
+use PDO;
 
 
 abstract class Crud extends Db
