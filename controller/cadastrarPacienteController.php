@@ -1,9 +1,11 @@
 <?php
 require_once('../vendor/autoload.php');
 
+use  sistema\Paciente as Paciente;
+use sistema\Triagem as st;
+
 $cpf = $_SESSION['cpf'];
-$triagem = new sistema\Triagem(null);
-$dadosTriagem = $triagem->selecionarUmRegistro($cpf);
+$dadosTriagem = (new st(null))->selecionarUmRegistro($cpf);
 
 $dados = [
     'nome' => $_POST['nome'] ?? null,
@@ -14,10 +16,7 @@ $dados = [
     'email' => $_POST['email'] ?? null
 ];
 
-
-$paciente = new sistema\Paciente($dadosTriagem, $dados);
-
-if ($paciente->inserirDados()) {
+if ((new Paciente($dadosTriagem, $dados))->inserirDados()) {
     echo "<pre>";
     print_r($paciente);
     echo "</pre>";

@@ -2,6 +2,7 @@
 // Incluir a definição da classe Triagem, se não estiver carregada automaticamente
 require_once('../vendor/autoload.php');
 
+use sistema\Triagem as Triagem;
 // Dados recebidos via $_POST (ou outro array associativo)
 $dadosFormulario = [
     'idade' => isset($_POST['idade']) ? (int)$_POST['idade'] : null,
@@ -28,10 +29,7 @@ $dadosFormulario = [
     'cpf' => $_POST['cpf'] ?? null
 ];
 
-
-$triagem = new sistema\Triagem($dadosFormulario);
-
-if ($triagem->inserirDados()) {
+if ((new Triagem($dadosFormulario))->inserirDados()) {
     $_SESSION['cpf'] = $dadosFormulario['cpf'];
     header("location:../view/html/cadastrarPacienteView.html");
 } else {

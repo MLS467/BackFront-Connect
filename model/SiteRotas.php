@@ -14,7 +14,7 @@ class SiteRotas extends Controlador
 
     public function index(): void
     {
-        echo $this->template->renderizar('triagemView.html', ['teste' => 'teste']);
+        echo $this->template->renderizar('triagemView.html', ['teste' => 'Maisson']);
     }
 
     public function cadastrarPaciente(): void

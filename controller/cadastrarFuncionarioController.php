@@ -1,9 +1,11 @@
 <?php
 require_once('../vendor/autoload.php');
 
-$cpf = $_SESSION['cpf'];
-$triagem = new sistema\Triagem(null);
-$dadosTriagem = $triagem->selecionarUmRegistro($cpf);
+// $cpf = $_SESSION['cpf'];
+// $triagem = new sistema\Triagem(null);
+// $dadosTriagem = $triagem->selecionarUmRegistro($cpf);
+
+use sistema\Funcionario as Funcionario;
 
 $dadosFunc = [
     'nome' => $_POST['nome'] ?? null,
@@ -19,8 +21,4 @@ $dadosFunc = [
     'statusEmprego' => $_POST['status_emprego'] ?? null,
 ];
 
-$func = new sistema\Funcionario($dadosTriagem, $dadosFunc);
-$func->inserirDados();
-echo '<pre>';
-print_r($func);
-echo '</pre>';
+(new Funcionario($dadosFunc))->inserirDados();
