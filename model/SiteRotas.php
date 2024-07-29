@@ -12,6 +12,10 @@ class SiteRotas extends Controlador
         parent::__construct('view/html');
     }
 
+    public function home(): void
+    {
+        echo $this->template->renderizar('home.html', ['css' => '../css/home.css']);
+    }
     public function index(): void
     {
         echo $this->template->renderizar('triagemView.html', ['teste' => 'Maisson']);
@@ -20,5 +24,10 @@ class SiteRotas extends Controlador
     public function cadastrarPaciente(): void
     {
         echo $this->template->renderizar('cadastrarPacienteView.html', ['teste' => 'teste']);
+    }
+
+    public function cadastrarFuncionario(): void
+    {
+        echo $this->template->renderizar('cadastrarFuncionarioView.html', ['teste' => 'teste']);
     }
 }

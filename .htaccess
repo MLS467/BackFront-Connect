@@ -4,19 +4,20 @@ Options -Indexes
 # TRABALHAR COM URL AMIGÁVEL
 RewriteEngine On
 
-#DEFINIR A URL BASE 
-#GERALMENTE QUANDO É 1 PROJETO JÁ É
-#CRIADO DIRETAMENTE NA RAIZ ENTÃO USA < / >, MAS 
-#SE TEM UMA PASTA DENTRO DO HTDOCS
-#DEVE DIZER A URL BASE
-
+# DEFINIR A URL BASE
 RewriteBase /PROJETO_INTEGRADO_FRONT_E_BACK
 
-# CONDIÇÕES DE REESCRITA DA URL
-# Redirecionamento não se aplica se não for um arquivo
+# PERMITIR ACESSO DIRETO A ARQUIVOS E DIRETÓRIOS
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# PERMITIR ACESSO A ARQUIVOS ESTÁTICOS
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule \.(jpg|jpeg|png|gif|css|js)$ - [L]
+
+# REDIRECIONAR REQUISIÇÕES PARA index.php SE NÃO FOREM ARQUIVOS, DIRETÓRIOS OU LINKS SIMBÓLICOS
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l
-
-# Guarda todas requisições na variável do arquivo index.php
 RewriteRule ^(.*)$ index.php/$1 [L]
