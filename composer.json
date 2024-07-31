@@ -4,9 +4,10 @@
     "autoload": {
         "psr-4": {
             "sistema\\": "model/",
-            "sistema\\controlador\\": "model/",
-            "sistema\\rotas\\": "model/",
-            "sistema\\suporte\\": "suporte/"
+            "sistema\\controlador\\": "Nucleo/",
+            "sistema\\rotas\\": "Nucleo/",
+            "sistema\\suporte\\": "suporte/",
+            "sistema\\nucleo\\": "Nucleo/"
         },
         "files": [
             "config/config.php"

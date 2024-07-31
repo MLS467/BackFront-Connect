@@ -1,0 +1,30 @@
+.not-found {
+    text-align: center;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
+}
+
+.not-found h1 {
+    font-size: 48px;
+    color: #e74c3c;
+    margin-bottom: 20px;
+}
+
+.not-found p {
+    font-size: 18px;
+    color: #333;
+}
+
+.not-found a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+}
+
+.not-found a:hover {
+    text-decoration: underline;
+}

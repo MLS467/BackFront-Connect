@@ -2,7 +2,7 @@
 
 namespace sistema;
 
-require_once('../config/config.php');
+require_once __DIR__ . '/../config/config.php';
 
 use PDO;
 use PDOException;
@@ -17,7 +17,9 @@ class Db
             return self::$pdo;
         } else {
             try {
-                self::$pdo = new PDO("mysql:host=" . SERVER . ";dbname=" . BANCO, USER, PASSWORD);
+                self::$pdo = new PDO("mysql:host=" . SERVER . ";dbname=" . BANCO, USER, PASSWORD, [
+                    PDO::ATTR_CASE => PDO::CASE_NATURAL
+                ]);
                 self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 self::$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             } catch (PDOException $e) {

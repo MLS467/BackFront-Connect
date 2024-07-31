@@ -1,6 +1,6 @@
 <?php
 // CLASSE DE MENSAGENS PERSONALIZADAS COM BOOTSTRAP
-namespace sistema;
+namespace sistema\nucleo;
 
 
 class Mensagem

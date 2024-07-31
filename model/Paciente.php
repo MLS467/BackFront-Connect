@@ -2,34 +2,37 @@
 
 namespace sistema;
 
-require_once('../config/config.php');
-require_once('../model/Crud.php');
+require_once __DIR__ . '/../config/config.php';
+
 
 use PDO;
+use sistema\nucleo\Validacao;
+use sistema\Crud;
 
 class Paciente extends Crud
 {
-    private ?array $triagem = null;
+
     private ?string $nome = null;
     private ?string $dataNascimento = null;
     private ?string $sexo = null;
     private ?string $endereco = null;
     private ?string $telefone = null;
     private ?string $email = null;
+    private ?string $Naturalidade = null;
     private ?int $triagemId = null;
     private ?Validacao $validacao = null;
 
-    public function __construct(?array $triagem, ?array $dados)
+    public function __construct(?array $dados)
     {
         $this->nomeTabela = 'pacientes';
-        $this->triagem = $triagem;
-        $this->triagemId = $triagem['id'];
-        $this->nome = $dados['nome'];
-        $this->dataNascimento = $dados['dataNascimeto'];
-        $this->endereco = $dados['endereco'];
-        $this->telefone = $dados['telefone'];
-        $this->email = $dados['email'];
-        $this->sexo = $dados['sexo'];
+        $this->triagemId = $dados['id_triagemCompleta'] ?? null;
+        $this->nome = $dados['nome'] ?? null;
+        $this->dataNascimento = $dados['dataNascimento'] ?? null;
+        $this->endereco = $dados['endereco'] ?? null;
+        $this->telefone = $dados['telefone'] ?? null;
+        $this->email = $dados['email'] ?? null;
+        $this->sexo = $dados['sexo'] ?? null;
+        $this->Naturalidade = $dados['Naturalidade'] ?? null;
         $this->validacao = new Validacao();
     }
 
@@ -37,29 +40,46 @@ class Paciente extends Crud
     {
         if ($this->getValidacao()->validaForm($this->getNome(), $this->getEmail(), $this->getSexo())) {
 
-            $sql = "INSERT INTO $this->nomeTabela VALUES (?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO $this->nomeTabela (nome, data_nascimento, sexo, endereco, telefone, email, naturalidade, triagem_id) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             $query = Db::preparar($sql);
-            $query->execute(array(
-                null,
+            $result = $query->execute(array(
                 $this->getNome(),
                 $this->getDataNascimento(),
                 $this->getSexo(),
                 $this->getEndereco(),
                 $this->getTelefone(),
                 $this->getEmail(),
+                $this->getNaturalidade(),
                 $this->getTriagemId()
             ));
 
-            if (!$query)
+            if (!$result)
                 return false;
             return true;
         } else {
             return false;
         }
     }
+
+
     function atualizarDados($id)
     {
+    }
+
+    public function mostraDados(): array
+    {
+        $sql = "SELECT * FROM pacientes AS P 
+        INNER JOIN sinais_vitais AS SV 
+        ON (P.triagem_id = SV.id) 
+        INNER JOIN triagem AS T 
+        ON (SV.triagem_id = T.id)
+        ORDER BY P.nome LIMIT 100";
+
+        $res = Db::preparar($sql);
+        $res->execute();
+        return $res->fetchAll();
     }
 
 
@@ -69,11 +89,16 @@ class Paciente extends Crud
         return $this->validacao;
     }
 
-
-    public function getTriagem(): array
+    public function getNaturalidade(): string
     {
-        return $this->triagem;
+        return $this->Naturalidade;
     }
+
+    public function setNaturalidade(string $Naturalidade)
+    {
+        return $this->Naturalidade = $Naturalidade;
+    }
+
 
     public function getNome(): ?string
     {
@@ -111,9 +136,9 @@ class Paciente extends Crud
     }
 
     // Setters
-    public function setTriagem(Triagem $triagem): void
+    public function setTriagem(int $triagem): int
     {
-        $this->triagem = $triagem;
+        return $this->triagemId = $triagem;
     }
 
     public function setValidacao(Validacao $validacao)

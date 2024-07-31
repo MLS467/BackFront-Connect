@@ -1,10 +1,6 @@
 <?php
 require_once('../vendor/autoload.php');
 
-// $cpf = $_SESSION['cpf'];
-// $triagem = new sistema\Triagem(null);
-// $dadosTriagem = $triagem->selecionarUmRegistro($cpf);
-
 use sistema\Funcionario as Funcionario;
 
 $dadosFunc = [

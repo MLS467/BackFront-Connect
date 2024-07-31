@@ -1,25 +1,33 @@
 <?php
 require_once('../vendor/autoload.php');
 
+use sistema\nucleo\Helpers;
+use sistema\nucleo\Mensagem;
 use  sistema\Paciente as Paciente;
-use sistema\Triagem as st;
+use sistema\SinaisVitais;
+use sistema\Triagem;
 
 $cpf = $_SESSION['cpf'];
-$dadosTriagem = (new st(null))->selecionarUmRegistro($cpf);
+$teste = (new SinaisVitais(null, null))->pegaCpf($cpf);
 
 $dados = [
     'nome' => $_POST['nome'] ?? null,
-    'dataNascimeto' => $_POST['dataNascimento'] ?? null,
+    'dataNascimento' => $_POST['dataNascimento'] ?? null,
     'sexo' => $_POST['sexo'] ?? null,
     'endereco' => $_POST['endereco'] ?? null,
     'telefone' => $_POST['telefone'] ?? null,
-    'email' => $_POST['email'] ?? null
+    'email' => $_POST['email'] ?? null,
+    'Naturalidade' => $_POST['Naturalidade'] ?? null,
+    'id_triagemCompleta' => $teste->id ?? null
 ];
 
-if ((new Paciente($dadosTriagem, $dados))->inserirDados()) {
-    echo "<pre>";
-    print_r($paciente);
-    echo "</pre>";
-} else {
-    echo "Deu ruim";
+try {
+    if ((new Paciente($dados))->inserirDados())
+        header("Location:" . Helpers::getServer("visualizar"));
+} catch (PDOException $e) {
+    if (Helpers::getServer() == URL_DESENVOLVIMENTO) {
+        echo (new Mensagem())->msg($e->getMessage())->erro();
+    } else {
+        header("Localhost:404");
+    }
 }

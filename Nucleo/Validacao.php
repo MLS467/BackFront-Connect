@@ -1,6 +1,6 @@
 <?php
 
-namespace sistema;
+namespace sistema\nucleo;
 
 use PDO;
 use PDOException;

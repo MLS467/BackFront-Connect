@@ -2,7 +2,8 @@
 
 namespace sistema\suporte;
 
-use sistema\Mensagem;
+use sistema\nucleo\Helpers;
+use sistema\nucleo\Mensagem;
 use Twig\Lexer;
 
 class Template
@@ -38,7 +39,13 @@ class Template
                 new \Twig\TwigFunction('sucesso', function (string $msg) {
                     echo (new Mensagem())->msg($msg)->sucesso();
                 })
-            )
+            ),
+            //RETORNA A URL COMPLETA
+            $this->twig->addFunction(
+                new \Twig\TwigFunction('url', function (string $url) {
+                    return Helpers::getServer($url);
+                })
+            ),
 
 
         );
