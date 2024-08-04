@@ -2,7 +2,9 @@
 
 namespace sistema;
 
-require_once('Db.php');
+require_once __DIR__ . "/../vendor/autoload.php";
+
+use sistema\Db;
 
 use PDO;
 
@@ -23,11 +25,11 @@ abstract class Crud extends Db
         return $res;
     }
 
-    public function selecionarUmRegistro($cpf)
+    public function selecionarUmRegistro($id)
     {
-        $sql = "SELECT * FROM $this->nomeTabela WHERE cpf = ?";
+        $sql = "SELECT * FROM $this->nomeTabela WHERE id = ?";
         $query = self::preparar($sql);
-        $query->execute(array($cpf));
+        $query->execute(array($id));
         $res = $query->fetch(PDO::FETCH_ASSOC);
         return $res;
     }

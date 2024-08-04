@@ -14,11 +14,13 @@ try {
 
     SimpleRouter::get(URL_BASE . '404', 'SiteRotas@notFound');
 
-    SimpleRouter::get(URL_BASE . 'cadastro_triagem', 'SiteRotas@cadastro_triagem');
+    SimpleRouter::get(URL_BASE . 'dados_basicos', 'SiteRotas@dados_basicos');
 
     SimpleRouter::get(URL_BASE . 'cadastro_sinais_vitais', 'SiteRotas@cadastro_sv');
 
     SimpleRouter::get(URL_BASE . 'cadastro_paciente', 'SiteRotas@cadastrarPaciente');
+
+    SimpleRouter::get(URL_BASE . 'consulta', 'SiteRotas@consulta');
 
     SimpleRouter::get(URL_BASE . 'cadastro_funcionario', 'SiteRotas@cadastrarFuncionario');
 

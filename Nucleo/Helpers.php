@@ -2,9 +2,43 @@
 
 namespace sistema\nucleo;
 
+use sistema\Db;
+use PDO;
+
 class Helpers
 {
 
+    public static function mostrarArray(array $arr = null, object $obj = null): void
+    {
+        $valor = ($arr != null ? $arr : $obj);
+        echo "<pre>";
+        print_r($valor);
+        echo "</pre>";
+    }
+
+    public static function selecionarTodasTabelas()
+    {
+        $sql = "SELECT 
+            ficha_atendimento.*, 
+            paciente.*,
+            triagem.*,
+            sinais_vitais.*,
+            dados_basicos.*,
+            enfermeiro.*
+        FROM ficha_atendimento
+        INNER JOIN paciente ON ficha_atendimento.idPaciente = paciente.id
+        INNER JOIN triagem ON ficha_atendimento.idTriagem = triagem.id
+        INNER JOIN sinais_vitais ON triagem.id_sinais_vitais_fk = sinais_vitais.id
+        INNER JOIN dados_basicos ON triagem.id_dados_basicos_fk = dados_basicos.id
+        INNER JOIN enfermeiro ON sinais_vitais.id_enfermeiro = enfermeiro.id
+        LIMIT 100";
+
+
+        $query = Db::preparar($sql);
+        $query->execute();
+        $res = $query->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
 
     /**
      * Exibe a data atual formatada com o nome do dia da semana, o dia do mês e o mês por extenso.

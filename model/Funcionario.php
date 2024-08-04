@@ -2,102 +2,75 @@
 
 namespace sistema;
 
-require_once('../config/config.php');
-require_once('../autoload.php');
-
+use sistema\Crud;
 use PDO;
+use PDOException;
 
-class Funcionario extends Crud
+abstract class Funcionario extends Crud
 {
+    private ?string $nomeCompleto;
+    private ?string $cidade;
+    private ?string $rua;
+    private ?string $bairro;
+    private ?string $numero;
+    private ?string $complemento;
+    private ?string $telefone;
+    private ?string $email;
+    private ?string $genero;
+    private ?string $dataRegistro;
+    private ?string $status;
 
-    private ?string $nome = null;
-    private ?string $dataNascimento = null;
-    private ?string $sexo = null;
-    private ?string $telefone = null;
-    private ?string $email = null;
-    private ?string $cargo = null;
-    private ?string $departamento = null;
-    private ?string $dataAdmissao = null;
-    private ?float $salario = null;
-    private ?string $numeroRegistroProfissional = null;
-    private ?string $statusEmprego = null;
 
-
-    public function __construct(?array $dados)
+    public function __construct(array $dados)
     {
-        $this->nomeTabela = 'funcionarios';
-        $this->nome = $dados['nome'];
-        $this->dataNascimento = $dados['dataNascimento'];
-        $this->sexo = $dados['sexo'];
-        $this->telefone = $dados['telefone'];
-        $this->email = $dados['email'];
-        $this->cargo = $dados['cargo'];
-        $this->departamento = $dados['departamento'];
-        $this->dataAdmissao = $dados['dataAdmissao'];
-        $this->salario = $dados['salario'];
-        $this->numeroRegistroProfissional = $dados['numeroRegistroProfissional'];
-        $this->statusEmprego = $dados['statusEmprego'];
+        $this->nomeCompleto = $dados['nomeCompleto'] ?? null;
+        $this->cidade = $dados['cidade'] ?? null;
+        $this->rua = $dados['rua'] ?? null;
+        $this->bairro = $dados['bairro'] ?? null;
+        $this->numero = $dados['numero'] ?? null;
+        $this->complemento = $dados['complemento'] ?? null;
+        $this->telefone = $dados['telefone'] ?? null;
+        $this->email = $dados['email'] ?? null;
+        $this->genero = $dados['genero'] ?? null;
+        $this->dataRegistro = $dados['dataRegistro'] ?? null;
+        $this->status = $dados['status'] ?? null;
     }
 
     public function inserirDados()
     {
-        $sql = "INSERT INTO $this->nomeTabela VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $query = Db::preparar($sql);
-        $query->execute(array(
-            null,
-            $this->getNome(),
-            $this->getDataNascimento(),
-            $this->getSexo(),
-            $this->getTelefone(),
-            $this->getEmail(),
-            $this->getCargo(),
-            $this->getDepartamento(),
-            $this->getDataAdmissao(),
-            $this->getSalario(),
-            $this->getNumeroRegistroProfissional(),
-            $this->getStatusEmprego()
-        ));
-
-        if (!$query)
-            return false;
-        return true;
     }
-
-
-
-    function atualizarDados($id)
+    public function atualizarDados($id)
     {
     }
 
-    // Getters e Setters
-    public function getNome(): ?string
+    public function getNomeCompleto(): ?string
     {
-        return $this->nome;
+        return $this->nomeCompleto;
     }
 
-    public function setNome(?string $nome): void
+    public function getCidade(): ?string
     {
-        $this->nome = $nome;
+        return $this->cidade;
     }
 
-    public function getDataNascimento(): ?string
+    public function getRua(): ?string
     {
-        return $this->dataNascimento;
+        return $this->rua;
     }
 
-    public function setDataNascimento(?string $dataNascimento): void
+    public function getBairro(): ?string
     {
-        $this->dataNascimento = $dataNascimento;
+        return $this->bairro;
     }
 
-    public function getSexo(): ?string
+    public function getNumero(): ?string
     {
-        return $this->sexo;
+        return $this->numero;
     }
 
-    public function setSexo(?string $sexo): void
+    public function getComplemento(): ?string
     {
-        $this->sexo = $sexo;
+        return $this->complemento;
     }
 
     public function getTelefone(): ?string
@@ -105,14 +78,60 @@ class Funcionario extends Crud
         return $this->telefone;
     }
 
-    public function setTelefone(?string $telefone): void
-    {
-        $this->telefone = $telefone;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
+    }
+
+    public function getGenero(): ?string
+    {
+        return $this->genero;
+    }
+
+    public function getDataRegistro(): ?string
+    {
+        return $this->dataRegistro;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    // Setters
+    public function setNomeCompleto(?string $nomeCompleto): void
+    {
+        $this->nomeCompleto = $nomeCompleto;
+    }
+
+    public function setCidade(?string $cidade): void
+    {
+        $this->cidade = $cidade;
+    }
+
+    public function setRua(?string $rua): void
+    {
+        $this->rua = $rua;
+    }
+
+    public function setBairro(?string $bairro): void
+    {
+        $this->bairro = $bairro;
+    }
+
+    public function setNumero(?string $numero): void
+    {
+        $this->numero = $numero;
+    }
+
+    public function setComplemento(?string $complemento): void
+    {
+        $this->complemento = $complemento;
+    }
+
+    public function setTelefone(?string $telefone): void
+    {
+        $this->telefone = $telefone;
     }
 
     public function setEmail(?string $email): void
@@ -120,63 +139,18 @@ class Funcionario extends Crud
         $this->email = $email;
     }
 
-    public function getCargo(): ?string
+    public function setGenero(?string $genero): void
     {
-        return $this->cargo;
+        $this->genero = $genero;
     }
 
-    public function setCargo(?string $cargo): void
+    public function setDataRegistro(?string $dataRegistro): void
     {
-        $this->cargo = $cargo;
+        $this->dataRegistro = $dataRegistro;
     }
 
-    public function getDepartamento(): ?string
+    public function setStatus(?string $status): void
     {
-        return $this->departamento;
-    }
-
-    public function setDepartamento(?string $departamento): void
-    {
-        $this->departamento = $departamento;
-    }
-
-    public function getDataAdmissao(): ?string
-    {
-        return $this->dataAdmissao;
-    }
-
-    public function setDataAdmissao(?string $dataAdmissao): void
-    {
-        $this->dataAdmissao = $dataAdmissao;
-    }
-
-    public function getSalario(): ?float
-    {
-        return $this->salario;
-    }
-
-    public function setSalario(?float $salario): void
-    {
-        $this->salario = $salario;
-    }
-
-    public function getNumeroRegistroProfissional(): ?string
-    {
-        return $this->numeroRegistroProfissional;
-    }
-
-    public function setNumeroRegistroProfissional(?string $numeroRegistroProfissional): void
-    {
-        $this->numeroRegistroProfissional = $numeroRegistroProfissional;
-    }
-
-    public function getStatusEmprego(): ?string
-    {
-        return $this->statusEmprego;
-    }
-
-    public function setStatusEmprego(?string $statusEmprego): void
-    {
-        $this->statusEmprego = $statusEmprego;
+        $this->status = $status;
     }
 }

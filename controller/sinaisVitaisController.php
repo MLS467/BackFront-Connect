@@ -1,15 +1,16 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use sistema\SinaisVitais as SV;
+use sistema\nucleo\DadosTemporarios;
+use sistema\SinaisVitais;
 use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
-use sistema\Triagem;
 
-$cpf = $_SESSION['cpf'];
-$triagem = (new Triagem(null))->selecionarUmRegistro($cpf);
+
+$idEnfermeiro = 1;
 
 $dados = array(
+    'id_enfermeiro' => $idEnfermeiro,
     'sintomas' => $_POST['sintomas'] ?? '',
     'gravidade' => $_POST['gravidade'] ?? '',
     'tempo_inicio' => $_POST['tempo_inicio'] ?? '',
@@ -26,9 +27,21 @@ $dados = array(
 );
 
 
+// $teste = new SinaisVitais($dados);
+// echo '<pre>';
+// print_r($teste);
+// echo '</pre>';
+// $teste->inserirDados();
+
+
 try {
-    if ((new SV($dados, $triagem))->inserirDados())
-        header("Location:" . URL_DESENVOLVIMENTO . "/cadastro_paciente");
+    $sv = new SinaisVitais($dados);
+    if ($sv->inserirDados()) {
+        (new DadosTemporarios())->criar($sv->getId(), 'sinais_vitais');
+        header("Location:triagemController.php");
+    } else {
+        echo "Erro ao inserir dados";
+    }
 } catch (PDOException $e) {
     if (Helpers::getServer() == URL_DESENVOLVIMENTO) {
         (new Mensagem())->msg($e->getMessage())->erro();

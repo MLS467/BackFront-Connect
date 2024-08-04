@@ -2,103 +2,86 @@
 
 namespace sistema;
 
-require_once __DIR__ . '/../config/config.php';
-
-
+use Exception;
 use PDO;
-use sistema\nucleo\Validacao;
+use PDOException;
 use sistema\Crud;
+use sistema\Telefone_Paciente;
 
 class Paciente extends Crud
 {
-
+    private ?int $id;
+    protected $nomeTabela =  null;
     private ?string $nome = null;
     private ?string $dataNascimento = null;
     private ?string $sexo = null;
-    private ?string $endereco = null;
+    protected ?string $rua = null;
+    protected ?string $bairro = null;
+    protected ?string $numero = null;
+    protected ?string $complemento = null;
     private ?string $telefone = null;
     private ?string $email = null;
-    private ?string $Naturalidade = null;
-    private ?int $triagemId = null;
-    private ?Validacao $validacao = null;
+    private ?string $naturalidade = null;
+
+
 
     public function __construct(?array $dados)
     {
-        $this->nomeTabela = 'pacientes';
-        $this->triagemId = $dados['id_triagemCompleta'] ?? null;
+        $this->nomeTabela = 'paciente';
         $this->nome = $dados['nome'] ?? null;
         $this->dataNascimento = $dados['dataNascimento'] ?? null;
-        $this->endereco = $dados['endereco'] ?? null;
+        $this->rua = $dados['rua'] ?? null;
+        $this->bairro = $dados['bairro'] ?? null;
+        $this->numero = $dados['numero'] ?? null;
+        $this->complemento = $dados['complemento'] ?? null;
         $this->telefone = $dados['telefone'] ?? null;
         $this->email = $dados['email'] ?? null;
         $this->sexo = $dados['sexo'] ?? null;
-        $this->Naturalidade = $dados['Naturalidade'] ?? null;
-        $this->validacao = new Validacao();
+        $this->naturalidade = $dados['naturalidade'] ?? null;
     }
 
-    function inserirDados()
+
+    public function inserirDados(): bool
     {
-        if ($this->getValidacao()->validaForm($this->getNome(), $this->getEmail(), $this->getSexo())) {
 
-            $sql = "INSERT INTO $this->nomeTabela (nome, data_nascimento, sexo, endereco, telefone, email, naturalidade, triagem_id) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO $this->nomeTabela VALUES (null,?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            $query = Db::preparar($sql);
-            $result = $query->execute(array(
-                $this->getNome(),
-                $this->getDataNascimento(),
-                $this->getSexo(),
-                $this->getEndereco(),
-                $this->getTelefone(),
-                $this->getEmail(),
-                $this->getNaturalidade(),
-                $this->getTriagemId()
-            ));
+        $query = Db::preparar($sql)->execute([
+            $this->getNome(),
+            $this->getDataNascimento(),
+            $this->getSexo(),
+            $this->getRua(),
+            $this->getBairro(),
+            $this->getNumero(),
+            $this->getComplemento(),
+            $this->getEmail(),
+            $this->getNaturalidade()
+        ]);
 
-            if (!$result)
-                return false;
+        if ($query) {
+            $this->id =  Db::conectar()->lastInsertId();
+            (new Telefone_Paciente(['telefone' => $this->telefone, 'id_pessoa' => $this->id]))->inserirDados();
             return true;
-        } else {
-            return false;
         }
+
+
+        return false;
     }
+
+
 
 
     function atualizarDados($id)
     {
     }
 
-    public function mostraDados(): array
-    {
-        $sql = "SELECT * FROM pacientes AS P 
-        INNER JOIN sinais_vitais AS SV 
-        ON (P.triagem_id = SV.id) 
-        INNER JOIN triagem AS T 
-        ON (SV.triagem_id = T.id)
-        ORDER BY P.nome LIMIT 100";
-
-        $res = Db::preparar($sql);
-        $res->execute();
-        return $res->fetchAll();
-    }
-
 
     // Getters
-    public function getValidacao(): Validacao
-    {
-        return $this->validacao;
-    }
 
-    public function getNaturalidade(): string
+    public function getId(): int
     {
-        return $this->Naturalidade;
+        return $this->id;
     }
-
-    public function setNaturalidade(string $Naturalidade)
-    {
-        return $this->Naturalidade = $Naturalidade;
-    }
-
 
     public function getNome(): ?string
     {
@@ -115,9 +98,24 @@ class Paciente extends Crud
         return $this->sexo;
     }
 
-    public function getEndereco(): ?string
+    public function getRua(): ?string
     {
-        return $this->endereco;
+        return $this->rua;
+    }
+
+    public function getBairro(): ?string
+    {
+        return $this->bairro;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function getComplemento(): ?string
+    {
+        return $this->complemento;
     }
 
     public function getTelefone(): ?string
@@ -130,20 +128,17 @@ class Paciente extends Crud
         return $this->email;
     }
 
-    public function getTriagemId(): ?int
+    public function getNaturalidade(): ?string
     {
-        return $this->triagemId;
+        return $this->naturalidade;
     }
+
 
     // Setters
-    public function setTriagem(int $triagem): int
-    {
-        return $this->triagemId = $triagem;
-    }
 
-    public function setValidacao(Validacao $validacao)
+    public function setId(int $id): void
     {
-        $this->validacao = $validacao;
+        $this->id = $id;
     }
 
     public function setNome(?string $nome): void
@@ -161,9 +156,24 @@ class Paciente extends Crud
         $this->sexo = $sexo;
     }
 
-    public function setEndereco(?string $endereco): void
+    public function setRua(?string $rua): void
     {
-        $this->endereco = $endereco;
+        $this->rua = $rua;
+    }
+
+    public function setBairro(?string $bairro): void
+    {
+        $this->bairro = $bairro;
+    }
+
+    public function setNumero(?string $numero): void
+    {
+        $this->numero = $numero;
+    }
+
+    public function setComplemento(?string $complemento): void
+    {
+        $this->complemento = $complemento;
     }
 
     public function setTelefone(?string $telefone): void
@@ -176,8 +186,8 @@ class Paciente extends Crud
         $this->email = $email;
     }
 
-    public function setTriagemId(?int $triagemId): void
+    public function setNaturalidade(?string $naturalidade): void
     {
-        $this->triagemId = $triagemId;
+        $this->naturalidade = $naturalidade;
     }
 }

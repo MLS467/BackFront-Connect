@@ -1,0 +1,35 @@
+{%extends '/base/default.html'%}
+
+{% block conteudo%}
+<div class="container">
+    <h2 class="mt-4">Formulário de Atendimento Médico</h2>
+    <form action="{{url('Controller/consultaController.php')}}" method="POST">
+        <div class="form-group">
+
+        </div>
+        <div class="form-group">
+            <label for="dataHora">Data e Hora:</label>
+            <input type="datetime-local" class="form-control" id="dataHora" name="dataHora" required>
+        </div>
+        <div class="form-group">
+            <label for="diagnostico">Diagnóstico:</label>
+            <input type="text" class="form-control" id="diagnostico" name="diagnostico" required>
+        </div>
+        <div class="form-group">
+            <label for="tratamento">Tratamento:</label>
+            <input type="text" class="form-control" id="tratamento" name="tratamento" required>
+        </div>
+        <div class="form-group">
+            <label for="observacoes">Observações:</label>
+            <textarea class="form-control" id="observacoes" name="observacoes" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <input type="text" class="form-control" id="status" name="status" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
+
+
+{% endblock %}

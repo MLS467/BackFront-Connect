@@ -1,0 +1,5 @@
+
+SELECT * FROM ficha_atendimento INNER JOIN paciente ON (ficha_atendimento.`idPaciente` = paciente.id) 
+JOIN triagem ON (ficha_atendimento.`idTriagem` = triagem.id) JOIN sinais_vitais ON 
+(triagem.id_sinais_vitais_fk = sinais_vitais.id) JOIN dados_basicos ON 
+(triagem.id_dados_basicos_fk = dados_basicos.id) LIMIT 100;

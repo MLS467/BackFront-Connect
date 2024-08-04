@@ -16,9 +16,9 @@ class SiteRotas extends Controlador
     {
         echo $this->template->renderizar('home.html', ['titulo' => 'Home']);
     }
-    public function cadastro_triagem(): void
+    public function dados_basicos(): void
     {
-        echo $this->template->renderizar('triagemView.html', ['teste' => 'Maisson']);
+        echo $this->template->renderizar('dadosBasicosView.html', ['teste' => 'Maisson']);
     }
 
     public function cadastrarPaciente(): void
@@ -41,11 +41,14 @@ class SiteRotas extends Controlador
         echo $this->template->renderizar('notFound.html', ['erro' => 'Página não encontrada!']);
     }
 
+    public function consulta(): void
+    {
+        echo $this->template->renderizar('consultaView.html', ['erro' => 'Página não encontrada!']);
+    }
+
     public function visualizar(): void
     {
-        $conteudo = (new Paciente(null))->mostraDados();
-
         // print_r($conteudo);
-        echo $this->template->renderizar('visualizarRegistrosView.html', ['res' => $conteudo]);
+        // echo $this->template->renderizar('visualizarRegistrosView.html', ['res' => $conteudo]);
     }
 }
