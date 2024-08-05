@@ -1,17 +1,26 @@
 <?php
-require_once "DB.php";
-require_once "config.php";
+
+namespace sistema;
+
+require_once __DIR__ . "/../vendor/autoload.php";
+
+use PDO;
+use Exception;
+use sistema\nucleo\Helpers;
 
 class Login
 {
-    private ?string $nome = null;
+    private ?string $nomeTabela;
+    private ?string $email;
+    private ?string $senha;
+    private ?string $token;
 
-    public function __construct(
-        private string $email,
-        private string $senha,
-        private string $token,
-        private string $nomeTabela = 'usuarios'
-    ) {
+    public function __construct(?array $dados = null)
+    {
+        $this->nomeTabela = $dados['nomeTabela'] ?? null;
+        $this->email = $dados['email'] ?? null;
+        $this->senha = $dados['senha'] ?? null;
+        $this->token = $dados['token'] ?? null;
     }
 
 
@@ -20,13 +29,15 @@ class Login
         $sql = "SELECT * FROM $this->nomeTabela WHERE email = ? AND senha=?";
         $sql = DB::preparar($sql);
         $sql->execute(array($this->email, $this->senha));
-        $usuario = $sql->fetch(PDO::FETCH_ASSOC);
+        $usuario = $sql->fetch(PDO::FETCH_OBJ);
         if ($usuario) {
-            $idUsuario = $usuario['id'];
             // FAZER A ATUALIZAÇÃO DO TOKEN
             $atualizar = "UPDATE $this->nomeTabela SET token = ? WHERE id = ?";
             $atualizar = DB::preparar($atualizar);
-            $atualizar->execute(array($this->token, $idUsuario));
+            $atualizar->execute(array($this->token, $usuario->id));
+            $_SESSION['token'] = $this->token;
+            $_SESSION['id'] = $usuario->id;
+            $_SESSION['nomeTabela'] = $this->nomeTabela;
             return true;
         }
 
@@ -39,13 +50,11 @@ class Login
         $sql = "SELECT * FROM $this->nomeTabela WHERE token = ? ";
         $sql = DB::preparar($sql);
         $sql->execute(array($token));
-        $usuario = $sql->fetch(PDO::FETCH_ASSOC);
+        $usuario = $sql->fetch(PDO::FETCH_OBJ);
 
         if ($usuario) {
-            if ($this->isValidaToken($usuario['token'])) {
-                $this->setNome($usuario["nome"]);
-                $this->setEmail($usuario["email"]);
-                return $usuario['token'];
+            if ($this->isValidaToken($usuario->token)) {
+                return $usuario->token;
             }
         }
 
@@ -62,18 +71,48 @@ class Login
         return false;
     }
 
-    public function getNome(): string
+
+
+    public function redirecionar(): void
     {
-        return $this->nome;
-    }
-    public function setNome(string $nome)
-    {
-        $this->nome = $nome;
+        switch ($this->nomeTabela) {
+            case 'medico':
+                header("Location:" . Helpers::getServer('consulta'));
+                break;
+            case 'enfermeiro':
+                header("Location:" . Helpers::getServer('cadastro_sinais_vitais'));
+
+                break;
+            case 'administrador':
+                header("Location:" . Helpers::getServer('administrador'));
+
+                break;
+            case 'atendente':
+                header("Location:" . Helpers::getServer('dados_basicos'));
+                break;
+
+            default:
+                echo new Exception("Error Processing Request", 1);
+                break;
+        }
     }
 
-    public function getEmail(): string
+
+
+    public function retornaToken(int $id): string
     {
-        return $this->email;
+        $nomeTable = $_SESSION['nomeTabela'];
+        $sql = "SELECT token FROM $nomeTable WHERE id = ? LIMIT 1";
+        $sql = Db::preparar($sql);
+        $sql->execute(array($id));
+
+        $result = $sql->fetch(PDO::FETCH_OBJ);
+
+        if ($result && isset($result->token)) {
+            return $result->token;
+        }
+
+        return '';
     }
 
     public function setEmail(string $email)

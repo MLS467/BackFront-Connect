@@ -3,3 +3,31 @@ SELECT * FROM ficha_atendimento INNER JOIN paciente ON (ficha_atendimento.`idPac
 JOIN triagem ON (ficha_atendimento.`idTriagem` = triagem.id) JOIN sinais_vitais ON 
 (triagem.id_sinais_vitais_fk = sinais_vitais.id) JOIN dados_basicos ON 
 (triagem.id_dados_basicos_fk = dados_basicos.id) LIMIT 100;
+
+Checklist de Validação de Dados
+Dados Pessoais:
+
+ Nome: Não vazio e sem caracteres inválidos.
+ Data de Nascimento: Data válida e idade apropriada.
+ Número de Identificação (CPF/RG): Formato correto e número válido.
+Dados de Contato:
+
+ E-mail: Formato válido e domínio existente.
+ Telefone: Formato correto e número de dígitos adequado.
+Dados de Endereço:
+
+ Endereço Completo: Todos os campos preenchidos e formatados corretamente.
+ CEP: Formato correto e CEP existente.
+Dados do Formulário de Cadastro:
+
+ Senhas: Complexidade adequada e confirmação correta.
+Campos Específicos do Sistema:
+
+ Data e Hora: Formatos válidos e datas/hora coerentes.
+ Seleções e Opções: Opções selecionadas são válidas e permitidas.
+Campos Numéricos:
+
+ Valores Monetários/Quantidades: Números válidos e dentro de intervalo aceitável.
+Campos Relacionados a Registros:
+
+ Chaves Estrangeiras: IDs ou referências são válidos e existem.

@@ -1,4 +1,5 @@
-import { Caixa } from "./caixa.js";
+// import { Caixa } from "./caixa.js";
+// import {Validar}
 
 //INSTANCIEI A CLASSE CONSEGUI PEGAR PORQUE O ARQUIVO DA CLASSE VEM ANTES 
 

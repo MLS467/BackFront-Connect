@@ -1,6 +1,7 @@
 {% extends '/base/default.html'%}
 
 {% block conteudo %}
+{% if verificar %}
 <div class="container">
     <h2 class="mt-4">Cadastro de Paciente</h2>
     <form action="{{url('Controller/cadastrarPacienteController.php')}}" method="POST">
@@ -54,5 +55,7 @@
         <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
 </div>
-
+{% else %}
+{{redirecionar(url(404))}}
+{% endif %}
 {% endblock %}

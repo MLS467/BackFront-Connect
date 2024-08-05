@@ -3,6 +3,8 @@
 namespace sistema\rotas;
 
 use sistema\controlador\Controlador;
+use sistema\Login;
+use sistema\nucleo\Helpers;
 use sistema\Paciente;
 
 class SiteRotas extends Controlador
@@ -16,14 +18,33 @@ class SiteRotas extends Controlador
     {
         echo $this->template->renderizar('home.html', ['titulo' => 'Home']);
     }
+
     public function dados_basicos(): void
     {
-        echo $this->template->renderizar('dadosBasicosView.html', ['teste' => 'Maisson']);
+        $token = $_SESSION['token'];
+        $id = $_SESSION['id'];
+        $testeToken = (new Login(null))->retornaToken($id);
+
+        if ($testeToken == $token) {
+            $verificacao = true;
+        } else {
+            $verificacao = false;
+        }
+        echo $this->template->renderizar('dadosBasicosView.html', ['verificar' => $verificacao, 'isForm' => true]);
     }
 
     public function cadastrarPaciente(): void
     {
-        echo $this->template->renderizar('cadastrarPacienteView.html', ['teste' => 'teste']);
+        $token = $_SESSION['token'];
+        $id = $_SESSION['id'];
+        $testeToken = (new Login(null))->retornaToken($id);
+
+        if ($testeToken == $token) {
+            $verificacao = true;
+        } else {
+            $verificacao = false;
+        }
+        echo $this->template->renderizar('cadastrarPacienteView.html', ['verificar' => $verificacao, 'isForm' => true]);
     }
 
     public function cadastrarFuncionario(): void
@@ -33,7 +54,17 @@ class SiteRotas extends Controlador
 
     public function cadastro_sv(): void
     {
-        echo $this->template->renderizar('sinaisVitaisView.html', ['teste' => 'teste']);
+        $token = $_SESSION['token'];
+        $id = $_SESSION['id'];
+        $testeToken = (new Login(null))->retornaToken($id);
+
+        if ($testeToken == $token) {
+            $verificacao = true;
+        } else {
+            $verificacao = false;
+        }
+
+        echo $this->template->renderizar('sinaisVitaisView.html', ['verificar' => $verificacao, 'isForm' => true]);
     }
 
     public function notFound(): void
@@ -43,7 +74,30 @@ class SiteRotas extends Controlador
 
     public function consulta(): void
     {
-        echo $this->template->renderizar('consultaView.html', ['erro' => 'Página não encontrada!']);
+        if (isset($_SESSION['token']) && !empty($_SESSION['token'])) {
+
+            $token = $_SESSION['token'];
+            $id = $_SESSION['id'];
+            $testeToken = (new Login(null))->retornaToken($id);
+
+            if ($testeToken == $token) {
+                $verificacao = true;
+            } else {
+                $verificacao = false;
+            }
+        } else {
+            $verificacao = false;
+        }
+
+        echo $this->template->renderizar('consultaView.html', ['verificar' => $verificacao, 'isForm' => true]);
+    }
+
+    public function login($err = null): void
+    {
+        if ($err != null)
+            $err = "Email ou Senha não encontrado";
+
+        echo $this->template->renderizar('LoginView.html', ['erro' => $err]);
     }
 
     public function visualizar(): void

@@ -1,5 +1,5 @@
 # OCULTAR EXIBIÇÃO DE DIRETÓRIOS
-Options -Indexes
+Options +Indexes
 
 # TRABALHAR COM URL AMIGÁVEL
 RewriteEngine On

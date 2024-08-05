@@ -1,6 +1,7 @@
 {% extends '/base/default.html'%}
 
 {% block conteudo %}
+{% if verificar %}
 <div class="container mt-4">
     <form method="POST" action="Controller/sinaisVitaisController.php">
         <fieldset>
@@ -81,4 +82,7 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 </div>
+{% else %}
+{{redirecionar(url(404))}}
+{% endif %}
 {% endblock %}

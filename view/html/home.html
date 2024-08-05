@@ -1,5 +1,6 @@
 {% extends 'base/default.html'%}
 {% block conteudo %}
+
 <header class="mb-0">
     <a href="http://localhost/PROJETO_INTEGRADO_FRONT_E_BACK/">
         <div id="logo" class="container">
@@ -12,19 +13,27 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 text-light">
-                    <li><a href="http://localhost/PROJETO_INTEGRADO_FRONT_E_BACK/dados_basicos"
-                            class="nav-link   text-light px-2 link-secondary">Triagem</a></li>
-                    <li><a href="http://localhost/PROJETO_INTEGRADO_FRONT_E_BACK/cadastro_sinais_vitais"
-                            class="nav-link px-2 text-light link-body-emphasis">Sinais-Vitais</a></li>
-                    <li><a href="http://localhost/PROJETO_INTEGRADO_FRONT_E_BACK/cadastro_paciente"
-                            class="nav-link px-2 text-light link-body-emphasis">Paciente</a></li>
-                    <li><a href="http://localhost/PROJETO_INTEGRADO_FRONT_E_BACK/visualizar"
-                            class="nav-link px-2 text-light link-body-emphasis">Visualizar</a></li>
+                    <li><a href="#" class="nav-link   text-light px-2 link-secondary">Triagem</a>
+                    </li>
+                    <li><a href="#" class="nav-link px-2 text-light link-body-emphasis">Sinais-Vitais</a></li>
+                    <li><a href="#" class="nav-link px-2 text-light link-body-emphasis">Paciente</a></li>
+                    <li><a href="#" class="nav-link px-2 text-light link-body-emphasis">Visualizar</a></li>
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
                     <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
                 </form>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle text-light" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Entrar
+                    </button>
+                    <ul class="dropdown-menu bg-light">
+                        <li><a class="dropdown-item" href="{{url('login')}}">Login</a></li>
+                        <li><a class="dropdown-item" href="#">Cadastro</a></li>
+
+                    </ul>
+                </div>
 
             </div>
         </div>
@@ -73,9 +82,14 @@
     <div class="row">
         <div class="col-lg-4 text-center">
             <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
+                role="img" aria-label="Imagem" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Imagem</title>
+                <defs>
+                    <clipPath id="clip-circle">
+                        <circle cx="70" cy="70" r="70" />
+                    </clipPath>
+                </defs>
+                <image href="public/assets/img/abs.png" width="140" height="140" clip-path="url(#clip-circle)" />
             </svg>
             <h2 class="fw-normal">Heading</h2>
             <p>Some representative placeholder content for the three columns of text below the carousel. This is
@@ -170,14 +184,6 @@
         </div>
     </div>
 
-    <hr class="featurette-divider">
 
     <!-- /END THE FEATURETTES -->
-
-</div>
-<footer class="container">
-    <p class="float-end"><a href="#">Back to top</a></p>
-    <p>© 2017–2024 Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-</footer>
-
-{% endblock %}
+    {% endblock %}

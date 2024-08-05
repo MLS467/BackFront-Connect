@@ -40,10 +40,21 @@ class Template
                     echo (new Mensagem())->msg($msg)->sucesso();
                 })
             ),
+            $this->twig->addFunction(
+                new \Twig\TwigFunction('erro', function (string $msg) {
+                    echo (new Mensagem())->msg($msg)->erro();
+                })
+            ),
             //RETORNA A URL COMPLETA
             $this->twig->addFunction(
                 new \Twig\TwigFunction('url', function (string $url) {
                     return Helpers::getServer($url);
+                })
+            ),
+            // REDIRECIONAR
+            $this->twig->addFunction(
+                new \Twig\TwigFunction('redirecionar', function (string $url) {
+                    return header("Location:" . $url);
                 })
             ),
 
