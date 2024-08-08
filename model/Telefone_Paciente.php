@@ -3,31 +3,48 @@
 namespace sistema;
 
 use sistema\Crud;
+use sistema\nucleo\Validacao;
 
 class Telefone_Paciente extends Crud
 {
     private int $id = 0;
     private ?string $telefone;
     private int $id_pessoa;
+    private Validacao $validacao;
 
     public function __construct(?array $dados)
     {
         $this->nomeTabela = 'telefone_paciente';
         $this->telefone = $dados['telefone'];
         $this->id_pessoa = $dados['id_pessoa'];
+        $this->validacao = new Validacao();
     }
 
     public function inserirDados()
     {
-        $sql = "INSERT INTO $this->nomeTabela VALUES (?,?,?)";
-        $dados = [
-            null,
-            $this->getTelefone(),
-            $this->getIdPessoa()
-        ];
+        try {
+            if (
+                $this->validacao->validarTelefone($this->getTelefone())
+            ) {
 
-        Db::preparar($sql)->execute($dados);
-        $this->setId(Db::conectar()->lastInsertId());
+                $sql = "INSERT INTO $this->nomeTabela VALUES (?,?,?)";
+                $dados = [
+                    null,
+                    $this->getTelefone(),
+                    $this->getIdPessoa()
+                ];
+
+                if (Db::preparar($sql)->execute($dados)) {
+                    $this->setId(Db::conectar()->lastInsertId());
+                    return true;
+                }
+                return false;
+            } else {
+                return false;
+            }
+        } catch (\Throwable $e) {
+            ///////////////////////////////////////
+        }
     }
 
     function atualizarDados($id)

@@ -6,6 +6,7 @@ use Exception;
 use PDO;
 use PDOException;
 use sistema\Crud;
+use sistema\nucleo\Validacao;
 use sistema\Telefone_Paciente;
 
 class Paciente extends Crud
@@ -22,7 +23,7 @@ class Paciente extends Crud
     private ?string $telefone = null;
     private ?string $email = null;
     private ?string $naturalidade = null;
-
+    private Validacao $validacao;
 
 
     public function __construct(?array $dados)
@@ -38,31 +39,48 @@ class Paciente extends Crud
         $this->email = $dados['email'] ?? null;
         $this->sexo = $dados['sexo'] ?? null;
         $this->naturalidade = $dados['naturalidade'] ?? null;
+        $this->validacao = new Validacao();
     }
 
 
     public function inserirDados(): bool
     {
 
-        $sql = "INSERT INTO $this->nomeTabela VALUES (null,?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            if (
+                $this->validacao->validaNome($this->nome) &&
+                $this->validacao->validarData($this->dataNascimento) &&
+                $this->validacao->validarTelefone($this->telefone) &&
+                $this->validacao->validarEmail($this->email)
+            ) {
 
-        $query = Db::preparar($sql)->execute([
-            $this->getNome(),
-            $this->getDataNascimento(),
-            $this->getSexo(),
-            $this->getRua(),
-            $this->getBairro(),
-            $this->getNumero(),
-            $this->getComplemento(),
-            $this->getEmail(),
-            $this->getNaturalidade()
-        ]);
+                $sql = "INSERT INTO $this->nomeTabela VALUES (null,?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        if ($query) {
-            $this->id =  Db::conectar()->lastInsertId();
-            (new Telefone_Paciente(['telefone' => $this->telefone, 'id_pessoa' => $this->id]))->inserirDados();
-            return true;
+                $query = Db::preparar($sql)->execute([
+                    $this->getNome(),
+                    $this->getDataNascimento(),
+                    $this->getSexo(),
+                    $this->getRua(),
+                    $this->getBairro(),
+                    $this->getNumero(),
+                    $this->getComplemento(),
+                    $this->getEmail(),
+                    $this->getNaturalidade()
+                ]);
+
+                if ($query) {
+                    $this->id =  Db::conectar()->lastInsertId();
+                    (new Telefone_Paciente(['telefone' => $this->telefone, 'id_pessoa' => $this->id]))->inserirDados();
+                    return true;
+                } else
+                    return false;
+            } else {
+                return false;
+            }
+        } catch (\Throwable $e) {
+            # code...
         }
+
 
 
         return false;

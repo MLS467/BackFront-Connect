@@ -37,7 +37,9 @@ body {
     flex-direction: row;
 }
 
+
 #paiImg {
+
     position: relative;
 }
 

@@ -57,6 +57,12 @@ class Template
                     return header("Location:" . $url);
                 })
             ),
+            $this->twig->addFunction(new \Twig\TwigFunction('asset', function ($path) {
+                // Ajuste o caminho base conforme necessário
+                if (!str_starts_with("/", $path))
+                    return "/PROJETO_INTEGRADO_FRONT_E_BACK/$path";
+                return '/PROJETO_INTEGRADO_FRONT_E_BACK' . $path;
+            }))
 
 
         );

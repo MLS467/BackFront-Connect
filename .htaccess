@@ -1,23 +1,23 @@
-# OCULTAR EXIBIÇÃO DE DIRETÓRIOS
-Options +Indexes
+# Desabilitar a exibição de diretórios
+Options -Indexes
 
-# TRABALHAR COM URL AMIGÁVEL
+# Ativar o mecanismo de reescrita
 RewriteEngine On
 
-# DEFINIR A URL BASE
+# Definir a URL base
 RewriteBase /PROJETO_INTEGRADO_FRONT_E_BACK/
 
-# PERMITIR ACESSO DIRETO A ARQUIVOS E DIRETÓRIOS
+# Permitir o acesso direto a arquivos e diretórios existentes
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# PERMITIR ACESSO A ARQUIVOS ESTÁTICOS
+# Permitir o acesso a arquivos estáticos como CSS, JS e imagens
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule \.(jpg|jpeg|png|gif|css|js)$ - [L]
 
-# REDIRECIONAR REQUISIÇÕES PARA index.php SE NÃO FOREM ARQUIVOS, DIRETÓRIOS OU LINKS SIMBÓLICOS
+# Redirecionar todas as outras requisições para index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-l
-RewriteRule ^(.*)$ index.php/$1 [L]
+RewriteRule ^(.*)$ index.php [L]
+

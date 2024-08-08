@@ -109,4 +109,28 @@ class Helpers
             return round($ano) == 1 ? "Há 1 ano" : "Há $ano anos";
         }
     }
+
+    public static function limpaArrayPost(array $dados): array | bool
+    {
+        if (!empty($dados)) {
+
+            foreach ($dados as $key => $value) {
+                $dados[$key] = Helpers::LimpaDados($value);
+            }
+
+            return $dados;
+        } else {
+            return false;
+        }
+    }
+
+
+    protected static function LimpaDados($dados)
+    {
+        $dados = trim($dados);
+        $dados = stripslashes($dados);
+        $dados = strip_tags($dados);
+        $dados = htmlspecialchars($dados);
+        return $dados;
+    }
 }

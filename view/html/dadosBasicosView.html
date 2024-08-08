@@ -3,7 +3,9 @@
 {% if verificar %}
 
 {% include '/base/partials/nav.html'%}
+
 <div class="container">
+    <!-- {% include '/base/partials/sideBar.html'%} -->
     <h1 class="mt-4 mb-4 text-primary">Formulário de Triagem</h1>
     <form method="POST" action="Controller/dadosBasicosController.php">
         <div class="card mb-4">
@@ -64,9 +66,9 @@
                     </div>
                 </fieldset>
 
-
-
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="submit" name="enviar" class="btn btn-primary">Enviar</button>
+                <button type="reset" onclick="document.location.reload()" name="cancelar"
+                    class="btn btn-warning">Cancelar</button>
             </div>
         </div>
     </form>

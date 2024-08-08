@@ -6,26 +6,32 @@ use sistema\nucleo\DadosTemporarios;
 use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
 
-$id_medico = 1;
-$fichaAtend = (new DadosTemporarios(null))->lerTodosPorStatus('pendente');
+$id_medico = $_SESSION['id'];
+
+if (isset($_POST) && !empty($_POST)) {
+
+    $fichaAtend = (new DadosTemporarios(null))->lerTodosPorStatus('pendente');
+    $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $input = Helpers::limpaArrayPost($input);
+
+    $data = [
+        'id' => $id_medico,
+        'id_ficha_atendimento_fk' => $fichaAtend[0]->id_usuario,
+        'id_medico_fk' => $id_medico,
+        'dataHora' => $input['dataHora'],
+        'diagnostico' => $input['diagnostico'],
+        'tratamento' => $input['tratamento'],
+        'observacoes' => $input['observacoes'],
+        'status' => $input['status']
+    ];
 
 
+    $teste = new Consulta($data);
 
-$data = [
-    'id' => 1,
-    'id_ficha_atendimento_fk' => $fichaAtend[0]->id_usuario,
-    'id_medico_fk' => $id_medico,
-    'dataHora' => $_POST['dataHora'],
-    'diagnostico' => $_POST['diagnostico'],
-    'tratamento' => $_POST['tratamento'],
-    'observacoes' => $_POST['observacoes'],
-    'status' => $_POST['status']
-];
-
-
-$teste = new Consulta($data);
-
-if ($teste->inserirDados()) {
-    (new DadosTemporarios(null))->deletarTodos();
-    echo (new Mensagem())->msg('Consulta Realizada!')->sucesso()->renderizar();
+    if ($teste->inserirDados()) {
+        (new DadosTemporarios(null))->deletarTodos();
+        echo (new Mensagem())->msg('Consulta Realizada!')->sucesso()->renderizar();
+    }
+} else {
+    /////////////////////////////////////////////////////
 }

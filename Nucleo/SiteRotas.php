@@ -92,17 +92,68 @@ class SiteRotas extends Controlador
         echo $this->template->renderizar('consultaView.html', ['verificar' => $verificacao, 'isForm' => true]);
     }
 
-    public function login($err = null): void
+    public function login(): void
     {
-        if ($err != null)
-            $err = "Email ou Senha não encontrado";
-
-        echo $this->template->renderizar('LoginView.html', ['erro' => $err]);
+        $id = null;
+        echo $this->template->renderizar('LoginView.html', ['erro' => $id]);
     }
 
     public function visualizar(): void
     {
-        // print_r($conteudo);
-        // echo $this->template->renderizar('visualizarRegistrosView.html', ['res' => $conteudo]);
+
+        $pacientes = array(
+            array(
+                'nome' => 'João Silva',
+                'dataNascimento' => '1985-03-15',
+                'sexo' => 'Masculino',
+                'idade' => 39,
+                'endereco' => 'Rua das Flores, 123, Centro',
+                'telefone' => '(11) 98765-4321',
+                'email' => 'joao.silva@example.com',
+                'naturalidade' => 'São Paulo',
+                'cpf' => '123.456.789-00',
+                'contato_emergencia' => 'Maria Silva - (11) 91234-5678',
+                'sintomas' => 'Dor de cabeça, febre',
+                'gravidade' => 'Moderada',
+                'tempo_inicio' => '2 horas',
+                'localizacao_dor' => 'Frente da cabeça',
+                'pressao_arterial' => '120/80 mmHg',
+                'frequencia_cardiaca' => '80 bpm',
+                'temperatura' => '37.8°C',
+                'saturacao' => '98%',
+                'frequencia_respiratoria' => '16 rpm',
+                'intensidade_da_dor' => '3',
+                'observacoes' => 'Paciente apresenta sinais de gripe.',
+                'natureza_dor' => 'Latejante',
+                'id_triagem' => 101
+            ),
+            array(
+                'nome' => 'Ana Oliveira',
+                'dataNascimento' => '1990-07-22',
+                'sexo' => 'Feminino',
+                'idade' => 33,
+                'endereco' => 'Avenida Brasil, 456, Jardim das Palmeiras',
+                'telefone' => '(21) 99876-5432',
+                'email' => 'ana.oliveira@example.com',
+                'naturalidade' => 'Rio de Janeiro',
+                'cpf' => '987.654.321-00',
+                'contato_emergencia' => 'Carlos Oliveira - (21) 97654-3210',
+                'sintomas' => 'Dor abdominal, náuseas',
+                'gravidade' => 'Alta',
+                'tempo_inicio' => '30 minutos',
+                'localizacao_dor' => 'Abdômen inferior',
+                'pressao_arterial' => '110/70 mmHg',
+                'frequencia_cardiaca' => '90 bpm',
+                'temperatura' => '38.5°C',
+                'saturacao' => '97%',
+                'frequencia_respiratoria' => '18 rpm',
+                'intensidade_da_dor' => '7',
+                'observacoes' => 'Paciente com histórico de gastrite.',
+                'natureza_dor' => 'Cólica',
+                'id_triagem' => 102
+            )
+        );
+
+        echo $this->template->renderizar('visualizarRegistrosView.html', ['res' => $pacientes]);
     }
 }

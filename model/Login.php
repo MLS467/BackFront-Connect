@@ -7,6 +7,8 @@ require_once __DIR__ . "/../vendor/autoload.php";
 use PDO;
 use Exception;
 use sistema\nucleo\Helpers;
+use sistema\nucleo\Mensagem;
+use sistema\nucleo\Validacao;
 
 class Login
 {
@@ -14,47 +16,57 @@ class Login
     private ?string $email;
     private ?string $senha;
     private ?string $token;
+    private Validacao $validacao;
 
-    public function __construct(?array $dados = null)
+    public function __construct(?array $dados)
     {
         $this->nomeTabela = $dados['nomeTabela'] ?? null;
         $this->email = $dados['email'] ?? null;
         $this->senha = $dados['senha'] ?? null;
         $this->token = $dados['token'] ?? null;
+        $this->validacao = new Validacao();
     }
 
 
-    public function isAutenticar(): bool
+    public function isAutenticar()
     {
-        $sql = "SELECT * FROM $this->nomeTabela WHERE email = ? AND senha=?";
-        $sql = DB::preparar($sql);
-        $sql->execute(array($this->email, $this->senha));
-        $usuario = $sql->fetch(PDO::FETCH_OBJ);
-        if ($usuario) {
-            // FAZER A ATUALIZAÇÃO DO TOKEN
-            $atualizar = "UPDATE $this->nomeTabela SET token = ? WHERE id = ?";
-            $atualizar = DB::preparar($atualizar);
-            $atualizar->execute(array($this->token, $usuario->id));
-            $_SESSION['token'] = $this->token;
-            $_SESSION['id'] = $usuario->id;
-            $_SESSION['nomeTabela'] = $this->nomeTabela;
-            return true;
-        }
 
-        return false;
+        try {
+            if ($this->validacao->validarEmail($this->email) && $this->validacao->validarSenha($this->senha)) {
+
+                $sql = "SELECT * FROM $this->nomeTabela WHERE email = ? AND senha=?";
+                $sql = DB::preparar($sql);
+                $sql->execute(array($this->email, $this->senha));
+                $usuario = $sql->fetch(PDO::FETCH_OBJ);
+
+                if ($usuario) {
+                    $atualizar = "UPDATE $this->nomeTabela SET token = ? WHERE id = ?";
+                    $atualizar = DB::preparar($atualizar);
+                    $atualizar->execute(array($this->token, $usuario->id));
+                    $_SESSION['token'] = $this->token;
+                    $_SESSION['id'] = $usuario->id;
+                    $_SESSION['nomeTabela'] = $this->nomeTabela;
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } catch (\Throwable $e) {
+            header("Location:" . Helpers::getServer('login'));
+        }
     }
 
 
     public function isAutenticado(string $token)
     {
-        $sql = "SELECT * FROM $this->nomeTabela WHERE token = ? ";
+        $sql = "SELECT * FROM $this->nomeTabela WHERE token = ? LIMIT 1";
         $sql = DB::preparar($sql);
         $sql->execute(array($token));
         $usuario = $sql->fetch(PDO::FETCH_OBJ);
 
         if ($usuario) {
             if ($this->isValidaToken($usuario->token)) {
-                return $usuario->token;
+                return true;
             }
         }
 
@@ -64,13 +76,12 @@ class Login
 
     public function isValidaToken(string $token): bool
     {
-        if ($token == $_SESSION['Token']) {
+        if ($token == $_SESSION['token']) {
             return true;
         }
 
         return false;
     }
-
 
 
     public function redirecionar(): void

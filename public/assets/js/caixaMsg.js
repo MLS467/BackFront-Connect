@@ -3,33 +3,37 @@ class Caixa {
     static cor = "#ccc";
     static destino = null;
     static divmsg = null;
+    static alturaTotal = null;
     status = null;
 
     // FIZ O CONSTRUTOR QUE VAI RECEBER UM OBJ LITERAL
     static config = (config) => {
         this.cor = config.cor;
+        this.destino = config.destino;
     }
 
     static mostrar = ($titulo, $texto) => {
-
         // MOSTRA A CAIXA NO BODY
 
         //TEXTOS DA CAIXA
-        this.destino = document.body;
+        // this.destino = document.body;
         this.titulo = $titulo;
         this.texto = $texto;
 
         // ESTILIZAÇÃO DA CAIXA
         let estilo = `display: flex;
+        z-index: 999;
+        position: absolute;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.7);`;
+        height:100vh;
+        background-color: rgba(0, 0, 0, 0.75);
+        `;
+
 
         const estiloAreaCaixa =
             `display:flex;
@@ -43,6 +47,7 @@ class Caixa {
         border-top-right-radius:5px;
         border-bottom-left-radius:5px;
         border-bottom-right-radius:5px;
+        z-index:999999999;
         `;
 
         const estiloTitulo =
@@ -50,7 +55,7 @@ class Caixa {
             background:${this.cor};
             padding:10px;
             color:white;
-        justify-content:flex-start;
+        justify-content:center;
         align-items:center;
         width:100%;
         height:100px;
@@ -73,7 +78,7 @@ class Caixa {
         const estiloCentro =
             `display:flex;
             padding:10px;
-        justify-content:flex-start;
+        justify-content:center;
         align-items:center;
         width:100%;
         height:200px;

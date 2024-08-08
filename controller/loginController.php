@@ -3,48 +3,60 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use sistema\Login;
 use sistema\nucleo\Helpers;
+use sistema\nucleo\Mensagem;
 
-$token = sha1(uniqid() . date("d-m-Y-H-i-s"));
-$cargo = $_POST['cargo'];
+if (isset($_POST) && !empty($_POST)) {
 
-switch ($cargo) {
-    case '1':
-        $nomeTabela = 'medico';
-        break;
-    case '2':
-        $nomeTabela = 'enfermeiro';
-        break;
-    case '3':
-        $nomeTabela = 'atendente';
-        break;
-    case '4':
-        $nomeTabela = 'administrador';
-        break;
-    default:
-        echo "Escolha um cargo!";
-        break;
-}
+    $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $input = Helpers::limpaArrayPost($input);
 
-$dados = [
-    'nomeTabela' => $nomeTabela,
-    'email' => $_POST['email'],
-    'senha' => $_POST['senha'],
-    'token' => $token
-];
+    $token = sha1(uniqid() . date("d-m-Y-H-i-s"));
 
-if (isset($_POST) and !empty($_POST)) {
+    $cargo = (!empty($_POST['cargo']) ? $_POST['cargo'] : null);
+    switch ($cargo) {
+        case '1':
+            $nomeTabela = 'medico';
+            break;
+        case '2':
+            $nomeTabela = 'enfermeiro';
+            break;
+        case '3':
+            $nomeTabela = 'atendente';
+            break;
+        case '4':
+            $nomeTabela = 'administrador';
+            break;
+        default:
+
+            header("Location:" . Helpers::getServer('login'));
+            break;
+    }
+
+    $dados = [
+        'nomeTabela' => $nomeTabela,
+        'email' => $input['email'],
+        'senha' => $input['senha'],
+        'token' => $token
+    ];
 
     $login = new Login($dados);
 
-    if ($login->isAutenticar()) {
-        if ($login->getToken() == $_SESSION['token'])
+    try {
+        $login->isAutenticar();
+        if ($login->isAutenticado($login->getToken()))
             $login->redirecionar();
         else {
-            echo new Exception("Token inválido", 1);
+            header("Location:" . Helpers::getServer('login'));
         }
-    } else {
-        header("Location:" . Helpers::getServer('login/1'));
+    } catch (PDOException $e) {
+        if ($_SERVER["SERVER_NAME"] == 'localhost') {
+            (new Mensagem())->msg($e->getMessage())->erro();
+        } else {
+
+            header("Location:" . Helpers::getServer('login'));
+        }
     }
 } else {
-    header("Location:" . Helpers::getServer('login/1'));
+
+    header("Location:" . Helpers::getServer('login'));
 }

@@ -1,11 +1,12 @@
 <?php
-
+// validado
 namespace sistema;
 
 use sistema;
 
 use PDO;
 use PDOException;
+use sistema\nucleo\Validacao;
 
 class DadosBasicos extends Crud
 {
@@ -28,6 +29,8 @@ class DadosBasicos extends Crud
     private ?string $motivoDaVisita = null;
 
     private ?string $obsAdicionais = null;
+
+    private Validacao $validacao;
 
     public function __construct(?array $dados)
     {
@@ -53,35 +56,40 @@ class DadosBasicos extends Crud
         // Avaliação de Sintomas
 
         $this->obsAdicionais = $dados['observacoes'] ?? null;
+        $this->validacao = new Validacao();
     }
 
     public function inserirDados()
     {
         try {
-            $sql = "INSERT INTO $this->nomeTabela VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            if ($this->validacao->validaNome($this->nome)) {
 
-            $query = Db::preparar($sql);
-            $query->execute(array(
-                null,
-                $this->getIdAtendenteFk(),
-                $this->getNome(),
-                $this->getCpf(),
-                $this->getIdade(),
-                $this->getContatoEmergencia(),
-                $this->getCondicoesMedicas(),
-                $this->getAlergias(),
-                $this->getMedicamentosEmUso(),
-                $this->getHistoricoDeCirurgia(),
-                $this->getDataHoraChegada(),
-                $this->getMotivoDaVisita(),
-                $this->getObsAdicionais()
-            ));
+                $sql = "INSERT INTO $this->nomeTabela VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-            if ($query) {
-                $this->setId(Db::conectar()->lastInsertId());
-                return true;
+                $query = Db::preparar($sql);
+                $query->execute(array(
+                    null,
+                    $this->getIdAtendenteFk(),
+                    $this->getNome(),
+                    $this->getCpf(),
+                    $this->getIdade(),
+                    $this->getContatoEmergencia(),
+                    $this->getCondicoesMedicas(),
+                    $this->getAlergias(),
+                    $this->getMedicamentosEmUso(),
+                    $this->getHistoricoDeCirurgia(),
+                    $this->getDataHoraChegada(),
+                    $this->getMotivoDaVisita(),
+                    $this->getObsAdicionais()
+                ));
+                if ($query) {
+                    $this->setId(Db::conectar()->lastInsertId());
+                    return true;
+                }
+                return false;
+            } else {
+                return false;
             }
-            return false;
         } catch (PDOException $e) {
             return $e->getMessage();
         }

@@ -6,37 +6,43 @@ use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
 use sistema\Paciente;
 
+if (isset($_POST) && !empty($_POST)) {
 
+    $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $input = Helpers::limpaArrayPost($input);
 
+    $dados = [
+        'nome' => $input['nome'] ?? null,
+        'rua' => $input['rua'] ?? null,
+        'bairro' => $input['bairro'] ?? null,
+        'numero' => $input['numero'] ?? null,
+        'complemento' => $input['complemento'] ?? null,
+        'dataNascimento' => $input['dataNascimento'] ?? null,
+        'sexo' => $input['sexo'] ?? null,
+        'endereco' => $input['endereco'] ?? null,
+        'telefone' => $input['telefone'] ?? null,
+        'email' => $input['email'] ?? null,
+        'naturalidade' => $input['Naturalidade'] ?? null,
+    ];
+    // $teste = new Paciente($dados);
+    // Helpers::mostrarArray(null, $teste);
 
-$dados = [
-    'nome' => $_POST['nome'] ?? null,
-    'rua' => $_POST['rua'] ?? null,
-    'bairro' => $_POST['bairro'] ?? null,
-    'numero' => $_POST['numero'] ?? null,
-    'complemento' => $_POST['complemento'] ?? null,
-    'dataNascimento' => $_POST['dataNascimento'] ?? null,
-    'sexo' => $_POST['sexo'] ?? null,
-    'endereco' => $_POST['endereco'] ?? null,
-    'telefone' => $_POST['telefone'] ?? null,
-    'email' => $_POST['email'] ?? null,
-    'naturalidade' => $_POST['Naturalidade'] ?? null,
-];
+    try {
+        $paciente = new Paciente($dados);
 
-
-try {
-    $paciente = new Paciente($dados);
-
-    if ($paciente->inserirDados()) {
-        (new DadosTemporarios(null))->criar($paciente->getId(), 'Paciente');
-        header('Location:fichaAtendimentoController.php');
-    } else {
-        echo "ERRO";
+        if ($paciente->inserirDados()) {
+            (new DadosTemporarios(null))->criar($paciente->getId(), 'Paciente');
+            header('Location:fichaAtendimentoController.php');
+        } else {
+            echo "ERRO";
+        }
+    } catch (PDOException $e) {
+        if (Helpers::getServer() == URL_DESENVOLVIMENTO) {
+            echo (new Mensagem())->msg($e->getMessage())->erro();
+        } else {
+            header("Localhost:404");
+        }
     }
-} catch (PDOException $e) {
-    if (Helpers::getServer() == URL_DESENVOLVIMENTO) {
-        echo (new Mensagem())->msg($e->getMessage())->erro();
-    } else {
-        header("Localhost:404");
-    }
+} else {
+    /////////////////////////////////////////////////////////////
 }

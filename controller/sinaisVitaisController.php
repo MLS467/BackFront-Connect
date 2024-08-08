@@ -6,46 +6,46 @@ use sistema\SinaisVitais;
 use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
 
+$idEnfermeiro = $_SESSION['id'];
 
-$idEnfermeiro = 1;
+if (isset($_POST) && !empty($_POST)) {
+    $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    var_dump($input);
+    $input = Helpers::limpaArrayPost($input);
 
-$dados = array(
-    'id_enfermeiro' => $idEnfermeiro,
-    'sintomas' => $_POST['sintomas'] ?? '',
-    'gravidade' => $_POST['gravidade'] ?? '',
-    'tempo_inicio' => $_POST['tempo_inicio'] ?? '',
-    'localizacao_dor' => $_POST['localizacao_dor'] ?? '',
-    'sintomas_associados' => $_POST['sintomas_associados'] ?? '',
-    'pressao_arterial' => $_POST['pressao_arterial'] ?? '',
-    'frequencia_cardiaca' => $_POST['frequencia_cardiaca'] ?? '',
-    'temperatura' => $_POST['temperatura'] ?? '',
-    'saturacao' => $_POST['saturacao'] ?? '',
-    'frequencia_respiratoria' => $_POST['frequencia_respiratoria'] ?? '',
-    'intensidade_dor' => $_POST['intensidade_dor'] ?? '',
-    'observacoes' => $_POST['observacoes'] ?? '',
-    'natureza_dor' => $_POST['natureza_dor'] ?? ''
-);
-
-
-// $teste = new SinaisVitais($dados);
-// echo '<pre>';
-// print_r($teste);
-// echo '</pre>';
-// $teste->inserirDados();
+    $dados = array(
+        'id_enfermeiro' => $idEnfermeiro,
+        'sintomas' => $input['sintomas'] ?? '',
+        'gravidade' => $input['gravidade'] ?? '',
+        'tempo_inicio' => $input['tempo_inicio'] ?? '',
+        'localizacao_dor' => $input['localizacao_dor'] ?? '',
+        'sintomas_associados' => $input['sintomas_associados'] ?? '',
+        'pressao_arterial' => $input['pressao_arterial'] ?? '',
+        'frequencia_cardiaca' => $input['frequencia_cardiaca'] ?? '',
+        'temperatura' => $input['temperatura'] ?? '',
+        'saturacao' => $input['saturacao'] ?? '',
+        'frequencia_respiratoria' => $input['frequencia_respiratoria'] ?? '',
+        'intensidade_dor' => $input['intensidade_dor'] ?? '',
+        'observacoes' => $input['observacoes'] ?? '',
+        'natureza_dor' => $input['natureza_dor'] ?? ''
+    );
 
 
-try {
-    $sv = new SinaisVitais($dados);
-    if ($sv->inserirDados()) {
-        (new DadosTemporarios())->criar($sv->getId(), 'sinais_vitais');
-        header("Location:triagemController.php");
-    } else {
-        echo "Erro ao inserir dados";
+    try {
+        $sv = new SinaisVitais($dados);
+        if ($sv->inserirDados()) {
+            (new DadosTemporarios())->criar($sv->getId(), 'sinais_vitais');
+            header("Location:triagemController.php");
+        } else {
+            echo "Erro ao inserir dados";
+        }
+    } catch (PDOException $e) {
+        if (Helpers::getServer() == URL_DESENVOLVIMENTO) {
+            (new Mensagem())->msg($e->getMessage())->erro();
+        } else {
+            header("Location:" . Helpers::getServer('404'));
+        }
     }
-} catch (PDOException $e) {
-    if (Helpers::getServer() == URL_DESENVOLVIMENTO) {
-        (new Mensagem())->msg($e->getMessage())->erro();
-    } else {
-        header("Location:" . Helpers::getServer('404'));
-    }
+} else {
+    ////////////////////////////////////////////
 }

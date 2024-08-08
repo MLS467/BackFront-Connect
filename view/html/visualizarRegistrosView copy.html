@@ -1,0 +1,68 @@
+{% extends '/base/default.html' %}
+{% block conteudo %}
+
+<div class="container mt-5">
+
+    {% for paciente in res %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Detalhes do Paciente</h1>
+        <div class="card">
+            <div class="card-header">
+                Informações Pessoais
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div><strong>Nome:</strong> {{ paciente.nome }}</div>
+                    <div><strong>Data de Nascimento:</strong> {{ paciente.dataNascimento }}</div>
+                </div>
+                <div class="form-group">
+                    <div><strong>Sexo:</strong> {{ paciente.sexo }}</div>
+                    <div><strong>Idade:</strong> {{ paciente.idade }}</div>
+                </div>
+                <div class="form-group">
+                    <div><strong>Endereço:</strong> {{ paciente.endereco }}</div>
+                    <div><strong>Telefone:</strong> {{ paciente.telefone }}</div>
+                </div>
+                <div class="form-group">
+                    <div><strong>Email:</strong> {{ paciente.email }}</div>
+                    <div><strong>Naturalidade:</strong> {{ paciente.naturalidade }}</div>
+                </div>
+                <div class="form-group">
+                    <div><strong>CPF:</strong> {{ paciente.cpf }}</div>
+                    <div><strong>Contato de Emergência:</strong> {{ paciente.contato_emergencia }}</div>
+                </div>
+
+                <h3 class="mt-4">Informações da Triagem</h3>
+                <div class="form-group">
+                    <div><strong>Sintomas:</strong> {{ paciente.sintomas }}</div>
+                    <div><strong>Gravidade:</strong> {{ paciente.gravidade }}</div>
+                </div>
+                <div class="form-group">
+                    <div><strong>Tempo de Início:</strong> {{ paciente.tempo_inicio }}</div>
+                    <div><strong>Localização da Dor:</strong> {{ paciente.localizacao_dor }}</div>
+                </div>
+                <div class="form-group">
+                    <div><strong>Pressão Arterial:</strong> {{ paciente.pressao_arterial }} mmHg</div>
+                    <div><strong>Frequência Cardíaca:</strong> {{ paciente.frequencia_cardiaca }} bpm</div>
+                </div>
+                <div class="form-group">
+                    <div><strong>Temperatura:</strong> {{ paciente.temperatura }} °C</div>
+                    <div><strong>Saturação:</strong> {{ paciente.saturacao }} %</div>
+                </div>
+                <div class="form-group">
+                    <div><strong>Frequência Respiratória:</strong> {{ paciente.frequencia_respiratoria }} rpm</div>
+                    <div><strong>Intensidade da Dor:</strong> {{ paciente.intensidade_da_dor }}</div>
+                </div>
+                <div class="form-group">
+                    <div><strong>Observações:</strong> {{ paciente.observacoes }}</div>
+                    <div><strong>Natureza da Dor:</strong> {{ paciente.natureza_dor }}</div>
+                </div>
+                <p><strong>ID da Triagem:</strong> {{ paciente.id_triagem }}</p>
+                <a href="#" class="btn btn-success">Realizar consulta</a>
+                <a href="#" class="btn btn-warning">Enviar para Enfermagem</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% endblock %}

@@ -2,19 +2,30 @@
 require_once('../vendor/autoload.php');
 
 use sistema\Funcionario as Funcionario;
+use sistema\nucleo\Helpers;
 
-$dadosFunc = [
-    'nome' => $_POST['nome'] ?? null,
-    'dataNascimento' => $_POST['data_nascimento'] ?? null,
-    'sexo' => $_POST['sexo'] ?? null,
-    'telefone' => $_POST['telefone'] ?? null,
-    'email' => $_POST['email'] ?? null,
-    'cargo' => $_POST['cargo'] ?? null,
-    'departamento' => $_POST['departamento'] ?? null,
-    'dataAdmissao' => $_POST['data_admissao'] ?? null,
-    'salario' => $_POST['salario'] ?? null,
-    'numeroRegistroProfissional' => $_POST['numeroRegistroProfissional'] ?? null,
-    'statusEmprego' => $_POST['status_emprego'] ?? null,
-];
+if (isset($_POST) && !empty($_POST)) {
 
-(new Funcionario($dadosFunc))->inserirDados();
+    $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $input = Helpers::limpaArrayPost($input);
+
+
+    $dadosFunc = [
+        'nome' => $input['nome'] ?? null,
+        'dataNascimento' => $input['data_nascimento'] ?? null,
+        'sexo' => $input['sexo'] ?? null,
+        'telefone' => $input['telefone'] ?? null,
+        'email' => $input['email'] ?? null,
+        'cargo' => $input['cargo'] ?? null,
+        'departamento' => $input['departamento'] ?? null,
+        'dataAdmissao' => $input['data_admissao'] ?? null,
+        'salario' => $input['salario'] ?? null,
+        'numeroRegistroProfissional' => $input['numeroRegistroProfissional'] ?? null,
+        'statusEmprego' => $input['status_emprego'] ?? null,
+    ];
+
+    (new Funcionario($dadosFunc))->inserirDados();
+} else {
+
+    ////////////////////////////////////////////////////////
+}

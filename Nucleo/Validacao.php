@@ -3,7 +3,7 @@
 namespace sistema\nucleo;
 
 /**
- * Classe para valida��o de dados
+ * Classe para validação de dados
  * author faael
  * copyright 2008
  * https://rafaelcouto.com.br/classe-para-validacao-de-dados-com-php/
@@ -18,142 +18,161 @@ class Validacao
 	// Mensagens de erro
 	public function mensagens($num, $campo, $max, $min)
 	{
-
 		$this->msg[0] = "Preencha o campo com um email válido <br />"; // EMAIL
 		$this->msg[1] = "CEP com formato inválido (Ex: XXXXX-XXX) <br />"; // CEP
-		$this->msg[2] = "Data em formato inválido (Ex: DD/MM/AAAA) <br />"; // DATA
-		$this->msg[3] = "Telefone inválido (Ex: 01433333333) <br />"; // TELEFONE
+		$this->msg[2] = "Data em formato inválido (Ex: YYYY-MM-DD) <br />"; // DATA
+		$this->msg[3] = "Telefone inválido (Ex: 01432363810) <br />"; // TELEFONE
 		$this->msg[4] = "CPF inválido (Ex: 11111111111) <br />"; // CPF
 		$this->msg[5] = "IP inválido (Ex: 192.168.10.1) <br />"; // IP
-		$this->msg[6] = "Preencha o campo " . $campo . " com numeros <br />"; // APENAS NUMEROS
-		$this->msg[7] = "URL especificada á inválida (Ex: http://www.google.com) <br />"; // URL
+		$this->msg[6] = "Preencha o campo " . $campo . " com números <br />"; // APENAS NUMEROS
+		$this->msg[7] = "URL especificada é inválida (Ex: http://www.google.com) <br />"; // URL
 		$this->msg[8] = "Preencha o campo " . $campo . " <br />"; // CAMPO VAZIO
-		$this->msg[9] = "O " . $campo . " deve ter no máximo " . $max . " caracteres <br />"; // MáXIMO DE CARACTERES
-		$this->msg[10] = "O " . $campo . " deve ter no mánimo " . $min . " caracteres <br />"; // M�NIMO DE CARACTERES
+		$this->msg[9] = "O " . $campo . " deve ter no máximo " . $max . " caracteres <br />"; // MÁXIMO DE CARACTERES
+		$this->msg[10] = "O " . $campo . " deve ter no mínimo " . $min . " caracteres <br />"; // MÍNIMO DE CARACTERES
 
 		return $this->msg[$num];
+	}
+
+	public function validaNome(string $nome): bool
+	{
+		$regex = '/^[a-záàâãéèêíïóôõöúçñ ]+$/i';
+
+		if (strlen($nome) <= 2 || empty($nome) || !preg_match($regex, $nome)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	// Validar Email
 	public function validarEmail($email)
 	{
-		if (!preg_match('/^[a-z0-9_\.\-]+@[a-z0-9_\.\-]*[a-z0-9_\-]+\.[a-z]{2,4}$/', $email)) {
-			return $this->mensagens(0, 'email', null, null);
+		if (!preg_match('/^[a-z0-9_\.\-]+@[a-z0-9_\.\-]+\.[a-z]{2,4}$/i', $email)) {
+			return false;
 		}
+		return true;
 	}
 
-	// Validar CEP (xxxxx-xxx)
+	// Validar CEP (XXXXX-XXX)
 	public function validarCep($cep)
 	{
-		if (!preg_match('/^[0-9]{5}-[0-9]{3}$/', $cep)) {
-			return $this->mensagens(1, 'cep', null, null);
+		if (!preg_match('/^\d{5}-\d{3}$/', $cep)) {
+			return false;
 		}
+		return true;
 	}
 
-	// Validar Datas (DD/MM/AAAA)
+	// Validar Datas (YYYY-MM-DD)
 	public function validarData($data)
 	{
-		if (!preg_match('/^[0-9]{2}/[0-9]{2}/[0-9]{4}$/', $data)) {
-			return $this->mensagens(2, 'data', null, null);
+		if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $data)) {
+			return false;
 		}
+
+		// Verifica se a data é válida
+		$dataArray = explode('-', $data);
+		$ano = (int)$dataArray[0];
+		$mes = (int)$dataArray[1];
+		$dia = (int)$dataArray[2];
+
+		return checkdate($mes, $dia, $ano);
 	}
 
 	// Validar Telefone (01432363810)
 	public function validarTelefone($telefone)
 	{
-		if (!preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/', $telefone)) {
-			return $this->mensagens(2, 'data', null, null);
+		if (!preg_match('/^\d{11}$/', $telefone)) {
+			return false;
 		}
+		return true;
 	}
 
-	// Validar CPF (111111111111)
+	// Validar CPF (11111111111)
 	public function validarCpf($cpf)
 	{
-
 		if (!is_numeric($cpf)) {
-			$status = false;
-		} else {
-			# Pega o digito verificador
-			$dv_informado = substr($cpf, 9, 2);
-
-			for ($i = 0; $i <= 8; $i++) {
-				$digito[$i] = substr($cpf, $i, 1);
-			}
-			# Calcula o valor do 10� digito de verifica��o
-			$posicao = 10;
-			$soma = 0;
-
-			for ($i = 0; $i <= 8; $i++) {
-				$soma = $soma + $digito[$i] * $posicao;
-				$posicao = $posicao - 1;
-			}
-
-			$digito[9] = $soma % 11;
-
-			if ($digito[9] < 2) {
-				$digito[9] = 0;
-			} else {
-				$digito[9] = 11 - $digito[9];
-			}
-
-			# Calcula o valor do 11� digito de verifica��o
-			$posicao = 11;
-			$soma = 0;
-
-			for ($i = 0; $i <= 9; $i++) {
-				$soma = $soma + $digito[$i] * $posicao;
-				$posicao = $posicao - 1;
-			}
-
-			$digito[10] = $soma % 11;
-
-			if ($digito[10] < 2) {
-				$digito[10] = 0;
-			} else {
-				$digito[10] = 11 - $digito[10];
-			}
-
-			# Verifica de o dv � igual ao informado
-			$dv = $digito[9] * 10 + $digito[10];
-
-			if ($dv != $dv_informado) {
-				$status = false;
-			} else
-				$status = true;
+			return false;
 		}
 
-		# Se houver erro
-		if (!$status) {
-			return $this->mensagens(4, 'cpf', null, null);
+		$cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
+
+		if (strlen($cpf) != 11) {
+			return false;
 		}
+
+		for ($i = 0; $i < 10; $i++) {
+			if ($cpf == str_repeat($i, 11)) {
+				return false;
+			}
+		}
+
+		$soma = 0;
+		$digito = 0;
+
+		for ($i = 0; $i < 9; $i++) {
+			$soma += $cpf[$i] * (10 - $i);
+		}
+
+		$resto = $soma % 11;
+		$digito = $resto < 2 ? 0 : 11 - $resto;
+
+		if ($cpf[9] != $digito) {
+			return false;
+		}
+
+		$soma = 0;
+
+		for ($i = 0; $i < 10; $i++) {
+			$soma += $cpf[$i] * (11 - $i);
+		}
+
+		$resto = $soma % 11;
+		$digito = $resto < 2 ? 0 : 11 - $resto;
+
+		if ($cpf[10] != $digito) {
+			return false;
+		}
+
+		return true;
 	}
 
-	// Validar IP (200.200.200.200)
+	// Validar IP (192.168.10.1)
 	public function validarIp($ip)
 	{
-		if (!preg_match("^([0-9]){1,3}.([0-9]){1,3}.([0-9]){1,3}.([0-9]){1,3}$", $ip)) {
-			return $this->mensagens(5, 'ip', null, null);
+		if (!preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $ip)) {
+			return false;
 		}
+		return true;
 	}
-
 
 	// Validar Numero
 	public function validarNumero($campo, $numero)
 	{
 		if (!is_numeric($numero)) {
-			return $this->mensagens(6, $campo, null, null);
+			return false;
 		}
+		return true;
 	}
 
 	// Validar URL
 	public function validarUrl($url, $campo)
 	{
 		if (!preg_match('|^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url)) {
-			return $this->mensagens(7, $campo, null, null);
+			return false;
 		}
+		return true;
 	}
 
-	// Verifica��o simples (Campo vazio, maximo/minimo de caracteres)
+	// Validar Senha
+	public function validarSenha($senha)
+	{
+		if (strlen($senha) < 6) {
+			return false;
+		}
+		return true;
+	}
+
+	// Verificação simples (Campo vazio, máximo/mínimo de caracteres)
 	public function validarCampo($campo, $valor, $max, $min)
 	{
 		$this->campo = $campo;
@@ -163,19 +182,12 @@ class Validacao
 			return $this->mensagens(9, $campo, $max, $min);
 		} elseif (strlen($valor) < $min) {
 			return $this->mensagens(10, $campo, $max, $min);
-		} elseif (strlen($valor) < $min) {
-			return $this->mensagens(10, $campo, $max, $min);
 		}
 	}
 
-
-	// Verifica se h� erros
+	// Verifica se há erros
 	public function verifica()
 	{
-		if (sizeof($this->msg) == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return sizeof($this->msg) == 0;
 	}
 }

@@ -1,8 +1,10 @@
 {% extends '/base/default.html'%}
 {% block conteudo %}
 {% include '/base/partials/nav.html'%}
-<main id="mainLogin" class="mt-5 mb-5">
-    <div id="animation">
+<main id="mainLogin">
+    <script src="{{asset('public/assets/js/login.js')}}" type="module"></script>
+
+    <div id="animation" class="zindex">
 
         <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
             type="module"></script>
@@ -28,7 +30,7 @@
                 <div id="funcionarioDiv">
 
                     <select class="form-select w-100 text-center" required aria-label="Default select example"
-                        name="cargo" id="func">
+                        name="cargo" id="cargo">
                         <option value="0" selected disabled>Selecionar Cargo</option>
                         <option value="1">Médico</option>
                         <option value="2">Enfermeiro</option>
@@ -38,16 +40,15 @@
 
                 </div>
                 <input type="submit" id="btnOculto" class="oculto">
-                <div id="btnLogin" class="btn btn-success btn-block">Entrar</div><br><br>
+                <div id="btnLogin" class="btn btn-block">Entrar</div>
+                <br><br>
             </form>
             {% if erro %}
-            <div class="alert alert-danger text-center">{{erro}}</div>
+            <div id="erro" class="alert alert-danger text-center">{{erro}}</div>
+
             {% endif %}
             <div id="err"></div>
         </div>
     </div>
 </main>
-
-<script src="public/assets/js/login.js" type="module"></script>
-
 {% endblock %}
