@@ -6,8 +6,8 @@
 
 <div class="container">
     <!-- {% include '/base/partials/sideBar.html'%} -->
-    <h1 class="mt-4 mb-4 text-primary">Formulário de Triagem</h1>
-    <form method="POST" action="Controller/dadosBasicosController.php">
+    <h1 class="mt-4 mb-4 text-primary">Informações Gerais</h1>
+    <form id="formEv" method="POST" action="Controller/dadosBasicosController.php">
         <div class="card mb-4">
             <div class="card-body">
                 <fieldset>
@@ -66,13 +66,14 @@
                     </div>
                 </fieldset>
 
-                <button type="submit" name="enviar" class="btn btn-primary">Enviar</button>
+                <button type="submit" id="enviado" name="enviar" class="btn btn-success">Enviar</button>
                 <button type="reset" onclick="document.location.reload()" name="cancelar"
                     class="btn btn-warning">Cancelar</button>
             </div>
         </div>
     </form>
 </div>
+
 
 {% else %}
 {{redirecionar(url(404))}}

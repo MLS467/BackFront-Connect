@@ -2,21 +2,23 @@
 require_once __DIR__ . "/../vendor/autoload.php";
 
 use sistema\Consulta;
+use sistema\FichaAtendimento;
 use sistema\nucleo\DadosTemporarios;
 use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
 
 $id_medico = $_SESSION['id'];
+$id_fa = $_SESSION['id_fa'];
+
 
 if (isset($_POST) && !empty($_POST)) {
 
-    $fichaAtend = (new DadosTemporarios(null))->lerTodosPorStatus('pendente');
     $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-    $input = Helpers::limpaArrayPost($input);
+
 
     $data = [
         'id' => $id_medico,
-        'id_ficha_atendimento_fk' => $fichaAtend[0]->id_usuario,
+        'id_ficha_atendimento_fk' => $id_fa,
         'id_medico_fk' => $id_medico,
         'dataHora' => $input['dataHora'],
         'diagnostico' => $input['diagnostico'],
@@ -26,12 +28,13 @@ if (isset($_POST) && !empty($_POST)) {
     ];
 
 
-    $teste = new Consulta($data);
+    $consulta = new Consulta($data);
 
-    if ($teste->inserirDados()) {
+    if ($consulta->inserirDados()) {
+        (new FichaAtendimento(null))->atualizarDados($id_fa);
         (new DadosTemporarios(null))->deletarTodos();
         echo (new Mensagem())->msg('Consulta Realizada!')->sucesso()->renderizar();
+    } else {
+        /////////////////////////////////////////////////////
     }
-} else {
-    /////////////////////////////////////////////////////
 }

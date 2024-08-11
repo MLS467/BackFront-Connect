@@ -11,6 +11,8 @@ $dados = [
     'id_sinais_vitais_fk' => $dadosTemp[1]->id_usuario
 ];
 
+Helpers::mostrarArray($dadosTemp, null);
+
 $triagem = new Triagem($dados);
 if ($triagem->inserirDados()) {
     (new DadosTemporarios(null))->deletarTodos();

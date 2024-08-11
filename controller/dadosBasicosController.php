@@ -8,9 +8,9 @@ use sistema\DadosBasicos as DB;
 use sistema\nucleo\DadosTemporarios;
 use sistema\nucleo\Mensagem;
 
-Helpers::mostrarArray($_POST, null);
+// Helpers::mostrarArray($_POST, null);
 
-if (isset($_POST) && isset($_POST['enviar']) && !empty($_POST)) {
+if (isset($_POST)  && !empty($_POST)) {
 
     $idAtendente = $_SESSION['id'];
 
@@ -33,6 +33,7 @@ if (isset($_POST) && isset($_POST['enviar']) && !empty($_POST)) {
 
 
     try {
+        (new DadosTemporarios(null))->deletarTodos();
         $dadosBasicos = new DB($dados);
         if ($dadosBasicos->inserirDados()) {
             if ((new DadosTemporarios())->criar($dadosBasicos->getId(), $dadosBasicos->getId()))
@@ -47,7 +48,10 @@ if (isset($_POST) && isset($_POST['enviar']) && !empty($_POST)) {
         }
     }
 } else if (isset($_POST) && isset($_POST['cancelar'])) {
+
     // (new DadosTemporarios())->deletarTodos();
     // echo 'foi';
     // // header("Location:" . Helpers::getServer('dados_basicos'));
+} else {
+    echo "dados";
 }

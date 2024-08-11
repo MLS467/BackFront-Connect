@@ -19,5 +19,5 @@ $fichaCad = new FichaAtendimento($dados);
 if ($fichaCad->inserirDados()) {
     (new DadosTemporarios())->deletarTodos();
     (new DadosTemporarios())->criar($fichaCad->getId(), 'fichaAtendimento');
-    header("Location:" . Helpers::getServer('consulta'));
+    header("Location:" . Helpers::getServer('visualizar'));
 }

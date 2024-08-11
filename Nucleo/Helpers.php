@@ -19,24 +19,29 @@ class Helpers
     public static function selecionarTodasTabelas()
     {
         $sql = "SELECT 
-            ficha_atendimento.*, 
-            paciente.*,
-            triagem.*,
-            sinais_vitais.*,
-            dados_basicos.*,
-            enfermeiro.*
-        FROM ficha_atendimento
-        INNER JOIN paciente ON ficha_atendimento.idPaciente = paciente.id
-        INNER JOIN triagem ON ficha_atendimento.idTriagem = triagem.id
-        INNER JOIN sinais_vitais ON triagem.id_sinais_vitais_fk = sinais_vitais.id
-        INNER JOIN dados_basicos ON triagem.id_dados_basicos_fk = dados_basicos.id
-        INNER JOIN enfermeiro ON sinais_vitais.id_enfermeiro = enfermeiro.id
+        *,
+        fa.id as ID_FA
+            -- fa.*, 
+            -- fa.id as 'id_fichaAtendimento',
+            -- p.*, 
+            -- t.*, 
+            -- sv.*, 
+            -- db.*, 
+            -- e.*
+        FROM ficha_atendimento AS fa
+        INNER JOIN paciente p ON fa.idPaciente = p.id
+        INNER JOIN triagem t ON fa.idTriagem = t.id
+        INNER JOIN sinais_vitais sv ON t.id_sinais_vitais_fk = sv.id
+        INNER JOIN dados_basicos db ON t.id_dados_basicos_fk = db.id
+        INNER JOIN enfermeiro e ON sv.id_enfermeiro = e.id
+        WHERE fa.status = 'pendente'
         LIMIT 100";
+
 
 
         $query = Db::preparar($sql);
         $query->execute();
-        $res = $query->fetchAll(PDO::FETCH_OBJ);
+        $res = $query->fetchAll(PDO::FETCH_ASSOC);
         return $res;
     }
 

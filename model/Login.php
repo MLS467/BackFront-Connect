@@ -88,7 +88,7 @@ class Login
     {
         switch ($this->nomeTabela) {
             case 'medico':
-                header("Location:" . Helpers::getServer('consulta'));
+                header("Location:" . Helpers::getServer('visualizar'));
                 break;
             case 'enfermeiro':
                 header("Location:" . Helpers::getServer('cadastro_sinais_vitais'));

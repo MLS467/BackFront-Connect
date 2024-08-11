@@ -36,7 +36,7 @@ class DadosTemporarios
     // Ler todos os dados temporários com status específico
     public function lerTodosPorStatus($status)
     {
-        $sql = "SELECT * FROM dados_temporarios WHERE status = ?";
+        $sql = "SELECT * FROM dados_temporarios WHERE status = ? ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$status]);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
