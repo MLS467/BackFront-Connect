@@ -14,6 +14,7 @@ $id_fa = $_SESSION['id_fa'];
 if (isset($_POST) && !empty($_POST)) {
 
     $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $input = Helpers::limpaArrayPost($input);
 
 
     $data = [
