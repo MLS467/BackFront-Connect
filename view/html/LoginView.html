@@ -10,14 +10,14 @@
             type="module"></script>
 
         <dotlottie-player src="https://lottie.host/f3e43d4d-dd6f-4844-b7a6-2c39e51872a4/ryqEz3skZE.json"
-            background="transparent" speed="1" style="width: 100%; height: inherit;" loop autoplay></dotlottie-player>
+            background="transparent" speed="1" style="width: 90%; height: 80vh;" loop autoplay></dotlottie-player>
     </div>
 
     <!--  -->
     <div class="login-container" id="login-container">
-        <div id="paiForm" style="height: 100%;" class="card">
+        <div id="paiForm" style="height: 100%;" class="card  bg-light">
 
-            <h5 class="card-title text-center">Login</h5>
+            <h3 class="card-title text-center">Login</h3>
             <form id="telaForm" action="Controller/loginController.php" method="POST">
                 <div class="form-group">
                     <label for="username">Email</label>
@@ -45,7 +45,6 @@
             </form>
             {% if erro %}
             <div id="erro" class="alert alert-danger text-center">{{erro}}</div>
-
             {% endif %}
             <div id="err"></div>
         </div>

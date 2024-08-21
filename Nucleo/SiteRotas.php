@@ -95,7 +95,7 @@ class SiteRotas extends Controlador
     public function login(): void
     {
         $id = null;
-        echo $this->template->renderizar('LoginView.html', ['erro' => $id]);
+        echo $this->template->renderizar('LoginView.html', ['erro' => $id, 'login' => true]);
     }
 
     public function visualizar(): void

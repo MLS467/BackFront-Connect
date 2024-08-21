@@ -4,12 +4,14 @@ export default class ValidaCampo {
     static telefone = '';
     static email = '';
     static senha = '';
+    static cpf = '';
 
     static mensagens = {
         nome: '',
         telefone: '',
         email: '',
-        senha: ''
+        senha: '',
+        cpf: ''
     };
 
     // Define os dados para validação
@@ -94,4 +96,62 @@ export default class ValidaCampo {
         this.validaSenha();
         return this.mensagens;
     }
+
+
+    static validaCPF(cpf) {
+        var Soma = 0
+        var Resto
+
+        var strCPF = String(cpf).replace(/[^\d]/g, '')
+
+        if (strCPF.length !== 11 || strCPF.length == 0) {
+            this.mensagens.cpf = 'Cpf deve ter 11 dígitos!';
+            return false
+        }
+
+        if ([
+            '00000000000',
+            '11111111111',
+            '22222222222',
+            '33333333333',
+            '44444444444',
+            '55555555555',
+            '66666666666',
+            '77777777777',
+            '88888888888',
+            '99999999999',
+        ].indexOf(strCPF) !== -1) {
+            this.mensagens.cpf = 'Dígito inválido!'
+            return false
+        }
+
+        for (i = 1; i <= 9; i++)
+            Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+
+        Resto = (Soma * 10) % 11
+
+        if ((Resto == 10) || (Resto == 11))
+            Resto = 0
+
+        if (Resto != parseInt(strCPF.substring(9, 10)))
+            return false
+
+        Soma = 0
+
+        for (i = 1; i <= 10; i++)
+            Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i)
+
+        Resto = (Soma * 10) % 11
+
+        if ((Resto == 10) || (Resto == 11))
+            Resto = 0
+
+        if (Resto != parseInt(strCPF.substring(10, 11))) {
+            this.mensagens.cpf = 'Cpf inválido!'
+            return false
+        }
+
+        return true
+    }
+
 }

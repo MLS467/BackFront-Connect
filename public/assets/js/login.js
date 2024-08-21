@@ -1,4 +1,4 @@
-import ValidaCampo from "./ValidaCamposFront.js";
+import ValidaCampo from "./validacoes/ValidaCamposFront.js";
 import { Caixa } from "./caixaMsg.js";
 
 
@@ -25,7 +25,7 @@ btnLogin.addEventListener('click', (evt) => {
         if (cargo == '0') {
             const config = { // CONFIG QUE VAI COMO PARAMETRO PARA A MÉTODO DE CONFIGURAÇÃO
                 cor: "rgba(110, 197, 207, 0.7)",
-                destino: document.getElementById('mainLogin')
+                destino: document.body
             }
             Caixa.config(config);
             Caixa.mostrar("Preencha os Campos", "Selecione um Cargo!");

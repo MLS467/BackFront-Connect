@@ -46,9 +46,7 @@ class Enfermeiro extends Funcionario
         }
     }
 
-    function atualizarDados($id)
-    {
-    }
+    function atualizarDados($id) {}
 
     public function getId(): int
     {

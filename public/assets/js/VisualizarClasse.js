@@ -1,6 +1,3 @@
-
-
-
 class Popup {
 
     destino = document.body;
