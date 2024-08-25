@@ -1,11 +1,11 @@
 {% extends '/base/default.html'%}
 
 {% block conteudo %}
-{% if verificar %}
+
 {% include '/base/partials/nav.html' %}
 <div class="container mt-4">
     <div id="popupContainer"></div>
-    <form id="formEv" method="POST" action="Controller/sinaisVitaisController.php">
+    <form id="formEv" method="POST" action="{{asset('Controller/triagemController.php')}}">
         <fieldset>
             <legend>Avaliação de Sintomas</legend>
             <div class="form-group">
@@ -23,10 +23,6 @@
             <div class="form-group">
                 <label for="localizacao_dor">Localização da Dor:</label>
                 <input type="text" class="form-control" id="localizacao_dor" name="localizacao_dor">
-            </div>
-            <div class="form-group">
-                <label for="sintomas_associados">Sintomas Associados:</label>
-                <textarea class="form-control" id="sintomas_associados" name="sintomas_associados"></textarea>
             </div>
         </fieldset>
 
@@ -79,12 +75,15 @@
                 <label for="observacoes">Observações:</label>
                 <textarea class="form-control" id="observacoes" name="observacoes"></textarea>
             </div>
+            <div class="form-group">
+                <label for="medicamento_uso">Medicamento em Uso:</label>
+                <input type="text" class="form-control" id="medicamento_uso" name="medicamento_uso">
+            </div>
         </fieldset>
 
         <button id="" type="submit" class="btn btn-primary">Enviar</button>
     </form>
+
 </div>
-{% else %}
-{{redirecionar(url(404))}}
-{% endif %}
+
 {% endblock %}

@@ -6,33 +6,40 @@ use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
 use sistema\Paciente;
 
+$id_atendente = 1;
+
 if (isset($_POST) && !empty($_POST)) {
 
     $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
     $input = Helpers::limpaArrayPost($input);
 
+
     $dados = [
-        'nome' => $input['nome'] ?? null,
-        'rua' => $input['rua'] ?? null,
-        'bairro' => $input['bairro'] ?? null,
-        'numero' => $input['numero'] ?? null,
-        'complemento' => $input['complemento'] ?? null,
-        'dataNascimento' => $input['dataNascimento'] ?? null,
-        'sexo' => $input['sexo'] ?? null,
-        'endereco' => $input['endereco'] ?? null,
-        'telefone' => $input['telefone'] ?? null,
-        'email' => $input['email'] ?? null,
-        'naturalidade' => $input['Naturalidade'] ?? null,
+        'id_atendente' => $id_atendente,
+        'nomeCompleto' => $_POST['nomeCompleto'] ?? null,
+        'cidade' => $_POST['cidade'] ?? null,
+        'rua' => $_POST['rua'] ?? null,
+        'bairro' => $_POST['bairro'] ?? null,
+        'numero' => $_POST['numero'] ?? null,
+        'complemento' => $_POST['complemento'] ?? null,
+        'telefone' => $_POST['telefone'] ?? null,
+        'email' => $_POST['email'] ?? null,
+        'status' => $_POST['status'] ?? null,
+        'dataNascimento' => $_POST['dataNascimento'] ?? null,
+        'cpf' => $_POST['cpf'] ?? null,
+        'idade' => $_POST['idade'] ?? null,
+        'genero' => $_POST['genero'] ?? null,
+        'naturalidade' => $_POST['naturalidade'] ?? null,
+        'alergia' => $_POST['alergia'] ?? null,
+        'historicoCirurgia' => $_POST['historicoCirurgia'] ?? null,
+        'contatoEmergencia' => $_POST['contatoEmergencia'] ?? null
     ];
-    // $teste = new Paciente($dados);
-    // Helpers::mostrarArray(null, $teste);
 
     try {
         $paciente = new Paciente($dados);
 
         if ($paciente->inserirDados()) {
-            (new DadosTemporarios(null))->criar($paciente->getId(), 'Paciente');
-            header('Location:fichaAtendimentoController.php');
+            header('Location:' . Helpers::getServer('visualizar_registro'));
         } else {
             echo "ERRO";
         }

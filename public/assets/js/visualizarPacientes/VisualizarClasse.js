@@ -45,7 +45,7 @@ class Popup {
     enviaId = ($id) => {
 
         // Construa a URL com parâmetros de consulta
-        const url = `/PROJETO_INTEGRADO_FRONT_E_BACK/Controller/retornaJsonPacientes.php?id=${$id}`;
+        const url = `/PROJETO_INTEGRADO_FRONT_E_BACK/Nucleo/retornaJsonPacientes.php?id=${$id}`;
 
         fetch(url, {
             method: 'GET'

@@ -130,7 +130,7 @@ class Helpers
     }
 
 
-    protected static function LimpaDados($dados)
+    public static function LimpaDados($dados)
     {
         $dados = trim($dados);
         $dados = stripslashes($dados);

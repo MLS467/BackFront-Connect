@@ -1,0 +1,31 @@
+{% extends '/base/default.html' %}
+
+{% block conteudo %}
+{% include '/base/partials/nav.html' %}
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Buscar Paciente</h4>
+                </div>
+                <div class="card-body">
+                    <form id="formEnviar">
+                        <div class="mb-3">
+                            <label for="cpf" class="form-label">CPF do Paciente</label>
+                            <input type="text" class="form-control" id="cpf" placeholder="Digite o CPF">
+                            <div class="invalid-feedback">
+                                Por favor, insira um CPF válido.
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </form>
+                    <div id="resultado" class="mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{asset('public/assets/js/DadosPaciente/dadosPaciente.js')}}"></script>
+
+{% endblock %}

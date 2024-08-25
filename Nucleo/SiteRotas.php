@@ -6,6 +6,7 @@ use sistema\controlador\Controlador;
 use sistema\Login;
 use sistema\nucleo\Helpers;
 use sistema\Paciente;
+use sistema\nucleo\DadosTemporarios;
 
 class SiteRotas extends Controlador
 {
@@ -19,32 +20,23 @@ class SiteRotas extends Controlador
         echo $this->template->renderizar('home.html', ['titulo' => 'Home']);
     }
 
-    public function dados_basicos(): void
-    {
-        $token = $_SESSION['token'];
-        $id = $_SESSION['id'];
-        $testeToken = (new Login(null))->retornaToken($id);
-
-        if ($testeToken == $token) {
-            $verificacao = true;
-        } else {
-            $verificacao = false;
-        }
-        echo $this->template->renderizar('dadosBasicosView.html', ['verificar' => $verificacao, 'isForm' => true]);
-    }
 
     public function cadastrarPaciente(): void
     {
-        $token = $_SESSION['token'];
-        $id = $_SESSION['id'];
-        $testeToken = (new Login(null))->retornaToken($id);
 
-        if ($testeToken == $token) {
-            $verificacao = true;
-        } else {
-            $verificacao = false;
-        }
-        echo $this->template->renderizar('cadastrarPacienteView.html', ['verificar' => $verificacao, 'isForm' => true]);
+
+        echo $this->template->renderizar('cadastrarPacienteView.html', ['isForm' => true]);
+
+
+        // $token = $_SESSION['token'];
+        // $id = $_SESSION['id'];
+        // $testeToken = (new Login(null))->retornaToken($id);
+
+        // if ($testeToken == $token) {
+        //     $verificacao = true;
+        // } else {
+        //     $verificacao = false;
+        // } 'verificar' => $verificacao
     }
 
     public function cadastrarFuncionario(): void
@@ -52,19 +44,20 @@ class SiteRotas extends Controlador
         echo $this->template->renderizar('cadastrarFuncionarioView.html', ['teste' => 'teste']);
     }
 
-    public function cadastro_sv(): void
+    public function triagem(): void
     {
-        $token = $_SESSION['token'];
-        $id = $_SESSION['id'];
-        $testeToken = (new Login(null))->retornaToken($id);
+        // $token = $_SESSION['token'];
+        // $id = $_SESSION['id'];
+        // $testeToken = (new Login(null))->retornaToken($id);
 
-        if ($testeToken == $token) {
-            $verificacao = true;
-        } else {
-            $verificacao = false;
-        }
+        // if ($testeToken == $token) {
+        //     $verificacao = true;
+        // } else {
+        //     $verificacao = false;
+        // }
 
-        echo $this->template->renderizar('sinaisVitaisView.html', ['verificar' => $verificacao, 'isForm' => true]);
+
+        echo $this->template->renderizar('TriagemView.html', ['isForm' => true]);
     }
 
     public function notFound(): void
@@ -74,22 +67,23 @@ class SiteRotas extends Controlador
 
     public function consulta(): void
     {
-        if (isset($_SESSION['token']) && !empty($_SESSION['token'])) {
+        // if (isset($_SESSION['token']) && !empty($_SESSION['token'])) {
 
-            $token = $_SESSION['token'];
-            $id = $_SESSION['id'];
-            $testeToken = (new Login(null))->retornaToken($id);
+        //     $token = $_SESSION['token'];
+        //     $id = $_SESSION['id'];
+        //     $testeToken = (new Login(null))->retornaToken($id);
 
-            if ($testeToken == $token) {
-                $verificacao = true;
-            } else {
-                $verificacao = false;
-            }
-        } else {
-            $verificacao = false;
-        }
+        //     if ($testeToken == $token) {
+        //         $verificacao = true;
+        //     } else {
+        //         $verificacao = false;
+        //     }
+        // } else {
+        //     $verificacao = false;
+        // }
 
-        echo $this->template->renderizar('consultaView.html', ['verificar' => $verificacao, 'isForm' => true]);
+
+        echo $this->template->renderizar('consultaView.html', ['isForm' => true]);
     }
 
     public function login(): void
@@ -100,7 +94,21 @@ class SiteRotas extends Controlador
 
     public function visualizar(): void
     {
+        echo $this->template->renderizar('visualizarRegistrosMedicoView.html', ['res' => (new Paciente())->selecionarTodosRegistros(), 'isForm' => true]);
+    }
 
-        echo $this->template->renderizar('visualizarRegistrosView.html', ['res' => Helpers::selecionarTodasTabelas(), 'isForm' => true]);
+    public function consultar_dados(): void
+    {
+        echo $this->template->renderizar('DadosPacienteView.html', ['isForm' => true, 'login' => true]);
+    }
+
+    public function visualizarRegistro(): void
+    {
+        $res = (new Paciente())->selecionarTodosRegistros();
+        echo $this->template->renderizar('visualizarRegistrosView.html', [
+            'isForm' => false,
+            'login' => false,
+            'res' => $res
+        ]);
     }
 }

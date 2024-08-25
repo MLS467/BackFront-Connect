@@ -10,17 +10,26 @@ use sistema\nucleo\Mensagem;
 SimpleRouter::setDefaultNamespace('sistema\rotas');
 
 try {
+    // ATENDENTE
+    SimpleRouter::get(URL_BASE . 'consultar_dados', 'SiteRotas@consultar_dados');
+    SimpleRouter::get(URL_BASE . 'cadastro_paciente', 'SiteRotas@cadastrarPaciente');
+
+
+    //ENFERMEIRO
+    SimpleRouter::get(URL_BASE . 'visualizar_registro', 'SiteRotas@visualizarRegistro');
+    SimpleRouter::get(URL_BASE . 'triagem', 'SiteRotas@triagem');
+
+
+
     SimpleRouter::get(URL_BASE, 'SiteRotas@home');
 
     SimpleRouter::get(URL_BASE . '404', 'SiteRotas@notFound');
 
-    SimpleRouter::get(URL_BASE . 'dados_basicos', 'SiteRotas@dados_basicos');
 
-    SimpleRouter::get(URL_BASE . 'cadastro_sinais_vitais', 'SiteRotas@cadastro_sv');
-
-    SimpleRouter::get(URL_BASE . 'cadastro_paciente', 'SiteRotas@cadastrarPaciente');
 
     SimpleRouter::get(URL_BASE . 'consulta', 'SiteRotas@consulta');
+
+    SimpleRouter::get(URL_BASE . 'dados_paciente', 'SiteRotas@dadosPaciente');
 
     SimpleRouter::get(URL_BASE . 'login', 'SiteRotas@login');
 
@@ -28,7 +37,6 @@ try {
 
     SimpleRouter::get(URL_BASE . 'cadastro_funcionario', 'SiteRotas@cadastrarFuncionario');
 
-    SimpleRouter::get(URL_BASE . 'visualizar', 'SiteRotas@visualizar');
 
     SimpleRouter::start();
 } catch (\Pecee\SimpleRouter\Exceptions\NotFoundHttpException $th) {

@@ -1,6 +1,11 @@
 <?php
+
+use sistema\nucleo\Helpers;
+use sistema\Paciente;
+
 require_once __DIR__ . "/../vendor/autoload.php";
+include "triagemController.php";
 
-use sistema\nucleo\DadosTemporarios;
+Helpers::mostrarArray(null, $triagem);
 
-print_r((new DadosTemporarios())->criar(1, '1'));
+echo "TESTE";

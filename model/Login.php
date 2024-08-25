@@ -99,7 +99,7 @@ class Login
 
                 break;
             case 'atendente':
-                header("Location:" . Helpers::getServer('dados_basicos'));
+                header("Location:" . Helpers::getServer('consultar_dados'));
                 break;
 
             default:

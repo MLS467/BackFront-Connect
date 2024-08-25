@@ -3,14 +3,16 @@
 namespace sistema;
 
 use PDOException;
-use sistema\Funcionario;
+use sistema\Pessoa;
+use sistema\Telefone_Funcionario;
 
-class Medico extends Funcionario
+class Medico extends Pessoa
 {
     private int $id = 0;
     private ?string $especialidade;
     private ?string $CRM;
-    private ?string $dataNascimento;
+    private string $data_inicio_trabalho;
+    private ?string $data_termino_trabalho;
     private ?string $observacoes;
 
     public function __construct(?array $dados)
@@ -19,37 +21,35 @@ class Medico extends Funcionario
         $this->nomeTabela = 'medico';
         $this->especialidade = $dados['especialidade'] ?? null;
         $this->CRM = $dados['CRM'] ?? null;
-        $this->dataNascimento = $dados['dataNascimento'] ?? null;
         $this->observacoes = $dados['observacoes'] ?? null;
+        $this->data_inicio_trabalho = date("Y-m-d");
+        $this->data_termino_trabalho = null;
     }
 
-    public function inserirDados(): bool|string
-    {
-        try {
-            $sql = "INSERT INTO $this->nomeTabela (
-                idFuncionario, especialidade, CRM, dataNascimento, observacoes
-            ) VALUES (?, ?, ?, ?, ?)";
+    // public function inserirDados(): bool|string
+    // {
+    //     try {
+    //         $sql = "INSERT INTO $this->nomeTabela (
+    //             idFuncionario, especialidade, CRM
+    //         ) VALUES (?, ?)";
 
-            $dados = [
-                $this->getEspecialidade(),
-                $this->getCRM(),
-                $this->getDataNascimento(),
-                $this->getObservacoes()
-            ];
+    //         $dados = [
+    //             $this->getEspecialidade(),
+    //             $this->getCRM(),
+    //         ];
 
-            if (Db::preparar($sql)->execute($dados)) {
-                $this->setId(Db::conectar()->lastInsertId());
-                return true;
-            } else
-                return false;
-        } catch (PDOException $e) {
-            return $e->getMessage();
-        }
-    }
+    //         if (Db::preparar($sql)->execute($dados)) {
+    //             $this->setId(Db::conectar()->lastInsertId());
+    // (new Telefone_Funcionario(['telefone'=>$this->telefone, 'id_pessoa'=>$this->id]))->inserirDados();
+    //             return true;
+    //         } else
+    //             return false;
+    //     } catch (PDOException $e) {
+    //         return $e->getMessage();
+    //     }
+    // }
 
-    function atualizarDados($id)
-    {
-    }
+    function atualizarDados($id) {}
 
 
     public function getId(): int
@@ -86,19 +86,6 @@ class Medico extends Funcionario
         $this->CRM = $CRM;
     }
 
-
-    public function getDataNascimento(): ?string
-    {
-        return $this->dataNascimento;
-    }
-
-
-    public function setDataNascimento(?string $dataNascimento): void
-    {
-        $this->dataNascimento = $dataNascimento;
-    }
-
-
     public function getObservacoes(): ?string
     {
         return $this->observacoes;
@@ -108,5 +95,28 @@ class Medico extends Funcionario
     public function setObservacoes(?string $observacoes): void
     {
         $this->observacoes = $observacoes;
+    }
+
+    public function getDataInicioTrabalho(): ?string
+    {
+        return $this->data_inicio_trabalho;
+    }
+
+    // Setter para data_inicio_trabalho
+    public function setDataInicioTrabalho(?string $data_inicio_trabalho): void
+    {
+        $this->data_inicio_trabalho = $data_inicio_trabalho;
+    }
+
+    // Getter para data_termino_trabalho
+    public function getDataTerminoTrabalho(): ?string
+    {
+        return $this->data_termino_trabalho;
+    }
+
+    // Setter para data_termino_trabalho
+    public function setDataTerminoTrabalho(?string $data_termino_trabalho): void
+    {
+        $this->data_termino_trabalho = $data_termino_trabalho;
     }
 }

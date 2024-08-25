@@ -6,7 +6,7 @@ use sistema\Crud;
 use PDO;
 use PDOException;
 
-abstract class Funcionario extends Crud
+abstract class Pessoa extends Crud
 {
     private ?string $nomeCompleto;
     private ?string $cidade;
@@ -17,11 +17,13 @@ abstract class Funcionario extends Crud
     private ?string $telefone;
     private ?string $email;
     private ?string $genero;
-    private ?string $dataRegistro;
     private ?string $status;
+    private ?string $dataNascimento;
+    private ?string $cpf;
+    private ?string $naturalidade;
+    private ?int $idade;
 
-
-    public function __construct(array $dados)
+    public function __construct(?array $dados)
     {
         $this->nomeCompleto = $dados['nomeCompleto'] ?? null;
         $this->cidade = $dados['cidade'] ?? null;
@@ -32,15 +34,59 @@ abstract class Funcionario extends Crud
         $this->telefone = $dados['telefone'] ?? null;
         $this->email = $dados['email'] ?? null;
         $this->genero = $dados['genero'] ?? null;
-        $this->dataRegistro = $dados['dataRegistro'] ?? null;
         $this->status = $dados['status'] ?? null;
+        $this->dataNascimento = $dados['dataNascimento'] ?? null;
+        $this->cpf = $dados['cpf'] ?? null;
+        $this->setIdade($this->dataNascimento) ?? null;
+        $this->naturalidade = $dados['naturalidade'] ?? null;
     }
 
-    public function inserirDados()
+    public function inserirDados() {}
+    public function atualizarDados($id) {}
+
+
+
+    public function getDataNascimento(): ?string
     {
+        return $this->dataNascimento;
     }
-    public function atualizarDados($id)
+
+    public function setDataNascimento(?string $dataNascimento): void
     {
+        $this->dataNascimento = $dataNascimento;
+    }
+
+    public function getCpf(): ?string
+    {
+        return $this->cpf;
+    }
+
+    public function setCpf(?string $cpf): void
+    {
+        $this->cpf = $cpf;
+    }
+
+    public function getIdade(): ?int
+    {
+        return $this->idade;
+    }
+
+    public function setIdade($data): void
+    {
+        $dataAtual = strtotime(date("Y-m-d"));
+        $diferencaTempo = $dataAtual - strtotime($data);
+        $this->idade = floor($diferencaTempo / (365.25 * 24 * 60 * 60));
+    }
+
+
+    public function getNaturalidade(): ?string
+    {
+        return $this->naturalidade;
+    }
+
+    public function setNaturalidade(?string $naturalidade): void
+    {
+        $this->naturalidade = $naturalidade;
     }
 
     public function getNomeCompleto(): ?string
@@ -88,17 +134,12 @@ abstract class Funcionario extends Crud
         return $this->genero;
     }
 
-    public function getDataRegistro(): ?string
-    {
-        return $this->dataRegistro;
-    }
-
     public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    // Setters
+
     public function setNomeCompleto(?string $nomeCompleto): void
     {
         $this->nomeCompleto = $nomeCompleto;
@@ -144,10 +185,6 @@ abstract class Funcionario extends Crud
         $this->genero = $genero;
     }
 
-    public function setDataRegistro(?string $dataRegistro): void
-    {
-        $this->dataRegistro = $dataRegistro;
-    }
 
     public function setStatus(?string $status): void
     {

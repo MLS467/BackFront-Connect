@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="public/assets/css/popup.css">
     <link rel="stylesheet" href="public/assets/css/confirmaForm.css">
     <link rel="stylesheet" href="public/assets/css/erro.css">
+    <link rel="stylesheet" href="public/assets/css/dadosPaciente.css">
 
 </head>
 
@@ -32,13 +33,13 @@
     {% block conteudo %} {% endblock %}
 
     {% if not login %}
-    <div class="container p-0 mt-0">
+    <!-- <div class="container p-0 mt-0">
         <hr class="featurette-divider">
-    </div>
-    <footer class="container d-flex  justify-content-between align-items-center  p-0">
+    </div> -->
+    <!-- <footer class="container d-flex  justify-content-between align-items-center  p-0">
         <p class="float-end"><a href="#">Back to top</a></p>
         <p>© 2017–2024 Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-    </footer>
+    </footer> -->
     {% endif %}
     </div>
     <script src="{{url('public/assets/js/bootstrap.bundle.min.js')}}"></script>

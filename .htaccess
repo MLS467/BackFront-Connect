@@ -1,5 +1,5 @@
 # Desabilitar a exibição de diretórios
-Options -Indexes
+Options +Indexes
 
 # Ativar o mecanismo de reescrita
 RewriteEngine On

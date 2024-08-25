@@ -40,22 +40,23 @@ if (isset($_POST) && !empty($_POST)) {
     ];
 
     $login = new Login($dados);
+    if ($login->isAutenticado($login->getToken()))
+        $login->redirecionar();
+    // try {
+    //     $login->isAutenticar();
+    //     if ($login->isAutenticado($login->getToken()))
+    //         $login->redirecionar();
+    //     else {
+    //         header("Location:" . Helpers::getServer('login'));
+    //     }
+    // } catch (PDOException $e) {
+    //     if ($_SERVER["SERVER_NAME"] == 'localhost') {
+    //         (new Mensagem())->msg($e->getMessage())->erro();
+    //     } else {
 
-    try {
-        $login->isAutenticar();
-        if ($login->isAutenticado($login->getToken()))
-            $login->redirecionar();
-        else {
-            header("Location:" . Helpers::getServer('login'));
-        }
-    } catch (PDOException $e) {
-        if ($_SERVER["SERVER_NAME"] == 'localhost') {
-            (new Mensagem())->msg($e->getMessage())->erro();
-        } else {
-
-            header("Location:" . Helpers::getServer('login'));
-        }
-    }
+    //         header("Location:" . Helpers::getServer('login'));
+    //     }
+    // }
 } else {
 
     header("Location:" . Helpers::getServer('login'));

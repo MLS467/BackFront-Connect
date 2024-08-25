@@ -10,8 +10,9 @@ use PDOException;
 class Consulta extends Crud
 {
     private int $id;
-    private int $id_ficha_atendimento_fk;
-    private int $id_medico_fk;
+    private int $id_medico;
+    private int $id_paciente;
+    private int $id_triagem;
     private ?string $dataHora;
     private ?string $diagnostico;
     private ?string $tratamento;
@@ -22,8 +23,9 @@ class Consulta extends Crud
     public function __construct(?array $dados)
     {
         $this->nomeTabela = 'consulta';
-        $this->id_ficha_atendimento_fk = $dados['id_ficha_atendimento_fk'];
-        $this->id_medico_fk = $dados['id_medico_fk'];
+        $this->id_medico = $dados['id_medico'];
+        $this->id_paciente = $dados['id_paciente'];
+        $this->id_triagem = $dados['id_triagem'];
         $this->dataHora = $dados['dataHora'] ?? null;
         $this->diagnostico = $dados['diagnostico'] ?? null;
         $this->tratamento = $dados['tratamento'] ?? null;
@@ -33,16 +35,16 @@ class Consulta extends Crud
 
     public function inserirDados(): bool
     {
-        $sql = "INSERT INTO $this->nomeTabela (
-            id_ficha_atendimento_fk, id_medico_fk, dataHora, diagnostico, tratamento, observacoes, status
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
         try {
+
+            $sql = "INSERT INTO $this->nomeTabela VALUES (null,?, ?, ?, ?, ?, ?, ?, ?)";
+
             $query = Db::preparar($sql);
 
             $result = $query->execute([
-                $this->getIdFichaAtendimentoFk(),
-                $this->getIdMedicoFk(),
+                $this->getIdMedico(),
+                $this->getIdTriagem(),
+                $this->getIdPaciente(),
                 $this->getDataHora(),
                 $this->getDiagnostico(),
                 $this->getTratamento(),
@@ -60,10 +62,43 @@ class Consulta extends Crud
         }
     }
 
-
-    function atualizarDados($id)
+    public function getIdMedico(): int
     {
+        return $this->id_medico;
     }
+
+    // Setter para id_medico
+    public function setIdMedico(int $id_medico): void
+    {
+        $this->id_medico = $id_medico;
+    }
+
+    // Getter para id_paciente
+    public function getIdPaciente(): int
+    {
+        return $this->id_paciente;
+    }
+
+    // Setter para id_paciente
+    public function setIdPaciente(int $id_paciente): void
+    {
+        $this->id_paciente = $id_paciente;
+    }
+
+    // Getter para id_triagem
+    public function getIdTriagem(): int
+    {
+        return $this->id_triagem;
+    }
+
+    // Setter para id_triagem
+    public function setIdTriagem(int $id_triagem): void
+    {
+        $this->id_triagem = $id_triagem;
+    }
+
+
+    function atualizarDados($id) {}
 
     // Getter e Setter para id
     public function getId(): int
@@ -76,29 +111,6 @@ class Consulta extends Crud
         $this->id = $id;
     }
 
-    // Getter e Setter para id_ficha_atendimento_fk
-    public function getIdFichaAtendimentoFk(): int
-    {
-        return $this->id_ficha_atendimento_fk;
-    }
-
-    public function setIdFichaAtendimentoFk(int $id_ficha_atendimento_fk): void
-    {
-        $this->id_ficha_atendimento_fk = $id_ficha_atendimento_fk;
-    }
-
-    // Getter e Setter para id_medico_fk
-    public function getIdMedicoFk(): int
-    {
-        return $this->id_medico_fk;
-    }
-
-    public function setIdMedicoFk(int $id_medico_fk): void
-    {
-        $this->id_medico_fk = $id_medico_fk;
-    }
-
-    // Getter e Setter para dataHora
     public function getDataHora(): ?string
     {
         return $this->dataHora;

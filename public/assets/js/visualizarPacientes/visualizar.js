@@ -1,5 +1,5 @@
 import { Popup } from "./VisualizarClasse.js";
-
+alert("OK");
 
 const btn = [...document.querySelectorAll('.Visualizar')];
 // const btn = document.getElementById('btn');

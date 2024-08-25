@@ -2,49 +2,51 @@
 
 namespace sistema;
 
-use sistema\Funcionario;
+use sistema\Pessoa;
 use PDOException;
 
-class Enfermeiro extends Funcionario
+class Enfermeiro extends Pessoa
 {
     private int $id = 0;
     private string $registroCoren;
     private string $especialidade;
-    private ?int $horarioDeTrabalho;
+    private string $data_inicio_trabalho;
+    private ?string $data_termino_trabalho;
 
     public function __construct(?array $dados)
     {
         parent::__construct($dados);
         $this->nomeTabela = 'Enfermeiro';
+        $this->data_inicio_trabalho = date("Y-m-d");
+        $this->data_termino_trabalho = null;
         $this->registroCoren = $dados['registroCoren'];
         $this->especialidade = $dados['especialidade'];
-        $this->horarioDeTrabalho = $dados['horarioDeTrabalho'];
     }
 
-    public function inserirDados(): bool
-    {
-        $sql = "INSERT INTO $this->nomeTabela (
-        registro_coren, especialidade, horario_de_trabalho
-    ) VALUES (?, ?, ?)";
+    // public function inserirDados(): bool
+    // {
+    //     $sql = "INSERT INTO $this->nomeTabela (
+    //     registro_coren, especialidade, horario_de_trabalho
+    // ) VALUES (?, ?, ?)";
 
-        try {
-            $query = Db::preparar($sql);
+    //     try {
+    //         $query = Db::preparar($sql);
 
-            $result = $query->execute([
-                $this->getRegistroCoren(),
-                $this->getEspecialidade(),
-                $this->getHorarioDeTrabalho()
-            ]);
+    //         $result = $query->execute([
+    //             $this->getRegistroCoren(),
+    //             $this->getEspecialidade(),
+    //             $this->getHorarioDeTrabalho()
+    //         ]);
 
-            if ($result) {
-                $this->setId(Db::conectar()->lastInsertId());
-                return true;
-            };
-        } catch (PDOException $e) {
-            echo 'Erro ao inserir dados: ' . $e->getMessage();
-            return false;
-        }
-    }
+    //         if ($result) {
+    //             $this->setId(Db::conectar()->lastInsertId());
+    //             return true;
+    //         };
+    //     } catch (PDOException $e) {
+    //         echo 'Erro ao inserir dados: ' . $e->getMessage();
+    //         return false;
+    //     }
+    // }
 
     function atualizarDados($id) {}
 
@@ -77,14 +79,26 @@ class Enfermeiro extends Funcionario
     {
         $this->especialidade = $especialidade;
     }
-
-    public function getHorarioDeTrabalho(): ?int
+    public function getDataInicioTrabalho(): ?string
     {
-        return $this->horarioDeTrabalho;
+        return $this->data_inicio_trabalho;
     }
 
-    public function setHorarioDeTrabalho(?int $horarioDeTrabalho): void
+    // Setter para data_inicio_trabalho
+    public function setDataInicioTrabalho(?string $data_inicio_trabalho): void
     {
-        $this->horarioDeTrabalho = $horarioDeTrabalho;
+        $this->data_inicio_trabalho = $data_inicio_trabalho;
+    }
+
+    // Getter para data_termino_trabalho
+    public function getDataTerminoTrabalho(): ?string
+    {
+        return $this->data_termino_trabalho;
+    }
+
+    // Setter para data_termino_trabalho
+    public function setDataTerminoTrabalho(?string $data_termino_trabalho): void
+    {
+        $this->data_termino_trabalho = $data_termino_trabalho;
     }
 }

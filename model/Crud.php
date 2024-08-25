@@ -18,10 +18,10 @@ abstract class Crud extends Db
 
     public function selecionarTodosRegistros()
     {
-        $sql = "SELECT * FROM $this->nomeTabela ORDER BY nome";
+        $sql = "SELECT * FROM $this->nomeTabela ORDER BY nomeCompleto";
         $query = self::preparar($sql);
         $query->execute();
-        $res = $query->fetchAll(PDO::FETCH_ASSOC);
+        $res = $query->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
 
@@ -31,6 +31,17 @@ abstract class Crud extends Db
         $query = self::preparar($sql);
         $query->execute(array($id));
         $res = $query->fetch(PDO::FETCH_ASSOC);
+        if ($res)
+            return $res;
+        return false;
+    }
+
+    public function selecionarUmRegistroCpf($cpf, $nomeTabela)
+    {
+        $sql = "SELECT * FROM $nomeTabela WHERE cpf = ?";
+        $query = self::preparar($sql);
+        $query->execute(array($cpf));
+        $res = $query->fetch(PDO::FETCH_OBJ);
         return $res;
     }
 
@@ -44,7 +55,6 @@ abstract class Crud extends Db
         return $res;
     }
 
-
     public function deletarUmRegistro($id)
     {
         $sql = "DELETE FROM $this->nomeTabela WHERE id = ?";
@@ -55,7 +65,6 @@ abstract class Crud extends Db
 
         return true;
     }
-
 
 
     public function selecionarParaPesquisa($pesquisa)

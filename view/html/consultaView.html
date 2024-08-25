@@ -1,11 +1,10 @@
 {%extends '/base/default.html'%}
 
 {% block conteudo%}
-{% if verificar %}
 {% include '/base/partials/nav.html'%}
 <div class="container">
     <h2 class="mt-4">Formulário de Atendimento Médico</h2>
-    <form action="{{url('Controller/consultaController.php')}}" method="POST">
+    <form action="{{asset('Controller/consultaController.php')}}" method="POST">
         <div class="form-group">
 
         </div>
@@ -37,7 +36,5 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 </div>
-{% else %}
-{{redirecionar(url(404))}}
-{% endif %}
+
 {% endblock %}

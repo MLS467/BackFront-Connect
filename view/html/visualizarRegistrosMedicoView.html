@@ -4,7 +4,7 @@
 <div class="container mt-5">
 
     <div class="container">
-        <h1 class="mb-4">Listagem de Triagem</h1>
+        <h1 class="mb-4">Listagem de Médico</h1>
         <table id="paciente-table" class="table text-center">
             <thead>
                 <tr>
@@ -19,7 +19,7 @@
                 <td>{{paciente.id}}</td>
                 <td>{{paciente.nomeCompleto}}</td>
                 <td>{{paciente.idade}}</td>
-                <th><button class="btn btn-danger p-1 VerPac">Fazer Triagem</button></th>
+                <th><button class="btn btn-info p-1 VerPac">Visualizar</button></th>
             </tbody>
             {% endfor %}
         </table>
@@ -35,6 +35,6 @@
         </div>
     </div>
 
-    <script type="module" src="{{asset('public/assets/js/Triagem/controleTriagem.js')}}"></script>
+    <script type="module" src="{{asset('public/assets/js/visualizarPacientes/visualizar.js')}}"></script>
 
     {% endblock %}

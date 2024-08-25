@@ -2,210 +2,128 @@
 
 namespace sistema;
 
-use Exception;
-use PDO;
-use PDOException;
-use sistema\Crud;
 use sistema\nucleo\Validacao;
 use sistema\Telefone_Paciente;
 
-class Paciente extends Crud
+class Paciente extends Pessoa
 {
     private ?int $id;
-    protected $nomeTabela =  null;
-    private ?string $nome = null;
-    private ?string $dataNascimento = null;
-    private ?string $sexo = null;
-    protected ?string $rua = null;
-    protected ?string $bairro = null;
-    protected ?string $numero = null;
-    protected ?string $complemento = null;
-    private ?string $telefone = null;
-    private ?string $email = null;
-    private ?string $naturalidade = null;
+    private ?int $id_atendente;
+    private ?string $alergia;
+    private ?string $historicoCirurgia;
+    private ?string $contatoEmergencia;
     private Validacao $validacao;
 
 
-    public function __construct(?array $dados)
+    public function __construct(?array $dados = null)
     {
-        $this->nomeTabela = 'paciente';
-        $this->nome = $dados['nome'] ?? null;
-        $this->dataNascimento = $dados['dataNascimento'] ?? null;
-        $this->rua = $dados['rua'] ?? null;
-        $this->bairro = $dados['bairro'] ?? null;
-        $this->numero = $dados['numero'] ?? null;
-        $this->complemento = $dados['complemento'] ?? null;
-        $this->telefone = $dados['telefone'] ?? null;
-        $this->email = $dados['email'] ?? null;
-        $this->sexo = $dados['sexo'] ?? null;
-        $this->naturalidade = $dados['naturalidade'] ?? null;
+        parent::__construct($dados);
         $this->validacao = new Validacao();
+        $this->id_atendente = $dados['id_atendente'] ?? null;
+        $this->nomeTabela = 'paciente' ?? null;
+        $this->alergia = $dados['alergia'] ?? null;
+        $this->historicoCirurgia = $dados['historicoCirurgia'] ?? null;
+        $this->contatoEmergencia = $dados['contatoEmergencia'] ?? null;
     }
-
 
     public function inserirDados(): bool
     {
-
         try {
             if (
-                $this->validacao->validaNome($this->nome) &&
-                $this->validacao->validarData($this->dataNascimento) &&
-                $this->validacao->validarTelefone($this->telefone) &&
-                $this->validacao->validarEmail($this->email)
+                $this->validacao->validaNome($this->getNomeCompleto()) &&
+                $this->validacao->validarEmail($this->getEmail())
             ) {
-
-                $sql = "INSERT INTO $this->nomeTabela VALUES (null,?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-                $query = Db::preparar($sql)->execute([
-                    $this->getNome(),
-                    $this->getDataNascimento(),
-                    $this->getSexo(),
+                $this->setStatus('Ativo');
+                $dados = [
+                    $this->getIdAtendente(),
+                    $this->getNomeCompleto(),
+                    $this->getCidade(),
                     $this->getRua(),
                     $this->getBairro(),
                     $this->getNumero(),
                     $this->getComplemento(),
+                    $this->getTelefone(),
                     $this->getEmail(),
-                    $this->getNaturalidade()
-                ]);
+                    $this->getGenero(),
+                    $this->getStatus(),
+                    $this->getDataNascimento(),
+                    $this->getCpf(),
+                    $this->getNaturalidade(),
+                    $this->getIdade(),
+                    $this->getAlergia(),
+                    $this->getHistoricoCirurgia(),
+                    $this->getContatoEmergencia()
+                ];
 
-                if ($query) {
-                    $this->id =  Db::conectar()->lastInsertId();
-                    (new Telefone_Paciente(['telefone' => $this->telefone, 'id_pessoa' => $this->id]))->inserirDados();
+                $sql = "INSERT INTO $this->nomeTabela 
+                        (id_atendente, nomeCompleto, cidade, rua, bairro, numero, complemento, telefone, email, genero, status, dataNascimento, cpf, naturalidade, idade, alergia, historicoCirurgia, contatoEmergencia)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                if (Db::preparar($sql)->execute($dados)) {
+                    $this->id = Db::conectar()->lastInsertId();
+                    (new Telefone_Paciente(['telefone' => $this->getTelefone(), 'id_pessoa' => $this->getId()]))->inserirDados();
                     return true;
-                } else
+                } else {
                     return false;
+                }
             } else {
                 return false;
             }
         } catch (\Throwable $e) {
-            # code...
+            echo $e;
+            return false;
         }
-
-
-
-        return false;
     }
 
 
 
-
-    function atualizarDados($id)
-    {
-    }
-
-
-    // Getters
+    function atualizarDados($id) {}
 
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getNome(): ?string
-    {
-        return $this->nome;
-    }
-
-    public function getDataNascimento(): ?string
-    {
-        return $this->dataNascimento;
-    }
-
-    public function getSexo(): ?string
-    {
-        return $this->sexo;
-    }
-
-    public function getRua(): ?string
-    {
-        return $this->rua;
-    }
-
-    public function getBairro(): ?string
-    {
-        return $this->bairro;
-    }
-
-    public function getNumero(): ?string
-    {
-        return $this->numero;
-    }
-
-    public function getComplemento(): ?string
-    {
-        return $this->complemento;
-    }
-
-    public function getTelefone(): ?string
-    {
-        return $this->telefone;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function getNaturalidade(): ?string
-    {
-        return $this->naturalidade;
-    }
-
-
-    // Setters
-
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    public function setNome(?string $nome): void
+    public function getAlergia(): ?string
     {
-        $this->nome = $nome;
+        return $this->alergia;
     }
 
-    public function setDataNascimento(?string $dataNascimento): void
+    public function setAlergia(?string $alergia): void
     {
-        $this->dataNascimento = $dataNascimento;
+        $this->alergia = $alergia;
     }
 
-    public function setSexo(?string $sexo): void
+    public function getHistoricoCirurgia(): ?string
     {
-        $this->sexo = $sexo;
+        return $this->historicoCirurgia;
     }
 
-    public function setRua(?string $rua): void
+    public function setHistoricoCirurgia(?string $historicoCirurgia): void
     {
-        $this->rua = $rua;
+        $this->historicoCirurgia = $historicoCirurgia;
     }
 
-    public function setBairro(?string $bairro): void
+    public function getContatoEmergencia(): ?string
     {
-        $this->bairro = $bairro;
+        return $this->contatoEmergencia;
     }
 
-    public function setNumero(?string $numero): void
+    public function setContatoEmergencia(?string $contatoEmergencia): void
     {
-        $this->numero = $numero;
+        $this->contatoEmergencia = $contatoEmergencia;
     }
-
-    public function setComplemento(?string $complemento): void
+    public function getIdAtendente(): int
     {
-        $this->complemento = $complemento;
+        return $this->id_atendente;
     }
-
-    public function setTelefone(?string $telefone): void
+    public function setIdAtendente(int $id_atendente): void
     {
-        $this->telefone = $telefone;
-    }
-
-    public function setEmail(?string $email): void
-    {
-        $this->email = $email;
-    }
-
-    public function setNaturalidade(?string $naturalidade): void
-    {
-        $this->naturalidade = $naturalidade;
+        $this->id_atendente = $id_atendente;
     }
 }
