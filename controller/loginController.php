@@ -13,27 +13,9 @@ if (isset($_POST) && !empty($_POST)) {
     $token = sha1(uniqid() . date("d-m-Y-H-i-s"));
 
     $cargo = (!empty($_POST['cargo']) ? $_POST['cargo'] : null);
-    switch ($cargo) {
-        case '1':
-            $nomeTabela = 'medico';
-            break;
-        case '2':
-            $nomeTabela = 'enfermeiro';
-            break;
-        case '3':
-            $nomeTabela = 'atendente';
-            break;
-        case '4':
-            $nomeTabela = 'administrador';
-            break;
-        default:
-
-            header("Location:" . Helpers::getServer('login'));
-            break;
-    }
 
     $dados = [
-        'nomeTabela' => $nomeTabela,
+        'nomeTabela' => Helpers::retornaCargo($cargo),
         'email' => $input['email'],
         'senha' => $input['senha'],
         'token' => $token
@@ -42,21 +24,21 @@ if (isset($_POST) && !empty($_POST)) {
     $login = new Login($dados);
     if ($login->isAutenticado($login->getToken()))
         $login->redirecionar();
-    // try {
-    //     $login->isAutenticar();
-    //     if ($login->isAutenticado($login->getToken()))
-    //         $login->redirecionar();
-    //     else {
-    //         header("Location:" . Helpers::getServer('login'));
-    //     }
-    // } catch (PDOException $e) {
-    //     if ($_SERVER["SERVER_NAME"] == 'localhost') {
-    //         (new Mensagem())->msg($e->getMessage())->erro();
-    //     } else {
+    try {
+        $login->isAutenticar();
+        if ($login->isAutenticado($login->getToken()))
+            $login->redirecionar();
+        else {
+            header("Location:" . Helpers::getServer('login'));
+        }
+    } catch (PDOException $e) {
+        if ($_SERVER["SERVER_NAME"] == 'localhost') {
+            (new Mensagem())->msg($e->getMessage())->erro();
+        } else {
 
-    //         header("Location:" . Helpers::getServer('login'));
-    //     }
-    // }
+            header("Location:" . Helpers::getServer('login'));
+        }
+    }
 } else {
 
     header("Location:" . Helpers::getServer('login'));

@@ -52,36 +52,31 @@ class Popup {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                document.getElementById('nomeJson').innerHTML += data.paciente.nome;
-                document.getElementById('dataNascimento').innerText = data.paciente.dataNascimento;
-                document.getElementById('sexo').innerText = data.paciente.sexo;
-                document.getElementById('idade').innerText = data.paciente.idade;
-                document.getElementById('endereco').innerText = `${data.paciente.bairro} ${data.paciente.rua} ${data.paciente.complemento}`;
-                document.getElementById('telefone').innerText = data.paciente.contatoEmergencia;
-                document.getElementById('email').innerText = data.paciente.email;
-                document.getElementById('naturalidade').innerText = data.paciente.naturalidade;
-                document.getElementById('cpf').innerText = data.paciente.cpf;
-                document.getElementById('contatoEmergencia').innerText = data.paciente.telefone;
-                document.getElementById('sintomas').innerText = data.paciente.sintomas;
-                document.getElementById('gravidade').innerText = data.paciente.gravidade;
-                document.getElementById('tempoInicio').innerText = data.paciente.tempo_inicio;
-                document.getElementById('localizacaoDor').innerText = data.paciente.localizacao_dor;
-                document.getElementById('pressaoArterial').innerText = data.paciente.pressao_arterial;
-                document.getElementById('frequenciaCardiaca').innerText = data.paciente.frequencia_cardiaca;
-                document.getElementById('temperatura').innerText = data.paciente.temperatura;
-                document.getElementById('saturacao').innerText = data.paciente.saturacao;
-                document.getElementById('frequenciaRespiratoria').innerText = data.paciente.frequencia_respiratoria;
-                document.getElementById('intensidadeDor').innerText = data.paciente.intensidade_da_dor;
-                document.getElementById('observacoes').innerText = data.paciente.observacoes;
-                document.getElementById('naturezaDor').innerText = data.paciente.natureza_dor;
-                document.getElementById('idTriagem').innerText = data.paciente.id;
+                console.log(data.paciente[0].nomeCompleto);
+                document.getElementById('nomeJson').innerHTML += data.paciente[0].nomeCompleto;
+                document.getElementById('dataNascimento').innerText = data.paciente[0].dataNascimento;
+                document.getElementById('sexo').innerText = data.paciente[0].sexo;
+                document.getElementById('idade').innerText = data.paciente[0].idade;
+                document.getElementById('endereco').innerText = `${data.paciente[0].bairro} ${data.paciente[0].rua} ${data.paciente[0].complemento}`;
+                document.getElementById('telefone').innerText = data.paciente[0].contatoEmergencia;
+                document.getElementById('email').innerText = data.paciente[0].email;
+                document.getElementById('naturalidade').innerText = data.paciente[0].naturalidade;
+                document.getElementById('cpf').innerText = data.paciente[0].cpf;
+                document.getElementById('contatoEmergencia').innerText = data.paciente[0].telefone;
+                document.getElementById('sintomas').innerText = data.paciente[0].sintomas;
+                document.getElementById('gravidade').innerText = data.paciente[0].gravidade;
+                document.getElementById('tempoInicio').innerText = data.paciente[0].tempo_inicio;
+                document.getElementById('localizacaoDor').innerText = data.paciente[0].localizacao_dor;
+                document.getElementById('pressaoArterial').innerText = data.paciente[0].pressao_arterial;
+                document.getElementById('frequenciaCardiaca').innerText = data.paciente[0].frequencia_cardiaca;
+                document.getElementById('temperatura').innerText = data.paciente[0].temperatura;
+                document.getElementById('saturacao').innerText = data.paciente[0].saturacao;
+                document.getElementById('frequenciaRespiratoria').innerText = data.paciente[0].frequencia_respiratoria;
+                document.getElementById('intensidadeDor').innerText = data.paciente[0].intensidade_da_dor;
+                document.getElementById('observacoes').innerText = data.paciente[0].observacoes;
+                document.getElementById('naturezaDor').innerText = data.paciente[0].natureza_dor;
+                document.getElementById('idTriagem').innerText = data.paciente[0].id;
 
-                //     document.getElementById('consultar').addEventListener('click', (evt) => {
-                //         const url = `/PROJETO_INTEGRADO_FRONT_E_BACK/Controller/consultaController.php?id=${data.paciente.id_ficha_Atendimento}`;
-                //         fetch(url, { method: 'GET' })
-                //             .then(alert(data.paciente.id_ficha_Atendimento));
-                //     })
             })
             .catch(error => {
                 console.error('Erro:', error);

@@ -10,6 +10,9 @@ use sistema\nucleo\Mensagem;
 SimpleRouter::setDefaultNamespace('sistema\rotas');
 
 try {
+    // ADM
+    SimpleRouter::get(URL_BASE . 'dashboard', 'SiteRotas@dashboard');
+
     // ATENDENTE
     SimpleRouter::get(URL_BASE . 'consultar_dados', 'SiteRotas@consultar_dados');
     SimpleRouter::get(URL_BASE . 'cadastro_paciente', 'SiteRotas@cadastrarPaciente');
@@ -19,23 +22,16 @@ try {
     SimpleRouter::get(URL_BASE . 'visualizar_registro', 'SiteRotas@visualizarRegistro');
     SimpleRouter::get(URL_BASE . 'triagem', 'SiteRotas@triagem');
 
-
-
-    SimpleRouter::get(URL_BASE, 'SiteRotas@home');
-
-    SimpleRouter::get(URL_BASE . '404', 'SiteRotas@notFound');
-
-
-
+    // Médico
+    SimpleRouter::get(URL_BASE . 'visualizar', 'SiteRotas@visualizar');
     SimpleRouter::get(URL_BASE . 'consulta', 'SiteRotas@consulta');
 
-    SimpleRouter::get(URL_BASE . 'dados_paciente', 'SiteRotas@dadosPaciente');
-
+    // Home
+    SimpleRouter::get(URL_BASE, 'SiteRotas@home');
     SimpleRouter::get(URL_BASE . 'login', 'SiteRotas@login');
 
-    SimpleRouter::get(URL_BASE . 'visualizar', 'SiteRotas@visualizar');
-
-    SimpleRouter::get(URL_BASE . 'cadastro_funcionario', 'SiteRotas@cadastrarFuncionario');
+    //Erro
+    SimpleRouter::get(URL_BASE . '404', 'SiteRotas@notFound');
 
 
     SimpleRouter::start();

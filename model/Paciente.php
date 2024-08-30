@@ -4,6 +4,8 @@ namespace sistema;
 
 use sistema\nucleo\Validacao;
 use sistema\Telefone_Paciente;
+use PDO;
+
 
 class Paciente extends Pessoa
 {
@@ -78,6 +80,25 @@ class Paciente extends Pessoa
 
 
     function atualizarDados($id) {}
+
+    function atualizarStatusPaciente($id)
+    {
+        $sql = "UPDATE $this->nomeTabela SET status ='consultando' WHERE id = $id";
+        if (Db::preparar($sql)->execute())
+            return true;
+        return false;
+    }
+
+
+    public function selecionarPorStatus($status)
+    {
+        $sql = "SELECT * FROM $this->nomeTabela WHERE status = ? ORDER BY nomeCompleto";
+        $query = self::preparar($sql);
+        $query->execute([$status]);
+        $res = $query->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
+
 
     public function getId(): int
     {

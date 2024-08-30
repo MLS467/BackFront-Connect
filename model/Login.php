@@ -44,7 +44,7 @@ class Login
                     $atualizar = DB::preparar($atualizar);
                     $atualizar->execute(array($this->token, $usuario->id));
                     $_SESSION['token'] = $this->token;
-                    $_SESSION['id'] = $usuario->id;
+                    $_SESSION['idFuncionario'] = $usuario->id;
                     $_SESSION['nomeTabela'] = $this->nomeTabela;
                     return true;
                 }
@@ -91,11 +91,11 @@ class Login
                 header("Location:" . Helpers::getServer('visualizar'));
                 break;
             case 'enfermeiro':
-                header("Location:" . Helpers::getServer('cadastro_sinais_vitais'));
+                header("Location:" . Helpers::getServer('visualizar_registro'));
 
                 break;
-            case 'administrador':
-                header("Location:" . Helpers::getServer('administrador'));
+            case 'adm':
+                header("Location:" . Helpers::getServer('dashboard'));
 
                 break;
             case 'atendente':

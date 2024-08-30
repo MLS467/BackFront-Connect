@@ -13,6 +13,7 @@ if ($id and !empty($id)) {
         $dt = new DadosTemporarios();
         $dt->criar($id, 'Paciente');
         $dt->atualizarStatus($dt->getId(), 2);
+        (new Paciente())->atualizarStatusPaciente($id);
         echo json_encode(['paciente' => $paciente, 'status' => true]);
     } else {
         echo json_encode(['status' => false]);

@@ -4,13 +4,55 @@ namespace sistema\nucleo;
 
 use sistema\Db;
 use PDO;
+use sistema\Login;
 
 class Helpers
 {
 
-    public static function mostrarArray(array $arr = null, object $obj = null): void
+
+    public static function validaCredencial(): bool
     {
-        $valor = ($arr != null ? $arr : $obj);
+        if (isset($_SESSION['token']) && !empty($_SESSION['token'])) {
+
+            $token = $_SESSION['token'];
+            $id = $_SESSION['idFuncionario'];
+            $testeToken = (new Login(null))->retornaToken($id);
+
+            if ($testeToken == $token) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+
+    public static function retornaCargo($cargo): string
+    {
+        switch ($cargo) {
+            case '1':
+                return 'medico';
+                break;
+            case '2':
+                return 'enfermeiro';
+                break;
+            case '3':
+                return 'atendente';
+                break;
+            case '4':
+                return 'adm';
+                break;
+            default:
+                //  ERRO PARA MOSTRAR NO LOGIN
+                header("Location:" . Helpers::getServer('login'));
+                break;
+        }
+    }
+
+    public static function mostrarArray($valor): void
+    {
         echo "<pre>";
         print_r($valor);
         echo "</pre>";
@@ -18,26 +60,22 @@ class Helpers
 
     public static function selecionarTodasTabelas()
     {
-        $sql = "SELECT 
-        *,
-        fa.id as ID_FA
-            -- fa.*, 
-            -- fa.id as 'id_fichaAtendimento',
-            -- p.*, 
-            -- t.*, 
-            -- sv.*, 
-            -- db.*, 
-            -- e.*
-        FROM ficha_atendimento AS fa
-        INNER JOIN paciente p ON fa.idPaciente = p.id
-        INNER JOIN triagem t ON fa.idTriagem = t.id
-        INNER JOIN sinais_vitais sv ON t.id_sinais_vitais_fk = sv.id
-        INNER JOIN dados_basicos db ON t.id_dados_basicos_fk = db.id
-        INNER JOIN enfermeiro e ON sv.id_enfermeiro = e.id
-        WHERE fa.status = 'pendente'
-        LIMIT 100";
+        $sql = "SELECT * FROM dados_temporarios as dt JOIN 
+        paciente p ON (dt.id_paciente = p.id) JOIN 
+        triagem AS t ON (dt.id_triagem = t.id) LIMIT 100";
 
+        $query = Db::preparar($sql);
+        $query->execute();
+        $res = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $res;
+    }
 
+    public static function selecionarDadosTemporarios($id)
+    {
+        $sql = "SELECT * FROM dados_temporarios as dt JOIN 
+        paciente p ON (dt.id_paciente = p.id) JOIN 
+        triagem AS t ON (dt.id_triagem = t.id) 
+        WHERE dt.id_paciente = $id LIMIT 100";
 
         $query = Db::preparar($sql);
         $query->execute();

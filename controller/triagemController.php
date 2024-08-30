@@ -6,8 +6,8 @@ use sistema\Triagem;
 use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
 
-// $idEnfermeiro = $_SESSION['id'];
-$idEnfermeiro = 5;
+$idEnfermeiro = $_SESSION['idFuncionario'];
+
 
 if (isset($_POST) && !empty($_POST)) {
 
@@ -38,7 +38,7 @@ if (isset($_POST) && !empty($_POST)) {
         $id_dt = $dadosTemp->lerTodosPorStatus('em_processo');
         $dadosTemp->atualizarStatus($id_dt[0]->id, 3);
         if ($dadosTemp->adcTriagem($id_dt[0]->id, $triagem->getId())) {
-            header("Location:" . Helpers::getServer('visualizar'));
+            header("Location:" . Helpers::getServer('visualizar_registro'));
         } else {
             echo "ERRO";
         };

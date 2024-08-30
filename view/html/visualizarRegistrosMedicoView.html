@@ -11,15 +11,17 @@
                     <th>Id</th>
                     <th>Nome</th>
                     <th>Idade</th>
+                    <th>Gravidade</th>
                     <th>Ações</th>
             </thead>
             {% for paciente in res %}
             <tbody class="mt-3">
 
-                <td>{{paciente.id}}</td>
+                <td>{{paciente.id_paciente}}</td>
                 <td>{{paciente.nomeCompleto}}</td>
                 <td>{{paciente.idade}}</td>
-                <th><button class="btn btn-info p-1 VerPac">Visualizar</button></th>
+                <td>{{paciente.gravidade}}</td>
+                <th><button class="btn btn-info p-1 Visualizar">Visualizar</button></th>
             </tbody>
             {% endfor %}
         </table>

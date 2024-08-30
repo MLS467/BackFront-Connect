@@ -6,7 +6,7 @@ use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
 use sistema\Paciente;
 
-$id_atendente = 1;
+$id_atendente = $_SESSION['idFuncionario'];
 
 if (isset($_POST) && !empty($_POST)) {
 
@@ -39,7 +39,7 @@ if (isset($_POST) && !empty($_POST)) {
         $paciente = new Paciente($dados);
 
         if ($paciente->inserirDados()) {
-            header('Location:' . Helpers::getServer('visualizar_registro'));
+            header('Location:' . Helpers::getServer('consultar_dados'));
         } else {
             echo "ERRO";
         }
