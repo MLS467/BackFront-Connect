@@ -3,6 +3,7 @@
 namespace sistema;
 
 use PDOException;
+use sistema\nucleo\Validacao;
 use sistema\Pessoa;
 use sistema\Telefone_Funcionario;
 
@@ -14,6 +15,7 @@ class Medico extends Pessoa
     private string $data_inicio_trabalho;
     private ?string $data_termino_trabalho;
     private ?string $observacoes;
+    private ?Validacao $validacao;
 
     public function __construct(?array $dados)
     {
@@ -21,33 +23,69 @@ class Medico extends Pessoa
         $this->nomeTabela = 'medico';
         $this->especialidade = $dados['especialidade'] ?? null;
         $this->CRM = $dados['CRM'] ?? null;
-        $this->observacoes = $dados['observacoes'] ?? null;
         $this->data_inicio_trabalho = date("Y-m-d");
         $this->data_termino_trabalho = null;
+        $this->validacao = new Validacao();
     }
 
-    // public function inserirDados(): bool|string
-    // {
-    //     try {
-    //         $sql = "INSERT INTO $this->nomeTabela (
-    //             idFuncionario, especialidade, CRM
-    //         ) VALUES (?, ?)";
+    public function inserirDados(): bool|string
+    {
+        if (
+            $this->validacao->validaNome($this->getNomeCompleto()) &&
+            $this->validacao->validarCpf($this->getCpf()) &&
+            $this->validacao->validarEmail($this->getEmail()) &&
+            $this->validacao->validarTelefone($this->getTelefone()) &&
+            $this->validacao->validarData($this->getDataNascimento())
+        ) {
+            try {
 
-    //         $dados = [
-    //             $this->getEspecialidade(),
-    //             $this->getCRM(),
-    //         ];
+                $sql = "INSERT INTO $this->nomeTabela (nomeCompleto, cidade, rua, bairro, numero, complemento, telefone, email, genero, status, dataNascimento, cpf, naturalidade, especialidade, CRM, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $dados = [
+                    $this->getNomeCompleto(),
+                    $this->getCidade(),
+                    $this->getRua(),
+                    $this->getBairro(),
+                    $this->getNumero(),
+                    $this->getComplemento(),
+                    $this->getTelefone(),
+                    $this->getEmail(),
+                    $this->getGenero(),
+                    $this->getStatus(),
+                    $this->getDataNascimento(),
+                    $this->getCpf(),
+                    $this->getNaturalidade(),
+                    $this->getEspecialidade(),
+                    $this->getCRM(),
+                    '123123'
+                ];
 
-    //         if (Db::preparar($sql)->execute($dados)) {
-    //             $this->setId(Db::conectar()->lastInsertId());
-    // (new Telefone_Funcionario(['telefone'=>$this->telefone, 'id_pessoa'=>$this->id]))->inserirDados();
-    //             return true;
-    //         } else
-    //             return false;
-    //     } catch (PDOException $e) {
-    //         return $e->getMessage();
-    //     }
-    // }
+
+                $stmt = Db::preparar($sql);
+                $resultado = $stmt->execute($dados);
+
+
+                if ($resultado) {
+                    $this->setId(Db::conectar()->lastInsertId());
+
+                    (new Telefone_Funcionario(
+                        [
+                            'telefone' => $this->getTelefone(),
+                            'id_funcionario' => $this->getId()
+                        ]
+                    ))->inserirDados();
+
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (PDOException $e) {
+                return $e->getMessage();
+            }
+        } else {
+            return false;
+        }
+    }
+
 
     function atualizarDados($id) {}
 

@@ -1,7 +1,7 @@
 {% extends '/base/default.html'%}
 {% block conteudo %}
 {% include '/base/partials/nav.html'%}
-<main id="mainLogin">
+<main id="mainLogin" class="bg-light border">
     <script src="{{asset('public/assets/js/login.js')}}" type="module"></script>
 
     <div id="animation" class="zindex">
@@ -15,7 +15,7 @@
 
     <!--  -->
     <div class="login-container" id="login-container">
-        <div id="paiForm" style="height: 100%;" class="card  bg-light">
+        <div id="paiForm" class="card bg-light">
 
             <h3 class="card-title text-center">Login</h3>
             <form id="telaForm" action="Controller/loginController.php" method="POST">

@@ -7,8 +7,7 @@ use sistema\nucleo\DadosTemporarios;
 use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
 
-// $id_medico = $_SESSION['id'];
-$id_medico = 1;
+$id_medico = $_SESSION['idFuncionario'];
 
 $dadosRecuperados = (new DadosTemporarios())->lerTodosPorStatus('concluido');
 

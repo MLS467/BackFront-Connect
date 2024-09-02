@@ -5,6 +5,7 @@ namespace sistema;
 use PDOException;
 use sistema\Pessoa;
 use sistema\nucleo\Validacao;
+use PDO;
 
 class Atendente extends Pessoa
 {
@@ -17,59 +18,65 @@ class Atendente extends Pessoa
     public function __construct(?array $dados)
     {
         parent::__construct($dados);
+        $this->nomeTabela = 'atendente';
         $this->data_inicio_trabalho = date("Y-m-d");
         $this->data_termino_trabalho = null;
-        $this->nomeTabela = 'atendente';
         $this->validacao = new Validacao();
     }
 
 
-    // function inserirDados(): bool | string
-    // {
-    //     try {
-    //         // Valida os dados
-    //         if (
-    //             $this->validacao->validaNome($this->getNomeCompleto()) &&
-    //             $this->validacao->validarEmail($this->getEmail()) &&
-    //             $this->validacao->validarTelefone($this->getTelefone()) &&
-    //             $this->validacao->validarData($this->getDataInicioTrabalho())
-    //         ) {
-    //             // Dados a serem inseridos
-    //             $dados = [
-    //                 $this->getNomeCompleto(),
-    //                 $this->getCidade(),
-    //                 $this->getRua(),
-    //                 $this->getBairro(),
-    //                 $this->getNumero(),
-    //                 $this->getComplemento(),
-    //                 $this->getTelefone(),
-    //                 $this->getEmail(),
-    //                 $this->getGenero(),
-    //                 $this->getDataRegistro(),
-    //                 $this->getStatus(),
-    //                 $this->getDataInicioTrabalho(),
-    //                 $this->getAreaAtuacao()
-    //             ];
+    public function inserirDados(): bool
+    {
+        if (
+            $this->validacao->validaNome($this->getNomeCompleto()) &&
+            $this->validacao->validarCpf($this->getCpf()) &&
+            $this->validacao->validarEmail($this->getEmail()) &&
+            $this->validacao->validarTelefone($this->getTelefone()) &&
+            $this->validacao->validarData($this->getDataNascimento())
+        ) {
 
-    //             // SQL para inserção
-    //             $sql = "INSERT INTO $this->nomeTabela (nome, cidade, rua, bairro, numero, complemento, telefone, email, genero, data_registro, status, data_inicio_trabalho, area_atuacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO $this->nomeTabela VALUES
+         (null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    //             // Preparar e executar a consulta
-    //             $stmt = Db::preparar($sql);
-    //             if ($stmt->execute($dados)) {
-    //                 $this->setId(Db::conectar()->lastInsertId());
-    //                 return true;
-    //             } else {
-    //                 return false;
-    //             }
-    //         } else {
-    //             return "Dados inválidos fornecidos.";
-    //         }
-    //     } catch (PDOException $e) {
-    //         // Retorna a mensagem de erro em caso de exceção
-    //         return $e->getMessage();
-    //     }
-    // }
+            try {
+                $query = Db::preparar($sql);
+                $dados = [
+                    $this->getNomeCompleto(),
+                    $this->getCidade(),
+                    $this->getRua(),
+                    $this->getBairro(),
+                    $this->getNumero(),
+                    $this->getComplemento(),
+                    $this->getTelefone(),
+                    $this->getEmail(),
+                    $this->getGenero(),
+                    $this->getStatus(),
+                    $this->getDataNascimento(),
+                    $this->getCpf(),
+                    $this->getSexo(),
+                    $this->getNaturalidade(),
+                    $this->getIdade(),
+                    $this->getDataInicioTrabalho(),
+                    $this->getDataTerminoTrabalho(),
+                    '12313',
+                    null
+                ];
+                $result = $query->execute($dados);
+
+                if ($result) {
+                    $this->setId(Db::conectar()->lastInsertId());
+                    return true;
+                }
+                return false;
+            } catch (PDOException $e) {
+                error_log('Erro ao inserir dados: ' . $e->getMessage());
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 
 
     function atualizarDados($id) {}
@@ -78,6 +85,11 @@ class Atendente extends Pessoa
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getSexo(): null
+    {
+        return null;
     }
 
 

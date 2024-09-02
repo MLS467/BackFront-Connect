@@ -2,7 +2,10 @@
 
 namespace sistema\rotas;
 
+use sistema\Atendente;
 use sistema\controlador\Controlador;
+use sistema\Enfermeiro;
+use sistema\Medico;
 use sistema\nucleo\Helpers;
 use sistema\Paciente;
 
@@ -24,6 +27,21 @@ class SiteRotas extends Controlador
         if (Helpers::validaCredencial())
             echo $this->template->renderizar('cadastrarPacienteView.html', ['isForm' => true]);
         else
+            header("Location:" . Helpers::getServer('404'));
+    }
+    public function listar_funcionario(): void
+    {
+        if (Helpers::validaCredencial()) {
+            $dados = array(
+                (new Medico(null))->selecionarTodosRegistros(),
+                (new Enfermeiro(null))->selecionarTodosRegistros(),
+                (new Atendente(null))->selecionarTodosRegistros()
+            );
+
+            $resultado = array_merge($dados[0], $dados[1], $dados[2]);
+
+            echo $this->template->renderizar('listagemFuncionarioView.html', ['isForm' => true, 'dados' => $resultado]);
+        } else
             header("Location:" . Helpers::getServer('404'));
     }
 
@@ -59,7 +77,7 @@ class SiteRotas extends Controlador
     public function login(): void
     {
         $id = null;
-        echo $this->template->renderizar('LoginView.html', ['erro' => $id, 'login' => true]);
+        echo $this->template->renderizar('LoginView.html', ['erro' => $id, 'login' => true, 'isForm' => false]);
     }
 
     public function visualizar(): void
@@ -73,7 +91,7 @@ class SiteRotas extends Controlador
     public function consultar_dados(): void
     {
         if (Helpers::validaCredencial())
-            echo $this->template->renderizar('DadosPacienteView.html', ['isForm' => true, 'login' => true]);
+            echo $this->template->renderizar('DadosPacienteView.html', ['isForm' => true, 'login' => false]);
         else
             header("Location:" . Helpers::getServer('404'));
     }
@@ -81,7 +99,7 @@ class SiteRotas extends Controlador
     public function visualizarRegistro(): void
     {
         if (Helpers::validaCredencial()) {
-            $res = (new Paciente())->selecionarPorStatus('ativo');
+            $res = (new Paciente())->selecionarPorStatus('Ativo');
             echo $this->template->renderizar('visualizarRegistrosView.html', ['isForm' => true, 'login' => false, 'res' => $res]);
         } else
             header("Location:" . Helpers::getServer('404'));

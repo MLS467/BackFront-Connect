@@ -40,8 +40,9 @@ if (isset($_POST) && !empty($_POST)) {
 
         if ($paciente->inserirDados()) {
             header('Location:' . Helpers::getServer('consultar_dados'));
+            exit;
         } else {
-            echo "ERRO";
+            exit;
         }
     } catch (PDOException $e) {
         if (Helpers::getServer() == URL_DESENVOLVIMENTO) {

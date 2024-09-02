@@ -1,0 +1,47 @@
+{% extends '/base/default.html' %}
+{% block conteudo %}
+{% include '/base/partials/nav.html'%}
+<div class="container mt-5">
+
+    <div class="container">
+        <h1 class="mb-4">Listagem de Funcionarios</h1>
+        <table id="paciente-table" class="table text-center">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>status</th>
+
+                </tr>
+            </thead>
+            <tbody class="mt-3">
+                {% for func in dados %}
+                <tr>
+                    <td>{{ func.id }}</td>
+                    <td>{{ func.nomeCompleto }}</td>
+                    <td>{{ func.status }}</td>
+
+
+                    <th>
+                        <a href="excluir?id={{func.id}}" class="btn btn-danger p-1 VerPac">Excluir</a>
+                        <a href="editar?id={{func.id}}" class="btn btn-warning p-1 VerPac">Editar</a>
+                    </th>
+                </tr>
+                {% endfor %}
+                <div> <a href="{{url('cadastrar_funcionario')}}" class="btn btn-success p-1 VerPac">+
+                        Adicionar
+                        Novo Funcionario</a></div><br><br>
+        </table>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <span id="popup-close" class="popup-close"></span>
+            <div id="popup-details">
+                <!-- Detalhes do paciente serão carregados aqui -->
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

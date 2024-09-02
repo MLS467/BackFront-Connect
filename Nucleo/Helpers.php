@@ -10,6 +10,17 @@ class Helpers
 {
 
 
+    public static function objetoParaArray($objeto)
+    {
+        return array_map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nomeCompleto' => $item->nomeCompleto,
+                'status' => $item->status
+            ];
+        }, $objeto);
+    }
+
     public static function validaCredencial(): bool
     {
         if (isset($_SESSION['token']) && !empty($_SESSION['token'])) {

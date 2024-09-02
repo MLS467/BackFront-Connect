@@ -11,7 +11,7 @@ document.getElementById('formEnviar').addEventListener('submit', async function 
 
     let dados = await pegaDados(cpf);
     if (dados) {
-
+        console.log(dados);
     } else {
         resultDiv.innerHTML = '<div class="alert alert-warning">Usuário não possui Cadastro! <a href="/PROJETO_INTEGRADO_FRONT_E_BACK/cadastro_paciente">cadastre aqui</a></div>';
     }

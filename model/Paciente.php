@@ -32,8 +32,12 @@ class Paciente extends Pessoa
     {
         try {
             if (
+                $this->validacao->validarData($this->getDataNascimento()) &&
                 $this->validacao->validaNome($this->getNomeCompleto()) &&
-                $this->validacao->validarEmail($this->getEmail())
+                $this->validacao->validarEmail($this->getEmail()) &&
+                $this->validacao->validarTelefone($this->getTelefone()) &&
+                $this->validacao->validarTelefone($this->getContatoEmergencia()) &&
+                $this->validacao->validarCpf($this->getCpf())
             ) {
                 $this->setStatus('Ativo');
                 $dados = [

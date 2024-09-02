@@ -44,8 +44,9 @@
     {% endif %}
     </div>
     <script src="{{url('public/assets/js/bootstrap.bundle.min.js')}}"></script>
+    {% if isForm%}
     <script src="{{asset('public/assets/js/confirmacaoForm/confirmacaoEnvio.js')}}"></script>
-
+    {% endif %}
 
 </body>
 

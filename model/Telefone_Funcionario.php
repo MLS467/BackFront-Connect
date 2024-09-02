@@ -7,50 +7,46 @@ use sistema\nucleo\Validacao;
 
 class Telefone_Funcionario extends Crud
 {
-    private int $id = 0;
+    private ?int $id;
     private ?string $telefone;
-    private int $id_pessoa;
+    private ?int $id_funcionario;
     private Validacao $validacao;
 
     public function __construct(?array $dados)
     {
         $this->nomeTabela = 'telefone_funcionario';
         $this->telefone = $dados['telefone'];
-        $this->id_pessoa = $dados['id_pessoa'];
+        $this->id_funcionario = $dados['id_funcionario'];
         $this->validacao = new Validacao();
     }
 
-    public function inserirDados()
+    public function inserirDados(): bool
     {
         try {
-            if (
-                $this->validacao->validarTelefone($this->getTelefone())
-            ) {
-                $sql = "INSERT INTO $this->nomeTabela VALUES (?,?,?)";
-                $dados = [
-                    null,
-                    $this->getTelefone(),
-                    $this->getIdPessoa()
-                ];
 
-                Db::preparar($sql)->execute($dados);
+            $sql = "INSERT INTO $this->nomeTabela (id,telefone,id_funcionario_fk) VALUES (null, ?, ?)";
+            $dados = [
+                $this->getTelefone(),
+                $this->getIdFuncionario()
+            ];
+
+            $stmt = Db::preparar($sql);
+            $resultado = $stmt->execute($dados);
+
+            if ($resultado) {
                 $this->setId(Db::conectar()->lastInsertId());
-                if (Db::preparar($sql)->execute($dados)) {
-                    $this->setId(Db::conectar()->lastInsertId());
-                    return true;
-                }
-                return false;
+                return true;
             } else {
                 return false;
             }
         } catch (\Throwable $e) {
-            ///////////////////////////////////////
+            // Log the exception message or handle the error as needed
+            error_log($e->getMessage());
+            return false;
         }
     }
 
-    function atualizarDados($id)
-    {
-    }
+    function atualizarDados($id) {}
 
     public function getId(): int
     {
@@ -73,13 +69,13 @@ class Telefone_Funcionario extends Crud
         $this->telefone = $telefone;
     }
 
-    public function getIdPessoa(): int
+    public function getIdFuncionario(): int
     {
-        return $this->id_pessoa;
+        return $this->id_funcionario;
     }
 
-    public function setIdPessoa(int $id_pessoa): void
+    public function setIdFuncionario(int $id_funcionario): void
     {
-        $this->id_pessoa = $id_pessoa;
+        $this->id_funcionario = $id_funcionario;
     }
 }

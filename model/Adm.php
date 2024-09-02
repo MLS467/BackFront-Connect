@@ -1,44 +1,59 @@
 <?php
 
+namespace sistema;
+
 use sistema\Atendente;
 use sistema\Enfermeiro;
 use sistema\Medico;
+use sistema\nucleo\Helpers;
 use sistema\Pessoa;
 
 class Adm extends Pessoa
 {
-    private string $Permissao;
-    private string $data_inicio_trabalho;
+    private ?string $Permissao;
+    private ?string $data_inicio_trabalho;
     private ?string $data_termino_trabalho;
 
     public function __construct(?array $n)
     {
         parent::__construct($n);
-        $this->Permissao = $n['permissao'];
-        $this->data_inicio_trabalho = date("Y-m-d");
+        $this->Permissao = $n['permissao'] ?? null;
+        $this->data_inicio_trabalho = date("Y-m-d") ?? null;
         $this->data_termino_trabalho = null;
     }
 
 
-    private function adicionarNovoFuncionario(int $tipo, array $n)
+    public function adicionarNovoFuncionario(string $tipo, array $n)
     {
+        $tipo = strtolower($tipo);
         switch ($tipo) {
-            case 1:
-                //ATENDENTE
-                ((new Atendente($n))->inserirDados());
+            case strtolower('atendente'):
+                Helpers::mostrarArray($n);
+                if ((new Atendente($n))->inserirDados())
+                    return true;
 
                 break;
-            case 2:
-                //Medico
-                ((new Medico($n))->inserirDados());
+
+            case strtolower('medico'):
+                //MEDICO
+                if ((new Medico($n))->inserirDados())
+                    return true;
                 break;
-            case 3:
-                //Medico
-                ((new Enfermeiro($n))->inserirDados());
+
+            case strtolower('enfermeiro'):
+                //ENFERMEIRO
+                if ((new Enfermeiro($n))->inserirDados())
+                    return true;
                 break;
+
             case 4:
                 //adm
-                ((new Adm($n))->inserirDados());
+                if ((new Adm($n))->inserirDados())
+                    return true;
+                break;
+
+            default:
+                echo "Não deu bom!";
                 break;
         }
     }
