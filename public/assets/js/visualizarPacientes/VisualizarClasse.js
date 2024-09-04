@@ -52,10 +52,10 @@ class Popup {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data.paciente[0].nomeCompleto);
+                console.log(data.paciente);
                 document.getElementById('nomeJson').innerHTML += data.paciente[0].nomeCompleto;
                 document.getElementById('dataNascimento').innerText = data.paciente[0].dataNascimento;
-                document.getElementById('sexo').innerText = data.paciente[0].sexo;
+                document.getElementById('sexo').innerText = data.paciente[0].genero;
                 document.getElementById('idade').innerText = data.paciente[0].idade;
                 document.getElementById('endereco').innerText = `${data.paciente[0].bairro} ${data.paciente[0].rua} ${data.paciente[0].complemento}`;
                 document.getElementById('telefone').innerText = data.paciente[0].contatoEmergencia;
