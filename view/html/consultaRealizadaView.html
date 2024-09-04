@@ -1,0 +1,16 @@
+{% extends '/base/default.html'%}
+
+{% block conteudo %}
+
+<div id="full-height">
+    <div id="alert-success-custom" class="alert alert-success mb-3" role="alert">
+        <i class="fa-solid fa-check-circle"></i>
+        <h4 class="alert-heading">Consulta Realizada com Sucesso!</h4>
+        <p>A sua consulta foi realizada com sucesso. Obrigado por utilizar nosso sistema.</p>
+    </div>
+    <div class="mt-5">
+        <button type="button" id="btn-custom" class="btn btn-success"
+            onclick="window.location.href='/PROJETO_INTEGRADO_FRONT_E_BACK/visualizar'">Retornar</button>
+    </div>
+</div>
+{% endblock %}

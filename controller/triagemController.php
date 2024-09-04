@@ -35,7 +35,7 @@ if (isset($_POST) && !empty($_POST)) {
     $triagem = new Triagem($dados);
     if ($triagem->inserirDados()) {
         $dadosTemp = new DadosTemporarios();
-        $id_dt = $dadosTemp->lerTodosPorStatus('em_processo');
+        $id_dt = $dadosTemp->lerTodosPorStatus('em_progresso');
         $dadosTemp->atualizarStatus($id_dt[0]->id, 3);
         if ($dadosTemp->adcTriagem($id_dt[0]->id, $triagem->getId())) {
             header("Location:" . Helpers::getServer('visualizar_registro'));

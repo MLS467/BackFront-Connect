@@ -19,7 +19,7 @@ btnLogin.addEventListener('click', (evt) => {
         const cargo = document.querySelector("#cargo").value;
         if (cargo == '0') {
             const config = {
-                cor: "rgba(110, 197, 207, 0.7)",
+                cor: "#2f60a7",
                 destino: document.body
             }
             Caixa.config(config);

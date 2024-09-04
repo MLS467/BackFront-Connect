@@ -82,9 +82,10 @@ class SiteRotas extends Controlador
 
     public function visualizar(): void
     {
-        if (Helpers::validaCredencial())
+
+        if (Helpers::validaCredencial()) {
             echo $this->template->renderizar('visualizarRegistrosMedicoView.html', ['res' => Helpers::selecionarTodasTabelas(), 'isForm' => true]);
-        else
+        } else
             header("Location:" . Helpers::getServer('404'));
     }
 
@@ -109,6 +110,14 @@ class SiteRotas extends Controlador
     {
         if (Helpers::validaCredencial()) {
             echo $this->template->renderizar('dashboardView.html', ['isForm' => true, 'login' => false]);
+        } else
+            header("Location:" . Helpers::getServer('404'));
+    }
+
+    public function consultaRealizada(): void
+    {
+        if (Helpers::validaCredencial()) {
+            echo $this->template->renderizar('consultaRealizadaView.html', ['isForm' => true, 'login' => false]);
         } else
             header("Location:" . Helpers::getServer('404'));
     }

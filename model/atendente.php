@@ -53,7 +53,7 @@ class Atendente extends Pessoa
                     $this->getStatus(),
                     $this->getDataNascimento(),
                     $this->getCpf(),
-                    $this->getSexo(),
+                    null,
                     $this->getNaturalidade(),
                     $this->getIdade(),
                     $this->getDataInicioTrabalho(),
@@ -87,10 +87,6 @@ class Atendente extends Pessoa
         return $this->id;
     }
 
-    public function getSexo(): null
-    {
-        return null;
-    }
 
 
     public function setId(int $id): void

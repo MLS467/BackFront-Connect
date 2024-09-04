@@ -36,7 +36,7 @@ document.getElementById('enviado').addEventListener('click', (evt) => {
         email.focus();
         hasError = true;
     } else {
-        nomeErro.innerHTML = ''; // Limpa erro caso o campo seja válido
+        emailErro.innerHTML = ''; // Limpa erro caso o campo seja válido
     }
 
     // Valida o campo Telefone

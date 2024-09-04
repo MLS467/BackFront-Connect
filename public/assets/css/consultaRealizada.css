@@ -1,0 +1,36 @@
+#full-height {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #a2c2e8, #f4f4f4);
+}
+
+#alert-success-custom {
+    background-color: #eafaf1;
+    color: #28a745;
+    border-color: #d4edda;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#alert-success-custom .fa-check-circle {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+#btn-custom {
+    border-radius: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+#btn-custom:hover {
+    background-color: #00b309;
+}

@@ -1,5 +1,5 @@
 .borda {
-    border: 2px solid orangered;
+    border: 0.125rem solid orangered;
 }
 
 .zindex {
@@ -7,14 +7,13 @@
 }
 
 #mainLogin {
-    /* background-color: red !important; */
     position: relative;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     width: 100%;
-    height: 100%;
-    padding: 50px 50px 0px 0px;
+    height: 150%;
+    padding: 0rem 1.25rem;
 }
 
 .oculto {
@@ -22,14 +21,13 @@
 }
 
 #login-container {
-    /* border: red 1px solid; */
-    max-width: 400px;
+    max-width: 24rem;
     width: 100%;
-    height: 500px;
+    height: 31.25rem;
 }
 
 #btnLogin {
-    background-color: #1dadb8;
+    background-color: #2f60a7;
     color: white;
     font-weight: bold;
 }
@@ -37,7 +35,7 @@
 #btnLogin:hover {
     color: black;
     opacity: 0.7;
-    background-color: #7ac8a8;
+    background-color: #7db8fc;
 }
 
 #funcionarioDiv {
@@ -45,7 +43,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
 }
 
 #telaForm {
@@ -56,23 +54,26 @@
 }
 
 #login-container .card {
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 5%;
+    width: 100%;
+    height: inherit;
+    padding: 1.25rem;
+    border-radius: 0.625rem;
+    box-shadow: 0 0 0.9375rem rgba(0, 0, 0, 0.1);
 }
 
 #paiForm {
-    position: relative;
     display: flex;
-    height: inherit;
     justify-content: center;
+    height: inherit;
+
 }
 
 #animation {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70%;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 100%;
     height: 100%;
 }
 
@@ -80,4 +81,187 @@
     width: 90%;
     position: absolute;
     bottom: 0;
+}
+
+/* Smartphones (600px para baixo) */
+@media only screen and (max-width: 600px) {
+    #animation {
+        display: none;
+    }
+
+
+    #navForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #cxForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: inherit;
+        /* border: 1px solid red; */
+    }
+
+    #imgLogo {
+        width: 50px;
+    }
+
+
+    #btnNavLogin {
+        display: none;
+    }
+
+    #mainLogin {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+    }
+
+    #login-container {
+        max-width: 20rem;
+        width: 100%;
+        height: auto;
+    }
+
+    #login-container .card {
+        margin-top: 2rem;
+        padding: 1rem;
+    }
+
+    #btnLogin {
+        font-size: 1rem;
+    }
+}
+
+/* Dispositivos um pouco maiores (Pequenos Tablets e Smartphones + largos, 600px para cima) */
+@media only screen and (min-width: 600px) {
+    #animation {
+        display: none;
+    }
+
+    #navForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #cxForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: inherit;
+        /* border: 1px solid red; */
+    }
+
+    #imgLogo {
+        width: 50px;
+    }
+
+    #btnNavLogin {
+        display: none;
+    }
+
+    #mainLogin {
+        justify-content: center;
+        padding: 1rem;
+        height: 100%;
+    }
+
+    #login-container {
+        max-width: 22rem;
+    }
+
+    #login-container .card {
+        padding: 1rem;
+    }
+}
+
+/* Dispositivos Médios (Tablets, 768px para cima) */
+@media only screen and (min-width: 768px) {
+    #animation {
+        display: block;
+        width: 50%;
+        height: 80vh;
+    }
+
+    #navForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #cxForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: inherit;
+        /* border: 1px solid red; */
+    }
+
+    #imgLogo {
+        width: 50px;
+    }
+
+
+    #btnNavLogin {
+        display: none;
+    }
+
+
+    #mainLogin {
+        justify-content: space-between;
+        padding: 2rem;
+    }
+
+    #login-container {
+        max-width: 24rem;
+    }
+
+    #login-container .card {
+        padding: 1.5rem;
+    }
+}
+
+/* Dispositivos Largos (laptops/desktops, 992px para cima) */
+@media only screen and (min-width: 992px) {
+    #animation {
+        width: 60%;
+    }
+
+    #mainLogin {
+        height: 100vh;
+    }
+
+    #login-container {
+        max-width: 28rem;
+    }
+
+    #login-container .card {
+        padding: 2rem;
+    }
+}
+
+/* Super Largos (Telas maiores laptops, desktops e TVs, 1200px para cima) */
+@media only screen and (min-width: 1200px) {
+    #animation {
+        width: 70%;
+    }
+
+    #mainLogin {
+        justify-content: flex-end;
+    }
+
+    #login-container {
+        max-width: 30rem;
+    }
+
+    #login-container .card {
+        padding: 2.5rem;
+    }
 }

@@ -3,76 +3,63 @@
 
 <header class="mb-0">
     <a href="http://localhost/PROJETO_INTEGRADO_FRONT_E_BACK/">
-        <div id="logo" class="container">
-            <img id="logoImg" src="public/assets/img/logo.png" alt="logo do pronto Atendimento">
+        <div id="logo">
+            <img id="logoImg" src="public/assets/img/logo2.png" alt="logo do pronto Atendimento">
         </div>
     </a>
 
-    <div style="background-color: #25c4b9;" class="">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+    <div id="navHome" style="background-color: #2f60a7;">
+        <div id="divContainerHome" class="container">
+            <div id="cxNavHome">
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 text-light">
-                    <li><a href="#" class="nav-link   text-light px-2 link-secondary">Sobre</a>
-                    </li>
-                    <li><a href="#" class="nav-link px-2 text-light link-body-emphasis">Missão</a></li>
-                    <!-- <li><a href="#" class="nav-link px-2 text-light link-body-emphasis">Paciente</a></li>
-                    <li><a href="#" class="nav-link px-2 text-light link-body-emphasis">Visualizar</a></li> -->
+                <ul class="nav">
+                    <li><a href="#" class="nav-link text-light link-secondary">Sobre</a></li>
+                    <li><a href="#" class="nav-link text-light link-body-emphasis">Missão</a></li>
                 </ul>
-
                 <div class="btn-group">
-                    <a href="{{asset('login')}}" type="button" class="btn btn-info text-light" aria-expanded="false">
+                    <a href="{{asset('login')}}" type="button" id="btnNavHome" class="btn" aria-expanded="false">
                         Login
                     </a>
-
                 </div>
 
             </div>
         </div>
     </div>
-
 </header>
 
 <section>
-    <div id="paiImg" class="mt-0">
-        <img class="img-fluid" id="imgCorpo" src="public/assets/img/doctor.jpg" alt="doutores sorrindo">
-        <div class="" id="caixaImg">
+    <div id="paiImg">
+        <img id="imgCorpo" src="public/assets/img/doctor.jpg" alt="doutores sorrindo">
+        <div id="caixaImg">
             <div>
-
-                <h2 style="text-align: center;color: white;">Use the online image color picker above to select a
+                <h2 id="caixaHeaderHome">Use the online image color picker above to select a
                     color
                     and get the
                     HTML Color Code of this pixel.
-                    '</h2>
+                </h2>
             </div>
         </div>
     </div>
-    <div class="mt-5 w-100 container">
-        <div>
-            <div id="card" class="card-body">
-                <div class="w-75">
-                    <h2>Testando o conteúdo</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, qui! Minima voluptatibus nam
-                        id, blanditiis consequuntur molestias a cum quas ducimus consectetur error nesciunt
-                        accusantium non ipsum eveniet distinctio nihil.
-                        Quo, delectus? Quas optio, adipisci qui unde, ex quisquam voluptates animi rerum nemo porro
-                        nam officiis nisi hic fugit tenetur ea velit a eveniet minima accusantium dolorum
-                        reprehenderit earum nostrum?</p>
-                </div>
-                <div>
-                    <a style="background-color: #25c4b9;" class="btn btn" href="#">teste</a>
-                </div>
+    <div>
+        <div id="card" class="container">
+            <div>
+                <h2>Testando o conteúdo</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, qui! Minima voluptatibus nam
+                    id, blanditiis consequuntur molestias a cum quas ducimus consectetur error nesciunt
+                    accusantium non ipsum eveniet distinctio nihil.
+                    Quo, delectus? Quas optio, adipisci qui unde, ex quisquam voluptates animi rerum nemo porro
+                    nam officiis nisi hic fugit tenetur ea velit a eveniet minima accusantium dolorum
+                    reprehenderit earum nostrum? <a href="#">Ler mais...</a></p>
             </div>
-        </div>
-    </div>
 
+        </div>
+    </div>
 </section>
 
-<div class="container marketing mt-5">
+<div>
 
-    <!-- Three columns of text below the carousel -->
-    <div class="row">
-        <div class="col-lg-4 text-center">
+    <div class="todosCirculosHome">
+        <div class="circuloHome">
             <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
                 role="img" aria-label="Imagem" preserveAspectRatio="xMidYMid slice" focusable="false">
                 <title>Imagem</title>
@@ -83,48 +70,44 @@
                 </defs>
                 <image href="public/assets/img/abs.png" width="140" height="140" clip-path="url(#clip-circle)" />
             </svg>
-            <h2 class="fw-normal">Heading</h2>
+            <h2>Heading</h2>
             <p>Some representative placeholder content for the three columns of text below the carousel. This is
                 the first column.</p>
-            <p><a class="btn btn corPrincipal" href="#">View details »</a></p>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4  text-center">
+            <p><a class="btn" href="#">View details »</a></p>
+        </div>
+        <div class="circuloHome">
             <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
                 role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
                 <title>Placeholder</title>
                 <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
             </svg>
-            <h2 class="fw-normal">Heading</h2>
+            <h2>Heading</h2>
             <p>Another exciting bit of representative placeholder content. This time, we've moved on to the
                 second column.</p>
-            <p><a class="btn btn corPrincipal" href="#">View details »</a></p>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4 text-center">
+            <p><a class="btn" href="#">View details »</a></p>
+        </div>
+        <div class="circuloHome">
             <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
                 role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
                 <title>Placeholder</title>
                 <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
             </svg>
-            <h2 class="fw-normal">Heading</h2>
+            <h2>Heading</h2>
             <p>Another exciting bit of representative placeholder content. This time, we've moved on to the
                 second column.</p>
-            <p><a class="btn corPrincipal" href="#">View details »</a></p>
-        </div><!-- /.col-lg-4 -->
-    </div><!-- /.row -->
+            <p><a class="btn" href="#">View details »</a></p>
+        </div>
+    </div>
 
+    <hr>
 
-    <!-- START THE FEATURETTES -->
-
-    <hr class="featurette-divider mt-5">
-
-    <div class="row featurette">
-        <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">First featurette heading. <span
-                    class="text-body-secondary">It’ll blow your mind.</span></h2>
+    <div class="cxHome">
+        <div>
+            <h2 class="featurette-heading">First featurette heading. <span>It’ll blow your mind.</span></h2>
             <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting
                 prose here.</p>
         </div>
-        <div class="col-md-5">
+        <div>
             <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
                 height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
                 preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -135,16 +118,15 @@
         </div>
     </div>
 
-    <hr class="featurette-divider">
+    <hr>
 
-    <div class="row featurette">
-        <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it’s that good. <span class="text-body-secondary">See
-                    for yourself.</span></h2>
+    <div class="cxHome">
+        <div>
+            <h2>Oh yeah, it’s that good. <span>See for yourself.</span></h2>
             <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of
                 how this layout would work with some actual real-world content in place.</p>
         </div>
-        <div class="col-md-5 order-md-1">
+        <div>
             <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
                 height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
                 preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -155,17 +137,16 @@
         </div>
     </div>
 
-    <hr class="featurette-divider">
+    <hr>
 
-    <div class="row featurette">
-        <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">And lastly, this one. <span
-                    class="text-body-secondary">Checkmate.</span></h2>
+    <div class="cxHome">
+        <div>
+            <h2>And lastly, this one. <span>Checkmate.</span></h2>
             <p class="lead">And yes, this is the last block of representative placeholder content. Again, not
                 really intended to be actually read, simply here to give you a better view of what this would
                 look like with some actual content. Your content.</p>
         </div>
-        <div class="col-md-5">
+        <div>
             <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
                 height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
                 preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -176,6 +157,6 @@
         </div>
     </div>
 
+</div>
 
-    <!-- /END THE FEATURETTES -->
-    {% endblock %}
+{% endblock %}

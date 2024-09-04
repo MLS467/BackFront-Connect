@@ -27,6 +27,7 @@ try {
     // Médico
     SimpleRouter::get(URL_BASE . 'visualizar', 'SiteRotas@visualizar');
     SimpleRouter::get(URL_BASE . 'consulta', 'SiteRotas@consulta');
+    SimpleRouter::get(URL_BASE . 'consulta_realizada', 'SiteRotas@consultaRealizada');
 
     // Home
     SimpleRouter::get(URL_BASE, 'SiteRotas@home');

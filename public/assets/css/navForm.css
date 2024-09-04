@@ -1,0 +1,9 @@
+#navForm {
+    height: 80px;
+}
+
+#cxForm {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}

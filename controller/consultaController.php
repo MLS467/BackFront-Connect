@@ -35,7 +35,7 @@ if (isset($_POST) && !empty($_POST)) {
             if ($consulta->inserirDados()) {
                 $dadosConcluidos = (new DadosTemporarios())->lerTodosPorStatus('Paciente/Triagem');
                 (new DadosTemporarios())->deletar($dadosRecuperados[0]->id);
-                echo (new Mensagem())->msg('Consulta Realizada!')->sucesso()->renderizar();
+                header("Location:" . Helpers::getServer('consulta_realizada'));
             } else {
                 echo 'ERRO';
             }

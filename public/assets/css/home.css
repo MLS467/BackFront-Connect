@@ -1,24 +1,17 @@
-* {
-    box-sizing: border-box;
-    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+#caixaHeaderHome {
+    text-align: center;
+    color: white;
 }
-
-body {
-    padding: 0px;
-    margin: 0px;
-    background-color: white;
-}
-
 
 .borda {
-    border: 1px solid orangered;
+    border: 0.0625rem solid orangered;
 }
 
 #logo {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 10px;
+    padding: 0.625rem;
 }
 
 #logoImg {
@@ -27,7 +20,6 @@ body {
 
 #imgCorpo {
     width: 100%;
-
 }
 
 #card {
@@ -37,47 +29,354 @@ body {
     flex-direction: row;
 }
 
-
 #paiImg {
-
     position: relative;
 }
 
 #caixaImg {
-    background-color: rgba(110, 197, 207, 0.7);
+    background-color: #58adfc;
     width: 40%;
-    height: 200px;
+    height: 12.5rem;
     position: absolute;
-    padding: 20px;
+    padding: 1.25rem;
     bottom: 0;
-    left: 100px;
+    left: 6.25rem;
+}
+
+#btnNavHome {
+    background-color: rgb(88, 173, 252);
+    color: white;
+}
+
+#btnNavHome:hover {
+    background-color: rgb(188, 220, 252);
+    color: black;
+}
+
+#cxNavHome {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#divContainerHome {
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#navHome {
+    height: 3.75rem !important;
 }
 
 .corPrincipal {
-    background-color: rgba(110, 197, 207, 0.7) !important;
+    background-color: rgb(188, 220, 252) !important;
 }
-
 
 /* Barra de rolagem personalizada */
 ::-webkit-scrollbar {
-    width: 6px;
-    /* Largura da barra de rolagem */
+    width: 0.375rem;
 }
 
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
-    /* Cor do fundo da barra de rolagem */
 }
 
 ::-webkit-scrollbar-thumb {
     background: rgba(110, 197, 207, 0.7);
-
-    /* Cor do "polegar" da barra de rolagem */
-    border-radius: 10px;
-    /* Bordas arredondadas do polegar */
+    border-radius: 0.625rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
-    /* Cor do polegar ao passar o mouse */
+}
+
+/* Smartphones (600px para baixo) */
+@media only screen and (max-width: 600px) {
+    #cxNavHome {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .todosCirculosHome {
+        margin-top: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .circuloHome {
+        text-align: center;
+        /* border: 1px solid red; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .cxHome {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+
+    #logo {
+        justify-content: center;
+    }
+
+    #card {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    #btnNavHome {
+        background-color: transparent;
+        color: white;
+    }
+
+    #btnNavHome:hover {
+        background-color: transparent;
+    }
+
+    #logoImg {
+        width: 20%;
+    }
+
+    #card {
+        flex-direction: column;
+    }
+
+    #caixaImg {
+        display: none;
+    }
+}
+
+/* Dispositivos um pouco maiores, mas ainda pequenos (Pequenos Tablets e Smartphones + largos, 600px para cima) */
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+    #cxNavHome {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    #card {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .todosCirculosHome {
+        margin-top: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .circuloHome {
+        text-align: center;
+        /* border: 1px solid red; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .cxHome {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #btnNavHome {
+        background-color: transparent;
+        color: white;
+    }
+
+    #btnNavHome:hover {
+        background-color: transparent;
+    }
+
+    #logo {
+        justify-content: center;
+    }
+
+    #logoImg {
+        width: 20%;
+    }
+
+    #caixaImg {
+        display: none;
+    }
+}
+
+/* Dispositivos Médios (Tablets deitados, 768px para cima) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    #logo {
+        justify-content: center;
+    }
+
+    .todosCirculosHome {
+        margin-top: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .circuloHome {
+        text-align: center;
+        /* border: 1px solid red; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .cxHome {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #cxNavHome {
+
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: row;
+        height: auto !important;
+    }
+
+    #btnNavHome {
+        background-color: transparent;
+        color: white;
+    }
+
+    #btnNavHome:hover {
+        background-color: transparent;
+    }
+
+    #card {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    #logoImg {
+        width: 15%;
+    }
+
+    #caixaImg {
+        display: none;
+    }
+}
+
+/* Dispositivos Largos (laptops/desktops, 992px para cima) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    #logoImg {
+        width: 12%;
+    }
+
+    .todosCirculosHome {
+        margin-top: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    #cxNavHome {
+        /* border: 0.0625rem solid orangered; */
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: row;
+        height: auto !important;
+        padding: 0 2rem;
+    }
+
+
+    .circuloHome {
+        text-align: center;
+        /* border: 1px solid red; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .cxHome {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #caixaImg {
+        display: none;
+    }
+}
+
+/* Super Largos (Telas maiores laptops, desktops e até TVs, 1200px para cima) */
+@media only screen and (min-width: 1200px) {
+    #logoImg {
+        width: 12%;
+    }
+
+    .todosCirculosHome {
+        margin-top: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    #cxNavHome {
+        /* border: 0.0625rem solid orangered; */
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: row;
+        height: auto !important;
+        padding: 0 2rem;
+    }
+
+
+    .circuloHome {
+        text-align: center;
+        /* border: 1px solid red; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .cxHome {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #caixaImg {
+        width: 40%;
+        left: 5%;
+    }
 }

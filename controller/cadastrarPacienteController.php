@@ -8,6 +8,7 @@ use sistema\Paciente;
 
 $id_atendente = $_SESSION['idFuncionario'];
 
+
 if (isset($_POST) && !empty($_POST)) {
 
     $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);

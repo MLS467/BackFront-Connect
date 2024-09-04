@@ -28,7 +28,6 @@ class Adm extends Pessoa
         $tipo = strtolower($tipo);
         switch ($tipo) {
             case strtolower('atendente'):
-                Helpers::mostrarArray($n);
                 if ((new Atendente($n))->inserirDados())
                     return true;
 
