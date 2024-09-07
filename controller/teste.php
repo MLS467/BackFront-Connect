@@ -1,5 +1,5 @@
 <?php
-
+// AQUI SERVE PARA DEBUG
 use sistema\nucleo\Helpers;
 use sistema\Paciente;
 

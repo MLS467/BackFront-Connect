@@ -5,15 +5,15 @@ use sistema\nucleo\DadosTemporarios;
 use sistema\Triagem;
 use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
-
+// pega o id do funcionario após o login
 $idEnfermeiro = $_SESSION['idFuncionario'];
 
 
 if (isset($_POST) && !empty($_POST)) {
-
+    // testa e limpa os dados 
     $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
     $input = Helpers::limpaArrayPost($input);
-
+    // estrutura os dados para serem inseridos
     $dados = array(
         'id_enfermeiro' => $idEnfermeiro,
         'sintomas' => $input['sintomas'] ?? '',
@@ -35,6 +35,7 @@ if (isset($_POST) && !empty($_POST)) {
     $triagem = new Triagem($dados);
     if ($triagem->inserirDados()) {
         $dadosTemp = new DadosTemporarios();
+        // se inseridos os dados os dados temporários são lidos para atualização
         $id_dt = $dadosTemp->lerTodosPorStatus('em_progresso');
         $dadosTemp->atualizarStatus($id_dt[0]->id, 3);
         if ($dadosTemp->adcTriagem($id_dt[0]->id, $triagem->getId())) {

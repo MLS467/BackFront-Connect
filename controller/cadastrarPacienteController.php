@@ -5,16 +5,15 @@ use sistema\nucleo\DadosTemporarios;
 use sistema\nucleo\Helpers;
 use sistema\nucleo\Mensagem;
 use sistema\Paciente;
-
+// pegando id do funcionário ao logar
 $id_atendente = $_SESSION['idFuncionario'];
 
-
 if (isset($_POST) && !empty($_POST)) {
-
+    // fazendo a sanitização dos dados
     $input = filter_input_array(INPUT_POST, FILTER_DEFAULT);
     $input = Helpers::limpaArrayPost($input);
 
-
+    // organizando dados para serem adicionados
     $dados = [
         'id_atendente' => $id_atendente,
         'nomeCompleto' => $_POST['nomeCompleto'] ?? null,
@@ -35,7 +34,7 @@ if (isset($_POST) && !empty($_POST)) {
         'historicoCirurgia' => $_POST['historicoCirurgia'] ?? null,
         'contatoEmergencia' => $_POST['contatoEmergencia'] ?? null
     ];
-
+    // instanciando paciente para realizar inserção caso contrário tera erro ou redirecionado a pagina 404
     try {
         $paciente = new Paciente($dados);
 

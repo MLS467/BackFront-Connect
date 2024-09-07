@@ -13,11 +13,13 @@ class Atendente extends Pessoa
     private int $id;
     private string $data_inicio_trabalho;
     private ?string $data_termino_trabalho;
+    private ?string $img;
     private Validacao $validacao;
 
     public function __construct(?array $dados)
     {
         parent::__construct($dados);
+        $this->img = $dados['img'] ?? null;
         $this->nomeTabela = 'atendente';
         $this->data_inicio_trabalho = date("Y-m-d");
         $this->data_termino_trabalho = null;
@@ -36,7 +38,7 @@ class Atendente extends Pessoa
         ) {
 
             $sql = "INSERT INTO $this->nomeTabela VALUES
-         (null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+         (null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             try {
                 $query = Db::preparar($sql);
@@ -59,7 +61,8 @@ class Atendente extends Pessoa
                     $this->getDataInicioTrabalho(),
                     $this->getDataTerminoTrabalho(),
                     '12313',
-                    null
+                    null,
+                    $this->getImg()
                 ];
                 $result = $query->execute($dados);
 
@@ -87,6 +90,15 @@ class Atendente extends Pessoa
         return $this->id;
     }
 
+    public function getImg(): string
+    {
+        return $this->img;
+    }
+
+    public function setImg(string $img): void
+    {
+        $this->img = $img;
+    }
 
 
     public function setId(int $id): void

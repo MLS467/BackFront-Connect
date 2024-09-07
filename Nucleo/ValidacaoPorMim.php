@@ -5,7 +5,7 @@ namespace sistema\nucleo;
 use PDO;
 use PDOException;
 
-class ValidacaoPorMin
+class ValidacaoPorMim
 {
 
     public function ValidaArq($imgExt, $imgTam)
@@ -13,7 +13,7 @@ class ValidacaoPorMin
         $controle = true;
 
         if ((!empty($imgExt)) && (!empty($imgTam))) {
-            $tamanhoMax = "2e+6";
+            $tamanhoMax = "2097152";
             if ($imgTam > $tamanhoMax) {
                 $controle = false;
             }
