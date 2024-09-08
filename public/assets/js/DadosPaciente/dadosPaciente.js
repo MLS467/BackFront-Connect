@@ -1,3 +1,6 @@
+let buscar = document.getElementById('buscarPac');
+let encontrado = document.getElementById('EncontradoPac');
+
 document.getElementById('formEnviar').addEventListener('submit', async function (event) {
     event.preventDefault();
 
@@ -9,9 +12,21 @@ document.getElementById('formEnviar').addEventListener('submit', async function 
         return;
     }
 
+
     let dados = await pegaDados(cpf);
     if (dados) {
-        console.log(dados);
+        buscar.classList.add('ocultarElemento');
+        encontrado.classList.remove('ocultarElemento');
+        limpaCampo();
+        encontrado.addEventListener('click', async () => {
+            const endpoint = `/PROJETO_INTEGRADO_FRONT_E_BACK/Controller/inserirPacienteJson.php?idPacienteEncontrado=${dados.id}`;
+            let result = await fetch(endpoint, { method: "GET" });
+            if (result.ok) {
+                alert('Paciente enviado para lista de Triagem!');
+            } else {
+                alert('Houve um problema para enviar os dados!');
+            }
+        });
     } else {
         resultDiv.innerHTML = '<div class="alert alert-warning">Usuário não possui Cadastro! <a href="/PROJETO_INTEGRADO_FRONT_E_BACK/cadastro_paciente">cadastre aqui</a></div>';
     }
@@ -35,5 +50,10 @@ async function pegaDados(cpf) {
         });
 
     return resultado;
+}
+
+function limpaCampo() {
+    document.getElementById('cpf').value = '';
+    document.getElementById('cpf').focus();
 }
 

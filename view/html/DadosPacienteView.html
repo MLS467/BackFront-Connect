@@ -6,7 +6,7 @@
     <div class="row d-flex justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header conDadosPac  text-white">
                     <h4>Buscar Paciente</h4>
                 </div>
                 <div class="card-body">
@@ -18,9 +18,13 @@
                                 Por favor, insira um CPF válido.
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Buscar</button>
+                        <button id="buscarPac" style="border: none;" type="submit"
+                            class="btn btn-primary conDadosPac">Buscar</button>
+                        <button id="EncontradoPac" style="border: none;" type="submit"
+                            class="btn btn-success rounded-5 ocultarElemento">Enviar p/ Triagem</button>
                     </form>
-                    <div id="resultado" class="mt-3"></div>
+                    <div id="resultado" class="mt-3"><a id="linkCadPac" href="{{asset('cadastro_paciente')}}">Cadastrar
+                            Paciente</a></div>
                 </div>
             </div>
         </div>

@@ -16,6 +16,7 @@ $tmp = $_FILES['imgFunc']['tmp_name'];
 $tamanho = $_FILES['imgFunc']['size'];
 $path = "../public/assets/img/pic/";
 
+// Helpers::mostrarArray($input);
 
 if (isset($input['cargo']) and isset($input) and !empty($input) and !empty($input['cargo'])) {
 

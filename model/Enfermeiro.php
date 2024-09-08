@@ -14,6 +14,8 @@ class Enfermeiro extends Pessoa
     private ?string $especialidade;
     private ?string $data_inicio_trabalho;
     private ?string $data_termino_trabalho;
+    private ?string $img;
+    private ?string $cargo;
     private ?Validacao $validacao;
 
     public function __construct(?array $dados)
@@ -21,6 +23,8 @@ class Enfermeiro extends Pessoa
 
         parent::__construct($dados);
         $this->nomeTabela = 'enfermeiro';
+        $this->cargo = $this->nomeTabela;
+        $this->img = $dados['img'] ?? null;
         $this->data_inicio_trabalho = date("Y-m-d");
         $this->data_termino_trabalho = null;
         $this->registroCoren = $dados['registroCoren'] ?? null;
@@ -56,15 +60,16 @@ class Enfermeiro extends Pessoa
                     $this->getRegistroCoren(),         // registroCoren
                     $this->getEspecialidade(),         // especialidade
                     $this->getDataInicioTrabalho(),    // data_inicio_trabalho
-                    $this->getDataTerminoTrabalho()    // data_termino_trabalho
+                    $this->getDataTerminoTrabalho(),    // data_termino_trabalho
+                    $this->getImg()
                 ];
 
                 $sql = "INSERT INTO enfermeiro (
                 nomeCompleto, cidade, rua, bairro, numero, complemento, telefone, email,
                 genero, status, dataNascimento, cpf, naturalidade, idade, registroCoren,
-                especialidade, data_inicio_trabalho, data_termino_trabalho
+                especialidade, data_inicio_trabalho, data_termino_trabalho,img,cargo
             ) VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?
             )";
 
                 $stmt = Db::preparar($sql);
@@ -78,6 +83,27 @@ class Enfermeiro extends Pessoa
         } else {
             return false;
         }
+    }
+
+
+    public function getImg(): string
+    {
+        return $this->img;
+    }
+
+    public function setImg(string $img): void
+    {
+        $this->img = $img;
+    }
+
+    public function getCargo(): string
+    {
+        return $this->cargo;
+    }
+
+    public function setCargo(string $cargo): void
+    {
+        $this->cargo = $cargo;
     }
 
     public function atualizarDados($id)

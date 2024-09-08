@@ -9,6 +9,30 @@ use sistema\Login;
 class Helpers
 {
 
+    public static function excluiImg(string $nomeImg): bool
+    {
+        echo $nomeImg . '<br>';
+        if (empty($nomeImg)) {
+            return false;
+        }
+
+        // Caminho completo da foto no servidor (caminho absoluto recomendado)
+        $caminhoFoto = __DIR__ . "/../public/assets/img/pic/" . $nomeImg;
+        echo $caminhoFoto . '<br>';
+        // Verificar se o arquivo existe
+        if (file_exists($caminhoFoto)) {
+            // Tentar excluir o arquivo
+            if (unlink($caminhoFoto)) {
+                return true; // Arquivo excluído com sucesso
+            } else {
+                return false; // Falha ao excluir o arquivo
+            }
+        }
+
+        // Se o arquivo não existir, retornar false
+        return false;
+    }
+
 
     public static function objetoParaArray($objeto)
     {

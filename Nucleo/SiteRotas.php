@@ -2,6 +2,7 @@
 
 namespace sistema\rotas;
 
+use DateTime;
 use sistema\Atendente;
 use sistema\controlador\Controlador;
 use sistema\Enfermeiro;
@@ -24,14 +25,23 @@ class SiteRotas extends Controlador
 
     public function cadastrarPaciente(): void
     {
-        if (Helpers::validaCredencial())
-            echo $this->template->renderizar('cadastrarPacienteView.html', ['isForm' => true]);
-        else
+        if (Helpers::validaCredencial()) {
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $res = (new Atendente(null))->selecionarUmRegistro($funcionario);
+            $res['img'] = !empty($res['img']) ? $res['img'] : null;
+
+            echo $this->template->renderizar('cadastrarPacienteView.html', ['isForm' => true, 'img' => $res]);
+        } else
             header("Location:" . Helpers::getServer('404'));
     }
     public function listar_funcionario(): void
     {
         if (Helpers::validaCredencial()) {
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $res = (new Atendente(null))->selecionarUmRegistro($funcionario);
+            $res['img'] = !empty($res['img']) ? $res['img'] : null;
+
+
             $dados = array(
                 (new Medico(null))->selecionarTodosRegistros(),
                 (new Enfermeiro(null))->selecionarTodosRegistros(),
@@ -40,24 +50,33 @@ class SiteRotas extends Controlador
 
             $resultado = array_merge($dados[0], $dados[1], $dados[2]);
 
-            echo $this->template->renderizar('listagemFuncionarioView.html', ['isForm' => true, 'dados' => $resultado]);
+            echo $this->template->renderizar('listagemFuncionarioView.html', ['isForm' => true, 'dados' => $resultado, 'img' => $res]);
         } else
             header("Location:" . Helpers::getServer('404'));
     }
 
     public function cadastrarFuncionario(): void
     {
-        if (Helpers::validaCredencial())
-            echo $this->template->renderizar('cadastrarFuncionarioView.html', ['teste' => 'teste']);
-        else
+        if (Helpers::validaCredencial()) {
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $res = (new Atendente(null))->selecionarUmRegistro($funcionario);
+            $res['img'] = !empty($res['img']) ? $res['img'] : null;
+
+
+            echo $this->template->renderizar('cadastrarFuncionarioView.html', ['teste' => 'teste', 'img' => $res]);
+        } else
             header("Location:" . Helpers::getServer('404'));
     }
 
     public function triagem(): void
     {
-        if (Helpers::validaCredencial())
-            echo $this->template->renderizar('TriagemView.html', ['isForm' => true]);
-        else
+        if (Helpers::validaCredencial()) {
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $res = (new Enfermeiro(null))->selecionarUmRegistro($funcionario);
+            $res['img'] = !empty($res['img']) ? $res['img'] : null;
+
+            echo $this->template->renderizar('TriagemView.html', ['isForm' => true, 'img' => $res]);
+        } else
             header("Location:" . Helpers::getServer('404'));
     }
 
@@ -68,9 +87,17 @@ class SiteRotas extends Controlador
 
     public function consulta(): void
     {
-        if (Helpers::validaCredencial())
-            echo $this->template->renderizar('consultaView.html', ['isForm' => true]);
-        else
+        if (Helpers::validaCredencial()) {
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $res = (new Medico(null))->selecionarUmRegistro($funcionario);
+            $res['img'] = !empty($res['img']) ? $res['img'] : null;
+
+            echo $this->template->renderizar('consultaView.html', [
+                'isForm' => true,
+                'img' => $res,
+                'agora' => date('Y-m-d H:i:s')
+            ]);
+        } else
             header("Location:" . Helpers::getServer('404'));
     }
 
@@ -84,24 +111,37 @@ class SiteRotas extends Controlador
     {
 
         if (Helpers::validaCredencial()) {
-            echo $this->template->renderizar('visualizarRegistrosMedicoView.html', ['res' => Helpers::selecionarTodasTabelas(), 'isForm' => true]);
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $res = (new Medico(null))->selecionarUmRegistro($funcionario);
+            $res['img'] = !empty($res['img']) ? $res['img'] : null;
+
+            echo $this->template->renderizar('visualizarRegistrosMedicoView.html', ['res' => Helpers::selecionarTodasTabelas(), 'isForm' => true, 'img' => $res]);
         } else
             header("Location:" . Helpers::getServer('404'));
     }
 
     public function consultar_dados(): void
     {
-        if (Helpers::validaCredencial())
-            echo $this->template->renderizar('DadosPacienteView.html', ['isForm' => true, 'login' => false]);
-        else
+        if (Helpers::validaCredencial()) {
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $res = (new Atendente(null))->selecionarUmRegistro($funcionario);
+            $res['img'] = !empty($res['img']) ? $res['img'] : null;
+
+            echo $this->template->renderizar('DadosPacienteView.html', ['isForm' => true, 'login' => false, 'img' => $res]);
+        } else
             header("Location:" . Helpers::getServer('404'));
     }
 
     public function visualizarRegistro(): void
     {
         if (Helpers::validaCredencial()) {
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $result = (new Enfermeiro(null))->selecionarUmRegistro($funcionario);
+            $result['img'] = !empty($result['img']) ? $result['img'] : null;
+
+
             $res = (new Paciente())->selecionarPorStatus('Ativo');
-            echo $this->template->renderizar('visualizarRegistrosView.html', ['isForm' => true, 'login' => false, 'res' => $res]);
+            echo $this->template->renderizar('visualizarRegistrosView.html', ['isForm' => true, 'login' => false, 'res' => $res, 'img' => $result]);
         } else
             header("Location:" . Helpers::getServer('404'));
     }
@@ -109,7 +149,12 @@ class SiteRotas extends Controlador
     public function dashboard(): void
     {
         if (Helpers::validaCredencial()) {
-            echo $this->template->renderizar('dashboardView.html', ['isForm' => true, 'login' => false]);
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $res = (new Atendente(null))->selecionarUmRegistro($funcionario);
+            // Verifica se a imagem existe, senão define $res['img'] como null
+            $res['img'] = !empty($res['img']) ? $res['img'] : null;
+
+            echo $this->template->renderizar('dashboardView.html', ['isForm' => true, 'login' => false, 'img' => $res]);
         } else
             header("Location:" . Helpers::getServer('404'));
     }

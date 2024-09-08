@@ -24,26 +24,36 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"></a>
                 </li>
+
             </ul>
             <!-- Left links -->
-            <div class="d-flex align-items-center">
-                <a data-mdb-ripple-init class="btn btn-light px-2 me-2" href="https://github.com/MLS467" role="button"
-                    target="_blank"><img src="public/assets/img/github.png" width="30" alt=""></a>
-                {% if isForm %}
-                <a href="Controller/sairController.php" class="btn btn-primary me-3">
-                    Sair
-                </a>
-            </div>
-            {% endif %}
+
 
         </div>
         <!-- Collapsible wrapper -->
     </div>
-    {% if isForm %}
-    <div class="me-2">
-        <img class="rounded-circle"
-            src="https://www.portalgiro.com/arquivos/noticias/7567/ha-100-anos-nascia-ramon-valdes-o-eterno-seu-madruga.jpg"
-            alt="" width="70" height="70">
+    <div class="d-flex align-items-center">
+        <a data-mdb-ripple-init class="btn btn-light px-2 me-2" href="https://github.com/MLS467" role="button"
+            target="_blank"><img src="public/assets/img/github.png" width="30" alt=""></a>
+        {% if isForm %}
+        <a href="Controller/sairController.php" class="btn btn-primary me-3">
+            Sair
+        </a>
+    </div>
+
+
+    <div class="me-2 d-flex align-items-center">
+        {% if img %}
+        <div style="height: 80px;width:100px ;text-align: center;display: flex; justify-content: center; align-items: center;flex-direction: column;"
+            class="">
+            <img class="rounded-circle border" src="public/assets/img/pic/{{ img.img }}" alt="" width="60" height="60"
+                title="{{img.nomeCompleto}}">
+            <small class="text-primary">{{img.nomeCompleto}}</small>
+        </div>
+        {% else %}
+        <img class="rounded-circle" src="public/assets/img/pic/semFoto/semFoto.jpg" alt="" width="60" height="60"
+            title="{{img.nomeCompleto}}">
+        {% endif %}
     </div>
     {% endif %}
     <!-- Container wrapper -->

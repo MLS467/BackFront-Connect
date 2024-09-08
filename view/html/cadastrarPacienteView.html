@@ -1,25 +1,29 @@
 {% extends '/base/default.html'%}
 
 {% block conteudo %}
-{% include '/base/partials/nav.html'%}
+{% include '/base/partials/nav.html' with {'img': img} %}
+
 <div class="container">
     <div id="popupContainer"></div>
     <h2 class="mt-4">Cadastro de Paciente</h2>
+    <button id="cadastroAleatorio" class="btn btn-info">Gerar Cadastro Aleatório</button>
     <p><small>Campos que contém <span class="erroForm">*</span> são obrigatórios!</small></p>
     <form id="formEv" action="{{url('Controller/cadastrarPacienteController.php')}}" method="POST">
         <div class="form-group">
             <label for="nomeCompleto">Nome Completo:<span class="erroForm">*</span></label>
-            <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" required>
+            <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" required
+                placeholder="Digite o nome completo">
             <p id="nomeErro" class="erroForm"></p>
         </div>
         <div class="form-group">
             <label for="cpf">CPF:<span class="erroForm">*</span></label>
-            <input type="text" class="form-control" id="cpf" name="cpf" required>
+            <input type="text" class="form-control" id="cpf" name="cpf" required placeholder="Digite o CPF">
             <p id="cpfErro" class="erroForm"></p>
         </div>
         <div class="form-group">
             <label for="dataNascimento">Data de Nascimento:</label>
-            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
+            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required
+                placeholder="Selecione a data de nascimento">
         </div>
         <div class="form-group">
             <label for="genero">Gênero:</label>
@@ -31,53 +35,58 @@
         </div>
         <div class="form-group">
             <label for="bairro">CEP</label>
-            <input type="text" class="form-control" id="cepCadastraPac" name="cep" required>
+            <input type="text" class="form-control" id="cepCadastraPac" name="cep" required placeholder="Digite o CEP">
         </div>
         <div class="form-group">
             <label for="bairro">Bairro:</label>
-            <input type="text" class="form-control" id="bairro" name="bairro" required>
+            <input type="text" class="form-control" id="bairro" name="bairro" required placeholder="Digite o bairro">
         </div>
         <div class="form-group">
             <label for="rua">Rua:</label>
-            <input type="text" class="form-control" id="rua" name="rua" required>
+            <input type="text" class="form-control" id="rua" name="rua" required placeholder="Digite a rua">
         </div>
         <div class="form-group">
             <label for="numero">Número:</label>
-            <input type="text" class="form-control" id="numero" name="numero" required>
+            <input type="text" class="form-control" id="numero" name="numero" required placeholder="Digite o número">
         </div>
         <div class="form-group">
             <label for="complemento">Complemento:</label>
-            <input type="text" class="form-control" id="complemento" name="complemento">
+            <input type="text" class="form-control" id="complemento" name="complemento"
+                placeholder="Digite o complemento (opcional)">
         </div>
         <div class="form-group">
             <label for="cidade">Cidade:</label>
-            <input type="text" class="form-control" id="cidade" name="cidade">
+            <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Digite a cidade">
         </div>
         <div class="form-group">
             <label for="naturalidade">Naturalidade:</label>
-            <input type="text" class="form-control" id="naturalidade" name="naturalidade">
+            <input type="text" class="form-control" id="naturalidade" name="naturalidade"
+                placeholder="Digite a naturalidade">
         </div>
         <div class="form-group">
             <label for="telefone">Telefone:<span class="erroForm">*</span></label>
-            <input type="tel" class="form-control" id="telefone" name="telefone">
+            <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Digite o telefone">
             <p id="telErro" class="erroForm"></p>
         </div>
         <div class="form-group">
             <label for="email">Email:<span class="erroForm">*</span></label>
-            <input type="email" class="form-control" id="email" name="email">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Digite o email">
             <p id="emailErro" class="erroForm"></p>
         </div>
         <div class="form-group">
             <label for="alergia">Alergia:</label>
-            <input type="text" class="form-control" id="alergia" name="alergia">
+            <input type="text" class="form-control" id="alergia" name="alergia"
+                placeholder="Digite qualquer alergia (se houver)">
         </div>
         <div class="form-group">
             <label for="historicoCirurgia">Histórico de Cirurgias:</label>
-            <input type="text" class="form-control" id="historicoCirurgia" name="historicoCirurgia">
+            <input type="text" class="form-control" id="historicoCirurgia" name="historicoCirurgia"
+                placeholder="Digite o histórico de cirurgias (se houver)">
         </div>
         <div class="form-group">
             <label for="contatoEmergencia">Contato de Emergência:<span class="erroForm">*</span></label>
-            <input type="text" class="form-control" id="contatoEmergencia" name="contatoEmergencia">
+            <input type="text" class="form-control" id="contatoEmergencia" name="contatoEmergencia"
+                placeholder="Digite o contato de emergência">
             <p id="ContEmerErro" class="erroForm"></p>
         </div>
 
@@ -87,4 +96,5 @@
 </div>
 <script src="{{asset('public/assets/js/validacoes/cadastroPacientes.js')}}" type="module"></script>
 <script src="{{asset('public/assets/js/api/viacep.js')}}"></script>
+<script src="{{asset('public/assets/js/cadastroAleatorio/cadastroAleatorio.js')}}"></script>
 {% endblock %}

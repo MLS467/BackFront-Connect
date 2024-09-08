@@ -6,6 +6,17 @@
     z-index: 0;
 }
 
+#linkVoltar {
+    text-align: center;
+    /* border: 1px solid red; */
+    display: block;
+    text-decoration: none;
+}
+
+#linkVoltar:hover {
+    text-decoration: underline;
+}
+
 #mainLogin {
     /* border: 1px solid red; */
     position: relative;

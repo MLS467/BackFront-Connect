@@ -3,6 +3,22 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.conDadosPac {
+    background-color: #2f60a7;
+}
+
+.ocultarElemento {
+    display: none;
+}
+
+#linkCadPac {
+    text-decoration: none;
+}
+
+#linkCadPac:hover {
+    text-decoration: underline;
+}
+
 .card-header {
     border-radius: 15px 15px 0 0;
 }

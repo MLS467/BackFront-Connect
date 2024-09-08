@@ -14,6 +14,7 @@ class Atendente extends Pessoa
     private string $data_inicio_trabalho;
     private ?string $data_termino_trabalho;
     private ?string $img;
+    private ?string $cargo;
     private Validacao $validacao;
 
     public function __construct(?array $dados)
@@ -21,6 +22,7 @@ class Atendente extends Pessoa
         parent::__construct($dados);
         $this->img = $dados['img'] ?? null;
         $this->nomeTabela = 'atendente';
+        $this->cargo = $this->nomeTabela;
         $this->data_inicio_trabalho = date("Y-m-d");
         $this->data_termino_trabalho = null;
         $this->validacao = new Validacao();
@@ -38,7 +40,7 @@ class Atendente extends Pessoa
         ) {
 
             $sql = "INSERT INTO $this->nomeTabela VALUES
-         (null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+         (null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             try {
                 $query = Db::preparar($sql);
@@ -62,7 +64,8 @@ class Atendente extends Pessoa
                     $this->getDataTerminoTrabalho(),
                     '12313',
                     null,
-                    $this->getImg()
+                    $this->getImg(),
+                    $this->getCargo()
                 ];
                 $result = $query->execute($dados);
 
@@ -84,6 +87,15 @@ class Atendente extends Pessoa
 
     function atualizarDados($id) {}
 
+    public function getCargo(): string
+    {
+        return $this->cargo;
+    }
+
+    public function setCargo(string $cargo): void
+    {
+        $this->cargo = $cargo;
+    }
 
     public function getId(): int
     {

@@ -23,7 +23,7 @@ if (isset($_POST) && !empty($_POST)) {
             'id_medico' => $id_medico,
             'id_paciente' => $dadosRecuperados[0]->id_paciente,
             'id_triagem' => $dadosRecuperados[0]->id_triagem,
-            'dataHora' => $input['dataHora'],
+            'dataHora' => date('Y-m-d H:i:s'),
             'diagnostico' => $input['diagnostico'],
             'tratamento' => $input['tratamento'],
             'observacoes' => $input['observacoes'],

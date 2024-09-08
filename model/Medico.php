@@ -15,12 +15,16 @@ class Medico extends Pessoa
     private string $data_inicio_trabalho;
     private ?string $data_termino_trabalho;
     private ?string $observacoes;
+    private ?string $img;
+    private ?string $cargo;
     private ?Validacao $validacao;
 
     public function __construct(?array $dados)
     {
         parent::__construct($dados);
         $this->nomeTabela = 'medico';
+        $this->cargo = $this->nomeTabela;
+        $this->img = $dados['img'] ?? null;
         $this->especialidade = $dados['especialidade'] ?? null;
         $this->CRM = $dados['CRM'] ?? null;
         $this->data_inicio_trabalho = date("Y-m-d");
@@ -39,7 +43,7 @@ class Medico extends Pessoa
         ) {
             try {
 
-                $sql = "INSERT INTO $this->nomeTabela (nomeCompleto, cidade, rua, bairro, numero, complemento, telefone, email, genero, status, dataNascimento, cpf, naturalidade, especialidade, CRM, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO $this->nomeTabela (nomeCompleto, cidade, rua, bairro, numero, complemento, telefone, email, genero, status, dataNascimento,idade ,cpf, naturalidade, especialidade, CRM, senha,img,cargo) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
                 $dados = [
                     $this->getNomeCompleto(),
                     $this->getCidade(),
@@ -52,11 +56,14 @@ class Medico extends Pessoa
                     $this->getGenero(),
                     $this->getStatus(),
                     $this->getDataNascimento(),
+                    $this->getIdade(),
                     $this->getCpf(),
                     $this->getNaturalidade(),
                     $this->getEspecialidade(),
                     $this->getCRM(),
-                    '123123'
+                    '123123',
+                    $this->getImg(),
+                    $this->getCargo()
                 ];
 
 
@@ -89,6 +96,30 @@ class Medico extends Pessoa
 
     function atualizarDados($id) {}
 
+
+
+
+    public function getCargo(): string
+    {
+        return $this->cargo;
+    }
+
+    public function setCargo(string $cargo): void
+    {
+        $this->cargo = $cargo;
+    }
+
+
+    public function getImg(): string
+    {
+        return $this->img;
+    }
+
+
+    public function setImg(string $img): void
+    {
+        $this->img = $img;
+    }
 
     public function getId(): int
     {
