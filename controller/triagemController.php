@@ -33,6 +33,7 @@ if (isset($_POST) && !empty($_POST)) {
 
 
     $triagem = new Triagem($dados);
+    // insere dados da triagem e redireciona para visualizar_registro
     if ($triagem->inserirDados()) {
         $dadosTemp = new DadosTemporarios();
         // se inseridos os dados os dados temporários são lidos para atualização

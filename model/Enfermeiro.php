@@ -61,15 +61,17 @@ class Enfermeiro extends Pessoa
                     $this->getEspecialidade(),         // especialidade
                     $this->getDataInicioTrabalho(),    // data_inicio_trabalho
                     $this->getDataTerminoTrabalho(),    // data_termino_trabalho
-                    $this->getImg()
+                    $this->getImg(),
+                    $this->getCargo(),
+                    '123123'
                 ];
 
                 $sql = "INSERT INTO enfermeiro (
                 nomeCompleto, cidade, rua, bairro, numero, complemento, telefone, email,
                 genero, status, dataNascimento, cpf, naturalidade, idade, registroCoren,
-                especialidade, data_inicio_trabalho, data_termino_trabalho,img,cargo
+                especialidade, data_inicio_trabalho, data_termino_trabalho,img,cargo,senha
             ) VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?
             )";
 
                 $stmt = Db::preparar($sql);
@@ -84,6 +86,49 @@ class Enfermeiro extends Pessoa
             return false;
         }
     }
+
+    function atualizarDados($id)
+    {
+        // Query de atualização com placeholders posicionais
+        $sql = "UPDATE $this->nomeTabela 
+                SET nomeCompleto = ?, cidade = ?, rua = ?, bairro = ?, numero = ?, complemento = ?, telefone = ?, email = ?, genero = ?, status = ?, dataNascimento = ?, cpf = ?, naturalidade = ?, idade = ?, registroCoren = ?, especialidade = ?, data_inicio_trabalho = ?, data_termino_trabalho = ?, img = ?, cargo = ?, senha = ?
+                WHERE id = ?";
+
+        // Preparar a query
+        $stmt = Db::preparar($sql);
+
+        // Executar a query com os valores recebidos pelos getters
+        if ($stmt->execute([
+            $this->getNomeCompleto(),          // nomeCompleto
+            $this->getCidade(),                // cidade
+            $this->getRua(),                   // rua
+            $this->getBairro(),                // bairro
+            $this->getNumero(),                // numero
+            $this->getComplemento(),           // complemento
+            $this->getTelefone(),              // telefone
+            $this->getEmail(),                 // email
+            $this->getGenero(),                // genero
+            $this->getStatus(),                // status
+            $this->getDataNascimento(),        // dataNascimento
+            $this->getCpf(),                   // cpf
+            $this->getNaturalidade(),          // naturalidade
+            $this->getIdade(),                 // idade
+            $this->getRegistroCoren(),         // registroCoren
+            $this->getEspecialidade(),         // especialidade
+            $this->getDataInicioTrabalho(),    // data_inicio_trabalho
+            $this->getDataTerminoTrabalho(),   // data_termino_trabalho
+            $this->getImg(),                   // img
+            $this->getCargo(),                 // cargo
+            '123123',                          // senha fixa
+            $id                                // ID do registro a ser atualizado
+        ])) {
+            return true;
+        }
+
+        // Retorna false em caso de falha
+        return false;
+    }
+
 
 
     public function getImg(): string
@@ -106,10 +151,7 @@ class Enfermeiro extends Pessoa
         $this->cargo = $cargo;
     }
 
-    public function atualizarDados($id)
-    {
-        // Implemente a lógica para atualizar dados se necessário
-    }
+
 
     public function getId(): int
     {

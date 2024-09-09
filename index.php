@@ -14,6 +14,7 @@ try {
     SimpleRouter::get(URL_BASE . 'dashboard', 'SiteRotas@dashboard');
     SimpleRouter::get(URL_BASE . 'listar_funcionario', 'SiteRotas@listar_funcionario');
     SimpleRouter::get(URL_BASE . 'cadastrar_funcionario', 'SiteRotas@cadastrarFuncionario');
+    SimpleRouter::get(URL_BASE . "editar_funcionario/{id}/{cargo}", "SiteRotas@editar_funcionario");
 
     // ATENDENTE
     SimpleRouter::get(URL_BASE . 'consultar_dados', 'SiteRotas@consultar_dados');

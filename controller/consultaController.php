@@ -39,14 +39,27 @@ if (isset($_POST) && !empty($_POST)) {
                 (new DadosTemporarios())->deletar($dadosRecuperados[0]->id);
                 header("Location:" . Helpers::getServer('consulta_realizada'));
             } else {
-                echo 'ERRO';
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Erro ao inserir dados na consulta. Por favor, tente novamente.'
+                ]);
             }
         } catch (\Throwable $e) {
-            echo $e;
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erro inesperado: ' . $e->getMessage()
+            ]);
         }
     } else {
-        ///// TRATAR ERRO
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Dados inválidos ou sessão expirada. Por favor, tente novamente.'
+        ]);
     }
 } else {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Dados não recebidos. Por favor, tente novamente.'
+    ]);
     Helpers::getServer('404');
 }

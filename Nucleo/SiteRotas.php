@@ -2,13 +2,18 @@
 
 namespace sistema\rotas;
 
+
+
 use DateTime;
+use sistema\Adm;
 use sistema\Atendente;
 use sistema\controlador\Controlador;
 use sistema\Enfermeiro;
 use sistema\Medico;
 use sistema\nucleo\Helpers;
 use sistema\Paciente;
+
+require_once __DIR__ . "/../vendor/autoload.php";
 
 class SiteRotas extends Controlador
 {
@@ -38,7 +43,7 @@ class SiteRotas extends Controlador
     {
         if (Helpers::validaCredencial()) {
             $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
-            $res = (new Atendente(null))->selecionarUmRegistro($funcionario);
+            $res = (new adm(null))->selecionarUmRegistro($funcionario);
             $res['img'] = !empty($res['img']) ? $res['img'] : null;
 
 
@@ -150,7 +155,7 @@ class SiteRotas extends Controlador
     {
         if (Helpers::validaCredencial()) {
             $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
-            $res = (new Atendente(null))->selecionarUmRegistro($funcionario);
+            $res = (new Adm(null))->selecionarUmRegistro($funcionario);
             // Verifica se a imagem existe, senão define $res['img'] como null
             $res['img'] = !empty($res['img']) ? $res['img'] : null;
 
@@ -163,6 +168,25 @@ class SiteRotas extends Controlador
     {
         if (Helpers::validaCredencial()) {
             echo $this->template->renderizar('consultaRealizadaView.html', ['isForm' => true, 'login' => false]);
+        } else
+            header("Location:" . Helpers::getServer('404'));
+    }
+
+    public function editar_funcionario(int $id, string $cargo): void
+    {
+        if (Helpers::validaCredencial()) {
+            $className = 'sistema\\' . ucfirst($cargo);
+            if (class_exists($className)) {
+                $dados = ((new $className(null)))->selecionarUmRegistro($id);
+            } else {
+                echo "Classe $cargo não encontrada.";
+            }
+
+            $funcionario = !empty($_SESSION['idFuncionario']) ? $_SESSION['idFuncionario'] : null;
+            $res = (new Adm(null))->selecionarUmRegistro($funcionario);
+            // Verifica se a imagem existe, senão define $res['img'] como null
+            $res['img'] = !empty($res['img']) ? $res['img'] : null;
+            echo $this->template->renderizar('editarFuncionarioView.html', ['isForm' => true, 'login' => true, 'func' => $dados, 'img' => $res]);
         } else
             header("Location:" . Helpers::getServer('404'));
     }

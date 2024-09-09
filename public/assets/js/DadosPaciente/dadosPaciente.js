@@ -17,11 +17,14 @@ document.getElementById('formEnviar').addEventListener('submit', async function 
     if (dados) {
         buscar.classList.add('ocultarElemento');
         encontrado.classList.remove('ocultarElemento');
-        limpaCampo();
+
         encontrado.addEventListener('click', async () => {
             const endpoint = `/PROJETO_INTEGRADO_FRONT_E_BACK/Controller/inserirPacienteJson.php?idPacienteEncontrado=${dados.id}`;
             let result = await fetch(endpoint, { method: "GET" });
             if (result.ok) {
+                limpaCampo();
+                buscar.classList.remove('ocultarElemento');
+                encontrado.classList.add('ocultarElemento');
                 alert('Paciente enviado para lista de Triagem!');
             } else {
                 alert('Houve um problema para enviar os dados!');

@@ -4,8 +4,8 @@
     <!-- Container wrapper -->
     <div id="cxForm" class="container">
         <!-- Navbar brand -->
-        <a class="navbar-brand me-2" href="/PROJETO_INTEGRADO_FRONT_E_BACK/">
-            <img id="imgLogo" src="public/assets/img/logo2.png" alt="" width="80">
+        <a class="navbar-brand me-2" href="{{asset('')}}">
+            <img id="imgLogo" src="{{asset('public/assets/img/logo2.png')}}" alt="logo_do_ps" width="80">
         </a>
 
         <!-- Toggle button -->
@@ -27,21 +27,19 @@
 
             </ul>
             <!-- Left links -->
-
-
         </div>
         <!-- Collapsible wrapper -->
-    </div>
-    <div class="d-flex align-items-center">
-        <a data-mdb-ripple-init class="btn btn-light px-2 me-2" href="https://github.com/MLS467" role="button"
-            target="_blank"><img src="public/assets/img/github.png" width="30" alt=""></a>
-        {% if isForm %}
-        <a href="Controller/sairController.php" class="btn btn-primary me-3">
-            Sair
-        </a>
-    </div>
+        <div class="d-flex align-items-center">
+            <a data-mdb-ripple-init class="btn btn-light px-2 me-2" href="https://github.com/MLS467" role="button"
+                target="_blank"><img src="{{asset('public/assets/img/github.png')}}" width="30" alt=""></a>
+            {% if isForm %}
+            <a href="{{asset('Controller/sairController.php')}}" class="btn btn-primary me-3">
+                Sair
+            </a>
+        </div>
 
 
+    </div>
     <div class="me-2 d-flex align-items-center">
         {% if img %}
         <div style="height: 80px;width:100px ;text-align: center;display: flex; justify-content: center; align-items: center;flex-direction: column;"
@@ -51,11 +49,12 @@
             <small class="text-primary">{{img.nomeCompleto}}</small>
         </div>
         {% else %}
-        <img class="rounded-circle" src="public/assets/img/pic/semFoto/semFoto.jpg" alt="" width="60" height="60"
+        <img class="rounded-circle" src="public/assets/img/pic/semFoto/semFoto.jpg'" alt="" width="60" height="60"
             title="{{img.nomeCompleto}}">
         {% endif %}
     </div>
     {% endif %}
+
     <!-- Container wrapper -->
 </nav>
 <!-- Navbar -->

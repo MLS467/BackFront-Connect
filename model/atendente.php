@@ -62,7 +62,7 @@ class Atendente extends Pessoa
                     $this->getIdade(),
                     $this->getDataInicioTrabalho(),
                     $this->getDataTerminoTrabalho(),
-                    '12313',
+                    '123123',
                     null,
                     $this->getImg(),
                     $this->getCargo()
@@ -83,9 +83,46 @@ class Atendente extends Pessoa
         }
     }
 
+    function atualizarDados($id)
+    {
+        // Query de atualização com placeholders posicionais
+        $sql = "UPDATE $this->nomeTabela 
+                SET nomeCompleto = ?, cidade = ?, rua = ?, bairro = ?, numero = ?, complemento = ?, telefone = ?, email = ?, genero = ?, status = ?, dataNascimento = ?, cpf = ?, naturalidade = ?, idade = ?, senha = ?, img = ?, cargo = ?
+                WHERE id = ?";
+
+        // Preparar a query
+        $stmt = Db::preparar($sql);
+
+        // Executar a query com os valores recebidos pelos getters
+        if ($stmt->execute([
+            $this->getNomeCompleto(),          // nomeCompleto
+            $this->getCidade(),                // cidade
+            $this->getRua(),                   // rua
+            $this->getBairro(),                // bairro
+            $this->getNumero(),                // numero
+            $this->getComplemento(),           // complemento
+            $this->getTelefone(),              // telefone
+            $this->getEmail(),                 // email
+            $this->getGenero(),                // genero
+            $this->getStatus(),                // status
+            $this->getDataNascimento(),        // dataNascimento
+            $this->getCpf(),                   // cpf
+            $this->getNaturalidade(),          // naturalidade
+            $this->getIdade(),                 // idade
+            '123123',                          // senha fixa
+            $this->getImg(),                   // img
+            $this->getCargo(),                 // cargo
+            $id                                // ID do registro a ser atualizado
+        ])) {
+            return true;
+        }
+
+        // Retorna false em caso de falha
+        return false;
+    }
 
 
-    function atualizarDados($id) {}
+
 
     public function getCargo(): string
     {

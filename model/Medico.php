@@ -94,7 +94,39 @@ class Medico extends Pessoa
     }
 
 
-    function atualizarDados($id) {}
+    function atualizarDados($id)
+    {
+        $sql = "UPDATE $this->nomeTabela 
+                SET nomeCompleto = ?, cidade = ?, rua = ?, bairro = ?, numero = ?, complemento = ?, telefone = ?, email = ?, genero = ?, status = ?, dataNascimento = ?, cpf = ?, naturalidade = ?, especialidade = ?, CRM = ?, senha = '123123', img = ?, cargo = ?
+                WHERE id = ?";
+
+        $stmt = Db::preparar($sql);
+
+        if ($stmt->execute([
+            $this->getNomeCompleto(),
+            $this->getCidade(),
+            $this->getRua(),
+            $this->getBairro(),
+            $this->getNumero(),
+            $this->getComplemento(),
+            $this->getTelefone(),
+            $this->getEmail(),
+            $this->getGenero(),
+            $this->getStatus(),
+            $this->getDataNascimento(),
+            $this->getCpf(),
+            $this->getNaturalidade(),
+            $this->getEspecialidade(),
+            $this->getCRM(),
+            $this->getImg(),
+            $this->getCargo(),
+            $id
+        ])) {
+            return true;
+        }
+
+        return false;
+    }
 
 
 

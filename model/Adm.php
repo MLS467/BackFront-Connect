@@ -17,6 +17,7 @@ class Adm extends Pessoa
     public function __construct(?array $n)
     {
         parent::__construct($n);
+        $this->nomeTabela = 'adm';
         $this->Permissao = $n['permissao'] ?? null;
         $this->data_inicio_trabalho = date("Y-m-d") ?? null;
         $this->data_termino_trabalho = null;
@@ -30,7 +31,6 @@ class Adm extends Pessoa
             case strtolower('atendente'):
                 if ((new Atendente($n))->inserirDados())
                     return true;
-
                 break;
 
             case strtolower('medico'):

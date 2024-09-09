@@ -6,6 +6,8 @@ use sistema\Db;
 use PDO;
 use sistema\Login;
 
+/** HELPERS -> funções úteis que posso usar em qualquer lugar no meu sistema */
+
 class Helpers
 {
 

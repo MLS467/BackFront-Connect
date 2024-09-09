@@ -1,0 +1,136 @@
+{% extends '/base/default.html' %}
+{% block conteudo %}
+{% include '/base/partials/nav.html' %}
+<div class="container mt-5">
+    <h2>Editar Funcionário</h2>
+    <form action="/PROJETO_INTEGRADO_FRONT_E_BACK/Controller/editarFuncionarioController.php" method="post"
+        enctype="multipart/form-data">
+        <!-- Seleção de Cargo -->
+        <div class="form-group">
+
+            <input class="form-control" type="text" value="{{func.cargo}}" name="cargo" readonly>
+            <p id="cargoForm" class="erroForm"></p>
+        </div>
+        <input type="hidden" value="{{func.id}}" name="id">
+        <!-- Campos Gerais da Superclasse -->
+        <div class="form-group">
+            <label for="nomeCompleto">Nome Completo <span class="erroForm">*</span></label>
+            <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto"
+                value="{{ func.nomeCompleto }}" placeholder="Nome Completo">
+            <p id="nomeErroFunc" class="erroForm"></p>
+        </div>
+        <div class="form-group">
+            <label for="cepCadastraPac">CEP</label>
+            <input type="text" class="form-control" id="cepCadastraPac" name="cepCadastraPac" value="{{ func.cep }}"
+                placeholder="CEP">
+        </div>
+        <div class="form-group">
+            <label for="cidadeFunc">Cidade</label>
+            <input type="text" class="form-control" id="cidadeFunc" name="cidade" value="{{ func.cidade }}"
+                placeholder="Cidade">
+        </div>
+        <div class="form-group">
+            <label for="ruaFunc">Rua</label>
+            <input type="text" class="form-control" id="ruaFunc" name="rua" value="{{ func.rua }}" placeholder="Rua">
+        </div>
+        <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <input type="text" class="form-control" id="bairroFunc" name="bairro" value="{{ func.bairro }}"
+                placeholder="Bairro">
+        </div>
+        <div class="form-group">
+            <label for="numero">Número</label>
+            <input type="text" class="form-control" id="numero" name="numero" value="{{ func.numero }}"
+                placeholder="Número">
+        </div>
+        <div class="form-group">
+            <label for="complemento">Complemento</label>
+            <input type="text" class="form-control" id="complemento" name="complemento" value="{{ func.complemento }}"
+                placeholder="Complemento">
+        </div>
+        <div class="form-group">
+            <label for="telefone">Telefone <span class="erroForm">*</span></label>
+            <input type="text" class="form-control" id="telefone" name="telefone" value="{{ func.telefone }}"
+                placeholder="Telefone">
+            <p id="telefoneFunc" class="erroForm"></p>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ func.email }}"
+                placeholder="E-mail">
+            <p id="emailFuncErro" class="erroForm"></p>
+        </div>
+        <div class="form-group">
+            <label for="genero">Gênero</label>
+            <input type="text" class="form-control" id="genero" name="genero" value="{{ func.genero }}"
+                placeholder="Gênero">
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <input type="text" class="form-control" id="status" name="status" value="{{ func.status }}"
+                placeholder="Status">
+        </div>
+        <div class="form-group">
+            <label for="dataNascimento">Data de Nascimento</label>
+            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento"
+                value="{{ func.dataNascimento }}" placeholder="Data de Nascimento">
+        </div>
+        <div class="form-group">
+            <label for="cpf">CPF <span class="erroForm">*</span></label>
+            <input type="text" class="form-control" id="cpf" name="cpf" value="{{ func.cpf }}" placeholder="CPF">
+            <p id="cpfFuncErro" class="erroForm"></p>
+        </div>
+        <div class="form-group">
+            <label for="naturalidade">Naturalidade</label>
+            <input type="text" class="form-control" id="naturalidade" name="naturalidade"
+                value="{{ func.naturalidade }}" placeholder="Naturalidade">
+        </div>
+
+        <!-- Campos Específicos do Médico -->
+        <div class="campo-especifico medico" {% if func.cargo !='medico' %}style="display:none;" {% endif %}>
+            <div class="form-group">
+                <label for="especialidade">Especialidade</label>
+                <input type="text" class="form-control" id="especialidade" name="especialidade"
+                    value="{{ func.especialidade }}" placeholder="Especialidade">
+            </div>
+            <div class="form-group">
+                <label for="crm">CRM</label>
+                <input type="text" class="form-control" id="crm" name="CRM" value="{{ func.CRM }}" placeholder="CRM">
+            </div>
+        </div><br>
+
+        <!-- Campos Específicos do Enfermeiro -->
+        <div class="campo-especifico enfermeiro" {% if func.cargo !='enfermeiro' %}style="display:none;" {% endif %}>
+            <div class="form-group">
+                <label for="coren">COREN</label>
+                <input type="text" class="form-control" id="coren" name="registroCoren" value="{{ func.coren }}"
+                    placeholder="COREN">
+            </div>
+        </div>
+
+        <!-- Campos Específicos do Atendente -->
+        <div class="campo-especifico atendente" {% if func.cargo !='atendente' %}style="display:none;" {% endif %}>
+            <div class="form-group">
+                <label for="areaAtuacao">Área de Atuação</label>
+                <input type="text" class="form-control" id="areaAtuacao" name="areaAtuacao"
+                    value="{{ func.areaAtuacao }}" placeholder="Área de Atuação">
+            </div>
+        </div><br>
+
+        <!-- Upload de Imagem -->
+        <div>
+            <input type="file" class="form-control" name="img" id="imgFunc">
+        </div>
+        <br>
+        <div class="mb-5">
+            <button type="submit" class="btn btn-primary rounded-5" id="enviarFunc">Salvar Alterações</button>
+            <a href="{{asset('listar_funcionario')}}" class="btn btn-info rounded-4">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script src="{{asset('public/assets/js/bootstrap.bundle.min.js')}}"></script>
+<!-- <script src="{{asset('/public/assets/js/validacoes/cadastroFuncionario.js')}}" type="module"></script> -->
+<!-- <script src="{{asset('/public/assets/js/adm/controleForm.js')}}"></script> -->
+<script src="{{asset('/public/assets/js/api/viacep.js')}}"></script>
+{% endblock %}
